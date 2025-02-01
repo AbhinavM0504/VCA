@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Education Details Fields -->
+    <include layout="@layout/education_fields_layout" />
+
+    <!-- Document Upload Section -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardElevation="0dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Upload your Marksheet"
+                android:textSize="24sp"
+                android:textColor="#1A1A1A"
+                android:fontFamily="@font/poppins_semibold"
+                android:lineSpacingMultiplier="1.2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <!-- Upload Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/uploadCard"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E0E0E0"
+                app:strokeWidth="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleText">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_file_upload"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Select file"
+                        android:textSize="14sp"
+                        android:textColor="#BDBDBD"
+                        android:fontFamily="@font/poppins_medium"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Divider -->
+            <TextView
+                android:id="@+id/dividerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="or"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:fontFamily="@font/poppins_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/uploadCard"/>
+
+            <!-- Camera Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cameraButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:text="Open Camera &amp; Take Photo"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium"
+                app:icon="@drawable/ic_camera"
+                app:iconGravity="textStart"
+                app:iconTint="#E8F5F0"
+                android:backgroundTint="#E62C67"
+                app:cornerRadius="12dp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerText"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="16dp"
+        android:baselineAligned="false">
+
+        <!-- First Row - Upload Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/uploadButton"
+            style="@style/CustomOutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload"
+            android:textColor="#A52955"
+            app:icon="@drawable/ic_upload_button"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@null" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:text="Add"
+                android:textColor="#A52955"
+                app:icon="@drawable/ic_add_one"
+                app:iconTint="@null"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                style="@style/CustomOutlinedButton"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deleteButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:text="Delete"
+                android:textColor="#A52955"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="@null"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                style="@style/CustomOutlinedButton"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

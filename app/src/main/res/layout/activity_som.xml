@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
+
+    <!-- Top Toolbar -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/toolbarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <!-- Gradient Background with increased alpha -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/gradient_1"
+                android:alpha="0.95"/>
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="SOM Department Structure"
+                app:titleCentered="true"
+                app:titleTextColor="@color/white"
+                app:titleTextAppearance="@style/ToolbarTitleStyle"
+                android:elevation="4dp"/>
+
+            <!-- Bottom Border with Gradient -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/toolbar_border_gradient"
+                android:alpha="0.9"/>
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp">
+
+            <!-- Department Head Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDepartmentHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/blue_500"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="@color/ripple_color"
+                android:stateListAnimator="@animator/card_lift">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <View
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:background="@drawable/gradient_circle"/>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imgDepartmentHead"
+                            android:layout_width="132dp"
+                            android:layout_height="132dp"
+                            android:layout_gravity="center"
+                            android:padding="4dp"
+                            android:src="@drawable/placeholder_image"
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="@android:color/white"
+                            android:background="@android:color/white"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:text="Mr. Kelvin Zhang"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:text="Department Head"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="16sp"
+                        android:textColor="@color/blue_500"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Animated Connector Line -->
+            <View
+                android:id="@+id/lineToDeputy"
+                android:layout_width="4dp"
+                android:layout_height="60dp"
+                android:background="@drawable/gradient_vertical_line"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardDepartmentHead" />
+
+            <!-- Deputy Head Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDeputyHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                app:layout_constraintTop_toBottomOf="@id/lineToDeputy"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/purple_500"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="@color/ripple_color"
+                android:stateListAnimator="@animator/card_lift">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <View
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:background="@drawable/gradient_circle_purple"/>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imgDeputyHead"
+                            android:layout_width="112dp"
+                            android:layout_height="112dp"
+                            android:layout_gravity="center"
+                            android:padding="4dp"
+                            android:src="@drawable/placeholder_image"
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="@android:color/white"
+                            android:background="@android:color/white"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:text="Mr. Abhishek Purohit"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:text="Deputy Head"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="14sp"
+                        android:textColor="@color/purple_500"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Another Connector Line -->
+            <View
+                android:id="@+id/lineToSubDepts"
+                android:layout_width="4dp"
+                android:layout_height="60dp"
+                android:background="@drawable/gradient_vertical_line_purple"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardDeputyHead" />
+
+            <!-- Sub Departments Container -->
+            <LinearLayout
+                android:id="@+id/containerSubDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toBottomOf="@id/lineToSubDepts"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

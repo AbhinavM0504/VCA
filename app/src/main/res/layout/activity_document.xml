@@ -1,0 +1,1914 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DocumentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--Header Layout-->
+        <RelativeLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_background_color"
+            android:padding="5dp">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/back" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/backBtn"
+                android:gravity="start|center"
+                android:padding="10dp"
+                android:text="Document Detail"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <!--Content Layout-->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--Passport Size Image Layout-->
+                <LinearLayout
+                    android:id="@+id/passportImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/passport_size_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Passport Image View-->
+                            <ImageView
+                                android:id="@+id/passportImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Passport Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/passportImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/passportImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/passportImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/passportPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addPassportImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadPassportImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Employee Sign Image Layout-->
+                <LinearLayout
+                    android:id="@+id/empSignImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/employee_sign_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Employee Sign Image View-->
+                            <ImageView
+                                android:id="@+id/employeeSignImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Employee Sign Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/employeeSignImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/employeeSignImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/employeeSignImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/empSignPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addEmployeeSignImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadEmployeeSignImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Aadhar Card Front Image Layout-->
+                <LinearLayout
+                    android:id="@+id/aadharCardImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/aadhar_card_front_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Aadhar Card Image View-->
+                            <ImageView
+                                android:id="@+id/aadharCardImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Aadhar Card Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/aadharCardImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/aadharCardImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/aadharCardImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/aadharCardPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addAadharCardImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadAadharCardImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Aadhar Card Back Image Layout-->
+                <LinearLayout
+                    android:id="@+id/aadharCardBackImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/aadhar_card_back_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Aadhar Card Image View-->
+                            <ImageView
+                                android:id="@+id/aadharCardBackImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Aadhar Card Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/aadharCardBackImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/aadharCardBackImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/aadharCardBackImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon"
+                                    tools:ignore="ContentDescription" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/aadharCardBackPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addAadharCardBackImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadAadharCardBackImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--PAN Card Image Layout-->
+                <LinearLayout
+                    android:id="@+id/panCardImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/pan_card_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--PAN Card Image View-->
+                            <ImageView
+                                android:id="@+id/panCardImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--PAN Card Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/panCardImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/panCardImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/panCardImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/panCardPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addPanCardImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadPanCardImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Bank Proof Image Layout-->
+                <LinearLayout
+                    android:id="@+id/bankProofImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/bank_proof_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Bank Proof Image View-->
+                            <ImageView
+                                android:id="@+id/bankProofImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Bank Proof Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/bankProofImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/bankProofImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/bankProofImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/bankProofPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addBankProofImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadBankProofImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Experience Images Option-->
+
+                <!--Last Company Experience Letter Image Layout-->
+                <LinearLayout
+                    android:id="@+id/lastCmpExpImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/last_company_experience_letter_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Last Company Exp Letter Image View-->
+                            <ImageView
+                                android:id="@+id/lastCpExpLtrImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Last Company Exp Letter Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/lastCpExpLtrImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/lastCpExpLtrImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/lastCpExpLtrImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/lastCmpExpPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addLastCpExpLtrImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadLastCpExpLtrImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Pay Slip 1 Image Layout-->
+                <LinearLayout
+                    android:id="@+id/paySlipImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/pay_slip_experience_letter_image_1"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Pay Slip Image View-->
+                            <ImageView
+                                android:id="@+id/paySlipExpLtrImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Pay Slip Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/paySlipImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/paySlipImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/paySlipImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/paySlipPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addPaySlipExpLtrImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadPaySlipExpLtrImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Pay Slip 2 Image Layout-->
+                <LinearLayout
+                    android:id="@+id/paySlip2ImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/pay_slip_experience_letter_image_2"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Pay Slip Image View-->
+                            <ImageView
+                                android:id="@+id/paySlipExp2LtrImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Pay Slip Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/paySlip2ImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/paySlip2ImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/paySlip2ImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/paySlip2Pg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addPaySlipExp2LtrImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadPaySlipExp2LtrImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Pay Slip 3 Image Layout-->
+                <LinearLayout
+                    android:id="@+id/paySlip3ImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/pay_slip_experience_letter_image_3"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Pay Slip Image View-->
+                            <ImageView
+                                android:id="@+id/paySlipExp3LtrImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Pay Slip Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/paySlip3ImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/paySlip3ImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/paySlip3ImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/paySlip3Pg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addPaySlipExp3LtrImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadPaySlipExp3LtrImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Resign Mail Image Layout-->
+                <LinearLayout
+                    android:id="@+id/resignMailImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/resign_mail_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Resign Mail Image View-->
+                            <ImageView
+                                android:id="@+id/resignMailImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Resign Mail Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/resignMailImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/resignMailImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/resignMailImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/resignMailPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addResignEmailImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadResignEmailImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Bank Statement Last 3 Month Layout-->
+                <LinearLayout
+                    android:id="@+id/bankStmtImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/bank_statement_last_3_month_image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Bank Statement Image View-->
+                            <ImageView
+                                android:id="@+id/bankStmtImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Bank Statement Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/bankStmtImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/bankStmtImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/bankStmtImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/bankStmtPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addBankStmtImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadBankStmtImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Offer Letter Layout-->
+                <LinearLayout
+                    android:id="@+id/offerLetterLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/offer_letter"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Offer Letter Image View-->
+                            <ImageView
+                                android:id="@+id/offerLetterIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Offer Letter Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/offerLetterPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/offerLetterPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/offerLetterPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/offerLetterPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addOfferLetterBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadOfferLetterBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Vaccine Certificate Image Layout-->
+                <LinearLayout
+                    android:id="@+id/vaccineCertificateImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/resume"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Vaccine Certificate Image View-->
+                            <ImageView
+                                android:id="@+id/vaccineCertificateImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Vaccine Certificate Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/vaccineCertificateImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/vaccineCertificateImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/vaccineCertificateImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/vaccineCertificatePg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addVaccineCertificateImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadVaccineCertificateImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Other Documents Image Layout-->
+                <LinearLayout
+                    android:id="@+id/otherDocumentsImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_outline"
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/other_documents_optional"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/black" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!--Other Documents Image View-->
+                            <ImageView
+                                android:id="@+id/otherDocumentsImageIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:src="@drawable/ic_raw_image"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <!--Other Documents Image View Pdf layout-->
+                            <LinearLayout
+                                android:id="@+id/otherDocumentsImgPdfLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/otherDocumentsImgPdfLinkTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:justificationMode="inter_word"
+                                    android:padding="5dp"
+                                    android:text="View Link"
+                                    android:textSize="12sp" />
+
+                                <ImageButton
+                                    android:id="@+id/otherDocumentsImgPdfViewBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="2dp"
+                                    android:layout_weight="6"
+                                    android:background="@drawable/background_outline"
+                                    android:src="@drawable/ic_view_icon" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/otherDocumentsPg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!--Add and Upload Button-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!--Add Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addOtherDocumentsImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/add"
+                            android:textColor="@color/black" />
+
+                        <!--Upload Button-->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/uploadOtherDocumentsImgBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button"
+                            android:backgroundTint="@color/app_background_color"
+                            android:text="@string/upload"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Warning-->
+                <TextView
+                    android:id="@+id/warningTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:padding="5dp"
+                    android:text="@string/you_are_not_able_to_edit_details_now"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

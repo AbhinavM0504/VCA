@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <!--Notification title-->
+        <TextView
+            android:id="@+id/notificationTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Notification Heading"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!--Notification date-->
+        <TextView
+            android:id="@+id/notificationDateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
+            android:padding="4dp"
+            android:text="2021-01-22"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+
+        <!--Notification Text-->
+        <TextView
+            android:id="@+id/notificationTextTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/notificationTitleTv"
+            android:layout_alignParentEnd="true"
+            android:padding="4dp"
+            android:text="This is a notification text"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

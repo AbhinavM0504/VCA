@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- When focused - A vibrant blue -->
+    <item android:state_focused="true"
+        android:color="#2196F3"/>
+
+    <!-- When hovered - A slightly different shade of blue -->
+    <item android:state_hovered="true"
+        android:color="#1976D2"/>
+
+    <!-- When disabled - A light gray with slight blue tint -->
+    <item android:state_enabled="false"
+        android:color="#BBDEFB"/>
+
+    <!-- Default state - A medium gray with blue undertone -->
+    <item android:color="#90CAF9"/>
+</selector>

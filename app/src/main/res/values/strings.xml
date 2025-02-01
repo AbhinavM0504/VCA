@@ -1,0 +1,371 @@
+<resources>
+    <string name="app_name"> </string>
+    <string name="point_1">1. Information furnished by me in above application is true and correct to the best of my knowledge and belief. In case any information given in this application proves to be false or incorrect, I shall be responsible for the consequences.</string>
+    <string name="point_2">2. Any document uploaded is found to be fake/ fabricated, my candidature can be rejected at any point of time.</string>
+    <string name="point_3">3. All the information furnished, redirect and use in all the statutory nomination forms and formats, such as Form-11, ESIC enrolment form, Form G, Joining form. And V-work Agreement, NDA/ FTA etc. are true and correct to the best of my knowledge.</string>
+    <string name="pf_details"><u><b>Provident Fund Details</b></u></string>
+    <string name="emergency_details"><u><b>Emergency Contact Details</b></u></string>
+    <string name="hereby_text">I hereby nominate the person / person’s mentioned below to receive any amount due to me from the employer, in the event to my death.</string>
+    <string name="pf_text_1">THE EMPLOYEES’ PROVIDENT FUNDS SCHEME, 1952 (Paragraph 34)\nAND\nTHE EMPLOYEES’ PENSION SCHEME, 1995 (Paragraph 24)\nDeclaration by a person taking up employment in an establishment in which the Employees’ Provident Funds and Employees’ Pension Scheme enforce</string>
+    <string name="c_text">I <b>have / have not*</b> withdrawn the amount of my Provident Fund/Pension Fund.</string>
+    <string name="d_text">I <b>have / have not*</b> drawn any superannuation benefits in respect of my past service from any employer.</string>
+    <string name="e_text">I <b>have / have never*</b> been a member of any Provident Fund and/or Pension Fund.</string>
+    <string name="f_text">I am <b>drawing / not drawing*</b> Pension under EPS 95.</string>
+    <string name="g_text">I am a <b>holder / not holder*</b> of scheme Certificate.</string>
+    <string name="h_text">Scheme certificate <b>surrendered / not surrendered*</b>.</string>
+    <string name="form_g_text"><b>FORM G</b>\n<br />[See sub-rule (3) of rule 6]\n<br /><br /><b>Fresh Nomination</b></string>
+    <string name="form_g_text_2">To,<br />\nBubugao Communication Pvt. Ltd.,<br />\nTorus 340, Metro Pillar no. 93, Near Sanjeevni Hospital, New Sanganer road<br />\nJaipur ( Rajasthan)- 302019<br />
+    </string>
+    <string name="text_2">I hereby certify the person(s) nominated is a/are member(s) of my family within the meaning of clause (h) of section 2 of the said Act.</string>
+    <string name="text_3a">I hereby certify the person(s) nominated is a/are member(s) of my family within the meaning of clause (h) of section 2 of the said Act.</string>
+    <string name="text_3b">I hereby certify the person(s) nominated is a/are member(s) of my family within the meaning of clause (h) of section 2 of the said Act.</string>
+    <string name="text_4">I have excluded my husband from my family by a notice dated the to the controlling authority in terms of the proviso to clause (h) of section 2 of the said Act.</string>
+    <string name="manner_acquring_text"><b>Manner of acquiring a family</b>\n
+        <br>
+            [Here give details as to how a family was acquired, i.e., whether by marriage or parents being rendered dependent or through other process like adoption\n
+        </br>
+        <!--<br>
+            <b>Statement</b>
+        </br>-->
+    </string>
+
+    <string name="active_status">Active</string>
+    <string name="manager_role">Department Manager</string>
+    <string name="action_call">Call</string>
+    <string name="action_email">Email</string>
+    <string name="action_message">Message</string>
+    <string name="error_loading_image">Error loading image</string>
+    <string name="no_images_available">No images available</string>
+
+    <string name="error_invalid_image">Invalid image</string>
+    <string name="error_loading_album">Error loading album</string>
+    <string name="error_showing_image">Error showing image</string>
+    <string name="default_album_name">Album</string>
+    <string name="privacy_text_1">Last updated: January 1, 2021\n\n<br />Vivo Mobile India Private Limited(hereinafter referred to as "we", or "us"), whose registered address is at 10th and
+        11th Floor, Emaar Palm Springs Plaza, Golf Course Road, DLF Phase 5, Sector 54, Gurugram, Haryana 122003，is the
+        provider of the Office System (including vchat, VRS, v-work, vCollege and other software or services designed for
+        work purpose, hereinafter referred to as the "Service"), we care about your privacy and think it important that you
+        know why and how we process your data in accordance with the applicable data protection laws. In these Privacy Terms
+        for vivo Office System (the "Terms"), we therefore explain the following content:\n\n<br />1.     <b>Collection and Processing</b>: the type of data, how and for what purpose it is collected, and the legal basis for data processing;\n<br />2.     <b>Storage</b>: how long we store your data;\n<br />3.     <b>Sharing and Transfer</b>: if we share or transfer your data;\n<br />4.     <b>Your Rights</b>: your rights with respect to the processing;\n<br />5.     <b>Contact Us</b>: how you can contact us with any further questions.\n\n<br />PLEASE BE AWARE THAT THE SERVICE IS DESIGNED AND PROVIDED FOR WORK PURPOSES ONLY, YOU SHALL KEEP THE SERVICE CONTENT CONFIDENTIAL AND DO NOT USE IT FOR OTHER PURPOSES.
+    </string>
+    <string name="collection_processing_text_1">What data we collect:\n<br />      Personal information: name, gender, birthday, marital status, Aadhaar number, country and region\n<br />      Contact information: phone number, work e-mail, emergency contact details and physical address\n<br />      Job and education information: department, position, EMP code, date of join and education background\n<br />      Financial information: PAN number, IFSC Code and bank account\n<br />      Device information: IMEI, OAID, device model, operating system information and software version\n<br />      Usage information: your usage data of the Service, uploaded pictures or screenshots, instant message content<br />
+    </string>
+    <string name="collection_processing_text_2">Purpose:\n<br />      Register an account for you to use the Service for job training or other work obligations\n<br />      Help you to communicate with other colleagues\n<br />      For customer maintenance and management of distribution or inventory\n<br />      Display your personal information and contact you\n<br />      Authenticate your device and solve the problem you encountered in use\n<br />      Monitor your use of the Service, ensuring the information security and confidentiality<br />
+    </string>
+    <string name="collection_processing_text_3">Legal Basis:\n<br />We process the data on the basis of our legitimate interests: for example, for unobstructed provision of the Service and protecting against improper use of the Service, or against unauthorized disclosure of our confidential information. However, other legal basis may be applicable as may be permitted by applicable laws, where such processing is necessary for us to carry out our obligations under our contract with you, or where such processing is necessary for us to carry out our legal obligations.\n\n<br />
+        Security:\n<br />We care about protecting your personal data. We have put in place appropriate security measures, including but not limited to encryption and anonymization techniques, which are designed to protect your personal data from unauthorized use, damage, or loss. We will do our best to protect your personal data. If you suspect any unauthorized use, damage, or loss of your personal data, please let us know immediately using the contact details set out below.<br />
+    </string>
+    <string name="storage_text_1">Period:\n<br />We will retain your personal data for 6 months from the date you accomplish all your work obligations.\n<br />Location:\n<br />To provide the same level of data protection as that of the user country or region and respond to user requests more efficiently, the location where data is stored varies for users in different countries or regions. Please refer to the <b>Storage and International Transfer</b> section in our Privacy Policy to find out where your personal data is stored.<br />
+    </string>
+    <string name="sharing_text_1">We will either process your data ourselves or by use of our affiliated companies. Since the message service is provided by SOLUTIONS INFINI TECHNOLOGIES (INDIA) PRIVATE LIMITED, we will share them the phone number and the message content to be sent to you, we have signed data protection agreements with above service providers and they will provide protection for your data no less than our level.\n<br />Since we operate internationally, your personal data may be processed in different countries/regions. If we transfer your personal data to another country/region that may not maintain appropriate data protection standards, we will take all reasonable measures to make sure your personal data is processed safely and as stipulated within these Terms.
+    </string>
+    <string name="your_rights_text_1">You have various rights with respect to the data which we hold about you.\n<br />Management Rights:\n<br />To exercise your data subject rights (such as rectification, erasure, restriction of processing, objection or data portability, depending on applicable data protection laws), please use the contact details set out below.\n<br />Complaint:\n<br />You have the right to lodge a complaint with a supervisory authority.<br />
+    </string>
+    <string name="contact_text_1">If you have any questions about these Terms or our processing of your personal data, if you need to report a problem or contact our Data Protection Officer, or if you would like to exercise one of your rights under data protection and privacy laws, you can contact us using the contact details below. We will seek to deal with your request without undue delay, and in any event within any time limits provided for in applicable data protection laws.\n\n<br />Email: privacy@vivo.com\n\n<br />These Terms may be updated from time to time. We will notify you via an appropriate method of any significant changes. All the practices mentioned in these Terms will be performed in accordance with our Privacy Policy, from which you may also find more details about our practices. You may find our latest Privacy Policy at <i>https://www.vivo.com/in/about-vivo/privacy-policy</i>.
+    </string>
+    <string name="disclosure_text_1">This Employee Non-Disclosure Agreement (hereinafter referred to as “Agreement”) has been entered into on this 20 day of Jan , 2020 at Jaipur.\n\n<br />Between\n\n<br /><b>Employer: Bubugao Communication Private Limited</b>, having its registered office at Taurus 340, Metro Pillar No-93, Opp. Sanjvani Hospital, New Sanganer, Road, Jaipur- 302019, Rajasthan, India (hereinafter referred to as the <b>“Party-A”/ “Company”</b>\n\n<br />And\n<br />
+    </string>
+    <string name="disclosure_text_2">\nParty-A and Party-B shall collectively be referred to as “Parties” and individually as “Party”.\n\n<br /><b>Whereas</b>, Party-B is associated and employed by Party-A and due to such association or employment Party- B has received, informed and conceived and/or will receive or know about some or important Policies, Processes, strategic and development plans, design, trade secrets, market opportunities, data, inventions, concepts and any other technical and/or commercial information of Party-A business and Plan through training, meeting, and so on (collectively called as <b>“Confidential Information”</b> and more specifically described hereunder). In order to regulate the rights and obligations of both parties, ensure the safety of Party-A Business strategy, Plan or confidential information, to protect the legitimate rights and interests of Party-A from illegal violation, its safeguard and promote the healthier and for longer development and sustainment of Party-A, according to the laws and regulations of India, in line with the principle of equality, voluntariness, fairness and integrity, both parties agree to execute this Agreement qua confidentiality obligations of Party-B towards Party-A. The terms of the Agreement are as follows:\n\n<br />1.    <b>Scope</b>: - Party-B hereby warrants and confirms that he/she has amicably concluded the erstwhile employment contract with the employer according to the laws or applicable contractual terms, and hence there is no labor and personnel dispute or any such kind other dispute subsisting. However, if any loss or damages is/are caused to the erstwhile employer due to or in relation to Party-B, then Party-B shall assume all legal responsibility and consequences for compensation, settlement or such arrangement on his/her own sole responsibility, and Party-A shall not be involved in any manner whatsoever.\n\n<br />2.    <b>Tenure</b>: - The term of employment referred to in this Agreement shall mean the period from the date when Party-B reports for work in Party-A official premise till the date of Party-B resignation form its services of the company including its notice period. The resignation mentioned in this Agreement shall be subject to the formal termination or expiration or due to any such reason of the employment contract between the parties.\n\n<br />
+    </string>
+    <string name="disclosure_text_3">3.    <b>Definition and Scope of Confidential Information</b>: "Confidential Information" uniformly refers to all business information related to Party-A business which is not in public domain and exclusively owned by Party- A, or which is subsequently developed, formed and got to known by Party-B during the employment of Party-B. For the avoidance of doubt confidential information includes but not limited to, software, programs, data, processes, designs, patents, know-how, samples, drawings, proprietary technology, flow, methods, relating to research, development, products, services, customers and market, and any or all commercial information, financial information, production data, meeting information and documents, such as client lists, contracts, prices, costs, research reports, forecasts and estimates, statements, business plans, trade secrets, business model, corporate resolution, Agreement and technical specification. Confidential information also includes information that is identified as confidential or proprietary in writing and information which are either orally identified as confidential or proprietary. Further, Confidential information has been categorized into three heads i.e. (A) Top Secret, (B) Confidential and © Secret. Party-A may adjust or supplement the confidential information and the corresponding confidential information classification according to the actual situation from time to time which shall be biding upon Party-B.\n\n<br />The inclusive definition of the classification is described below:\n\n<br />(A) <b>Top secret (Level-A)</b>:\n\n<br />It refers to the matters that have a significant interest relationship with the Party-A Sales operation, and once disclosed or divulged unauthorized, the security and interests of Party-A will be seriously damaged, and the original files/information only shared among Grade A/B, hence includes but not limited to:\n\n<br />•    Sales Operation: The company / Party-A overall development plan, business strategy, Monthly/Quarterly/Yearly Business Plan, Product strategy, Sales and market information/Analysis reports, or any content related to sales data, contract or Agreement documents with its external MD, retailers or any other third party.\n\n<br />•    Financial information: company/ Party-A share, asset composition, investment situation, turnover, cost, expense, profit/gross profit rate, annual/quarterly financial statement and other financial information.\n\n<br />•    Product: Information and specification like initial launch quantity and volume or key product configuration, main selling feature, cost/price, promotion strategy, prototype before launch event or during any negotiation prior to making it public.\n\n<br />•    Any document or resolution or internal working documentation/Process/Policy during the course of major company-level (Grade A/B/C) meetings (such as annual meeting, quarterly business review meeting,) etc.\n\n<br />
+    </string>
+    <string name="disclosure_text_3b">(B) <b>Confidential (Level-B)</b>:\n\n<br />It refers to the matters that have an important interest relationship with the Party-A operation, and once disclosed or divulged unauthorized, the security and interests of Party-A will be seriously damaged, and the original files/information only shared among Grade A/B/C/D, including but not limited to:\n\n<br />•    Finance and seal: It means the Party-A/company official seal and stamp, special financial stamp, contract seal and stamp, safe password, monthly/quarterly/annual financial budget and final accounts report and various financial and statistical statements, etc.\n\n<br />•    Personnel and salary: It means and include important personnel adjustment and arrangement of the Party-A/company that have not been determined, evaluation of important personnel of the company, salary policy of Party-A/ company, and, salary and bonus of the personnel, etc.\n\n<br />•    Product: It means and include all Undisclosed technical data and production stages of various products, including new product marketing plan, promotion plan, training materials, channel pricing adjustment information, etc.\n\n<br />•    Quality: It means and include information about major quality accidents, customer complaints, and any information relating to product customer care reports/information/analysis/summary files, etc.\n\n<br />•    Information of external parties: It means and include business information between suppliers, MD, retailers and our company, including but not limited to contracts, orders, quotations, Agreements, client contact information, user identity and location information.\n\n<br />•    Commercial inspection, customs declaration and other relevant information.\n\n<br />•    Other various rules, regulations and procedures issued by Party-A, from time to time.\n\n<br />(C) <b>Secret (Level-C)</b>:\n\n<br />It refers to the matters that have a greater interest relationship with the Party-A operation, and once disclosed and divulged unauthorized, the security and interests of Party-A will be damaged, and the original files/information only shared among Grade A/B/C/D/E/F or all staff only, including but not limited to:\n\n<br />•    Production/Delivery: It means and includes production planning and arrangement, delivery arrangement, production plan, logistic status/data, etc.\n\n<br />•    Investigation of the company in the violation of laws, rules, regulation and disciplinary proceedings of the related or responsible persons.\n\n<br />•    The contact information, company contacts list and other information of important personnel (including but not limited to Grade A/B/C/D) of Party-A which shall not be disclosed or divulged unauthorized to irrelevant third parties.\n\n<br />•    Organization structure of the company and each department. Level &amp; Grade Policy, or others exclusive policies/processes of the company.\n\n<br />•    IT related secret information, including but not limited to: server/cloud disk/email/HRMS system/PMS system/Ding talk platform administrative user/password, etc.\n\n<br />
+    </string>
+    <string name="disclosure_text_3.1">3.1 <b>Confidentiality</b>, Party-B shall abide by Party-A\'s confidentiality system, keep all trade secrets or confidential information of Party-A, and shall strictly perform the following obligations:\n\n<br />3.1.A    Party-B warrants that he/she will only use the Party-A/company\'s confidential information within the scope of its own designated responsibility and shall not use Party-A\'s confidential information for purposes unrelated or irrelevant to his/her own work. It is unequivocally agreed by Party-B that without the prior written permission of Party-A, Party-B shall not disclose or divulge, be it intentionally or unintentionally, the confidential information of Party-A to any third party (including but not limited to other employees of Party-A and third parties other than Party- A who have access to the relevant confidential information) in written, oral, letter, document, E- mail or in any other form.\n\n<br />3.1.B    After joining the employment or entering the premises of Party-A, Party-B shall all time strictly abide by Party-A\'s Information Confidentiality Management System and other rules and regulations relating to information security.\n\n<br />3.1.C    Party-B shall have the obligation to prevent and prohibit the disclosure of Party-A\'s confidential information while using Party-A\'s or his/her personal computer system or equipment after joining the employment or entering the Party-A/company\'s premises. At the same time, Party-B shall accept the operation and management of Party-A\'s computer monitoring system. Party-A shall have the right to review and monitor Party-B\'s computer operation and computer system provided by Party-A, at any time without notifying Party-B in advance, according to this Non-Disclosure Agreement.\n\n<br />3.1.D    Party-B shall have the obligation to properly keep and maintain all carriers recording confidential information of Party-A (including but not limited to paper documents, pictures, soft disks, hard disks, USB sticks, CD, E-mail boxes and other carriers with data storage functions). Without the prior written permission of Party-A, Party-B shall not copy, print, fax or otherwise hold or keep the confidential information hereunder, and shall not take the confidential information carrier away using his/her position without prior written permission.\n\n<br />3.1.E    Party-B hereby agrees that, upon its employment termination/ retirement/conclusion, he/she need to compulsorily return any Party-A\'s Confidential or proprietary media device, recording, data, notes, reports, proposals, listing, letter, written materials, specifications, drawings, blueprints, draft, equipment, documents or other property, and for each of the foregoing, the copies as well to Party-A, or otherwise destroy such things according to Party-A\'s direction.\n\n<br />3.1.F    Party-B undertakes that during his/her term of employment at Party-A, he/she shall not hold any position in other enterprises, institutions or social organizations that produce or operate similar products or provide similar services to any third party without prior consent of Party-A, such third party may include but not limited to shareholders, partners, directors, managers, employees, agents, consultants. During his/her term of employment and after his/her resignation,\n\n<br />3.1.G    Party-B shall not compete for Party-A\'s clients, nor shall he/she employ, attempt to employ or assist any other person or organization to induce other employees of Party-A to leave, nor shall he/she damage Party-A\'s legitimate rights and interests in any manner whatsoever.\n\n<br />
+    </string>
+    <string name="disclosure_text_3.1.h">3.1.H    Party-B shall, for One year after his/her resignation, continue to keep confidential information or technical secrets and other confidential information of Party-A and any third Party who has business relations with Party-A, which he/she knows during employment at Party-A, and shall undertake the same confidentiality obligation, like during his/her employment at Party-A, regardless of the reason for resignation.\n\n<br />3.1.I    Special confidentiality obligation of key position: (key position: refers to the position involved in the work with access or in custody with top-secret information, like as MIS/IT./HR.)\n\n<br />3.2 During the term of employment, if Party-B takes up a key position, he/she shall abide by the following special confidentiality obligation:\n\n<br />3.2.A    Record his/her relatives with business relationship: Party-B shall complete the record keeping of the business relationship of his/her relatives.\n\n<br />3.2.B    If a close relative of Party-B takes up a job in an enterprise directly competing with Party-A, Party-B shall feedback the relevant information to Party-A and cooperate with the HR Dept of Party-A to make a record of the related business relationship.\n\n<br />3.2.C    The close relatives of Party-B refer to Party-B\'s parents, spouse, children and siblings.\n\n<br />3.2.D    Party-B shall keep in mind his/her responsibilities and strengthen confidentiality awareness.\n\n<br />3.2.E    Party-B shall strictly observe the safety of the usage, storage, protection, delivery and transmission of the confidential information within the scope of its duties and responsibilities, and shall not disclose any confidential information.\n\n<br />3.2.F    During the term of employment with Party-A, Party-B shall learn and memorize the company\'s confidentiality system, procedures, standards and other relevant requirements, and perform the duties of confidentiality.\n\n<br />3.2.G    Party-B shall ensure and maintain the safety of the use of the top-secret carriers. Party-B shall keep top-secret carriers in good condition before leaving the employment with Party-A and shall not place it in the environment that has possibility of disclosure randomly.\n\n<br />3.2.H    Party-B shall ensure the safety of the confidential information during the process of communication:\n\n<br />3.2.I    Party-B shall pay attention towards the communication strategy when it communicates through telephone or email and if only communicate through telephone, such communication should be with proper security and under the strategy of maintaining the confidentiality of the information.\n\n<br />3.2.J    Party-B shall observe the network security system while communicating through the network and shall not communicate through the insecure network. Further,\n\n<br />3.2.K    Party-B shall not communicate any data or information related to the company through whatsapp, wechat, dingtalk and other instant messaging tools to any person or organization outside Bubugao.\n\n<br />3.2.L    Party-B shall not send any information through their private mail accounts.\n\n<br />3.2.M    Party-B shall ensure that all members involved in the meeting are the personnel authorized to access the top-secret information when he/she releases the top-secret information in the meeting.\n\n<br />3.2.N    Party-B shall not transfer any top-secret information on a carrier which is not safe to use.\n\n<br />
+    </string>
+    <string name="disclosure_text_3.2.o">3.2.O    If Party-B is fully responsible and accountable for the protection of the top-secret information carriers, he/she shall, in accordance with the relevant regulations of the company, properly keep the top-secret information carriers at the designated security premises.\n\n<br />3.2.P    If Party-B occupies the position of a responsible person of the department, including but not limited to head of department, the head of the Zone, project manager and such others duties performer, Party-B shall exercise vigilantly the confidentiality management and restraint or restrict their subordinates to disclosure of Party-A\'s confidential information in any manner without prior written permission.\n\n<br />4.    <b>Ownership of Intellectual Property</b>: - The term of employment referred to in this Agreement shall mean the period from the date when Party-B reports for work in Party-A official premise till the date of Party-B\’s resignation form its services of the company including its notice period. The resignation mentioned in this Agreement shall be subject to the formal termination or expiration or due to any such reason of the employment contract between the parties.\n\n<br />4.A    During the term of employment by Party-B with Party-A, the intellectual property rights (IPR) including trade name or trade secrets etc weather registered or not shall belong to Party-A in respect of any invention, software, technical materials of research and development, or the confidential information, which are developed by Party-B using or taking advantage of Party- A\'s physical and technical conditions, business information, and so on during its association with Party-A towards performing its duties. Party-A may, in its sole discretion, exercise the right to use such inventions, software, technical materials of research and development or other confidential information related to production, marketing which has been developed by Party- B during association with Party-A. It is also understood and accepted by Party-B, even such IPR has been registered in its name, Party-A reserve its right to use and exploit the same commercially without paying any royalty. Party-B shall not disclose the information of the intellectual property right, including but not limited to the information of the application, progress, content, and technical background, to the third Party in written, oral, letter or any other form, before the final grant of such right.\n\n<br />4.B    When performing his/her duties for Party-A, Party-B shall not use any technical secret or other confidential business information which belongs to others without authorization, nor he/she shall commit any act that may infringe intellectual property rights of others without authorization. If Party-B violates the above provisions and Party-A is accused of such infringement by that third Party, then Party-B shall bear all the costs and consequences which is paid or taken care by Party- A in response to the lawsuit or such infringement action. Therefore, Party-A reserve its right to claim compensation from Party-B during the adjudication or disposal such infringement action.\n\n<br />4.C    It is specifically agreed by the Party-B that after resignation, Party-B shall not obtain or apply to obtain any intellectual property rights on any confidential information or IPR developed by him during its employment with Party-A and if it is so done by Party-B, it shall be deemed to violation of the provisions of this Non-Disclosure Agreement, and shall assume the breaching liability, and Party-A reserve its right to retrieve such intellectual property right from Party-B.\n\n<br />4.D    After the period of employment or services “Party B” is specifically instructed, not to use the organization candidature in against to his/her title which attracts his/her association with organization. furthermore, it includes Company Logo, Uniform, ID card, Previous Employee Code, Previous Employee Designation etc. direct or indirect relationship with organization. This caused, forced to “Party A” initiate the severe action against to individual or Cause.\n\n<br />
+    </string>
+    <string name="disclosure_text_5">5.    <b>Liability</b>:\n\n<br />5.A    Party-B is willing and undertakes to comply with Party-A\'s Information Confidentiality Management System, which is Annexed to this Agreement. If Party-B breaches the Agreement or the provisions of the said System, Party-B agrees to accept Party-A\'s decision and disposal procedure according to this Agreement or per the provisions of the System.\n\n<br />5.B    Party-B\'s breach of Agreement shall be dealt with Party-A in accordance with the provisions of Information Confidentiality Management System or this Agreement or per the law available for the time being in force, however, in the event that Party-B\'s breach has not caused severe consequences or heavy economic losses to Party-A, other amicable remedial measures shall take place according to the discretion of Party-A.\n\n<br />5.C    If Party-B is found to be in violation of this Agreement or intends or is negligent and disclose the confidential information of the company/ Party- with prior authority, or otherwise violates the provisions of the relevant confidentiality system by stealing, spying, receiving, or illegally providing the company\'s confidential information, or uses its position in the company to force other employee to violate the provisions of this non-disclosure Agreement or confidential information system, resulting in severe consequences or heavy economic losses and damages to Party-A, Party-B undertake to pay Party-A liquidated damages for such breach of contract with a cost to the extent of Rupees 100,000 (Rupees One Lakh only). In the event of above occurrence, Party-A reserve its right to lodge complaint for such grave violation of this Agreement with the appropriate authorities in accordance with the law.\n\n<br />5.D    However, if liquidated damages for breach of contract are not sufficient to cover the loss of Party- A, Party-B shall pay the said liquidated damages for breach of contract to Party-A and compensate for the loss caused to Party-A.\n\n<br />5.E    Disputes arising out of this Agreement between the parties, shall be settled through consultation first. If a settlement is not reached through consultation, it may be settled by way of litigation and shall be governed by the court in which Party-A resides/ situated or registered. The winning Party shall be entitled to recover from the other Party reasonable and necessary costs, including the attorney fees for such litigation or negotiation proceedings.\n\n<br />5.F    Failure by either Party to strictly perform any provision of this Agreement shall not be deemed as a waiver. Both parties after the occurrence of any disputes, shall continue to exercise their other rights in this Agreement and perform their other obligations under this Agreement, except for the matters are in dispute.\n\n<br />5.G    The "severe consequences" referred to in this article shall mean the severe adverse consequences caused to Party-A by disturbing Party-A\'s management order, damaging Party-A\'s goodwill, and so on. The "heavy economic losses" referred to in this article shall mean the economic loss of Rupees 1,00,000 (Rupees One Lakh) or more caused to Party-A.\n\n<br />
+    </string>
+    <string name="disclosure_text_6">6.    Matters not covered herein shall be negotiated by both parties and a written supplementary Agreement shall be signed from time to time, if required which shall have the same legal effect under this Agreement. After the signing of this Agreement, the relevant provisions of this Agreement may be modified or supplemented upon consensus reached by the parties, provided that such modification or supplementary shall be confirmed in writing. The aforesaid documents shall have same legal effect and become an integral part of this Agreement once signed by the parties.\n\n<br />7.    This Non-Disclosure Agreement shall be valid from the date of signing by both parties and shall expire Five years after the termination of the employment contract between both parties.\n\n<br />8.    Both parties hereby confirm that they have carefully reviewed the contents of this Agreement before signing this Agreement and fully understand the legal implications of all terms hereof. This Agreement shall come into force upon being signed or sealed by both parties.\n\n<br />9.    Termination of Employment – Hereinafter, If Party B (Employee) found guilt during the tenure or anytime of his/her services refer to submitted any fake information about his/her previous employment, document or any other information about candidature will be caused to taken strict action by Party A(Employer) including termination of employment contract or termination of employee services.\n\n<br /><b>IN WITNESS WHEREOF</b>, the parties hereto have caused this Agreement to be executed as of the date first written above their duly authorized representatives.\n\n<br />
+    </string>
+    <string name="declaration_form"><big><b>Declaration Form</b></big>\n\n\n<br /><small>To be filled by employee after reading instruction overleaf. Two Passport Size photographs to be attached with the form. This form is free of cost.</small></string>
+    <string name="instruction_text_1">Submission of Form-1 is governed by regulation 11 &amp; 12 of ESI (General) Regulations, 1950</string>
+    <string name="instruction_text_2">"Family" means all or any of the following relatives of an Insured Person namely:-\n<br />(i) a spouse (ii) a minor legitimate or adopted child dependent upon the I.P.; (iii) a child who is wholly dependent on the earnings of the I.P. and who is (a) receiving education, till he or she attains the age of 21 years (b) an unmarried daughter; (iv) a child who is infirm by reason of any physical or mental abnormality or injury and is wholly dependent on the earnings of the I.P. so longas the infirmity continues; (v) dependent parents (Please see Section 2 clause 11 of the ESI Act 1948 for details.</string>
+    <string name="instruction_text_3">Identity Card is Non-Transferable.</string>
+    <string name="instruction_text_4">Loss of Identity Card be reported to Employer/Branch Manager immediately.</string>
+    <string name="instruction_text_5">Submission of false information attracts penal action Under Section 84 of ESI Act. 1948.</string>
+    <string name="instruction_text_6">This form duly filled in must reach the concerned Branch Office within 10 days of appointment of an Employee. Delay attracts penal action under Section 85 of the Act, against employer.</string>
+    <string name="instruction_text_7">TAs an insured person you and your dependent family members are entitled to full medical care. The other benefits in cash include (1) Sickness Benefit (2) Temporary Disablement benefit (3) Permanent disablement Benefit (4) Dependants benefit and (5) Maternity Benefit (in case of woman employees) subject of fulfillment of contributory conditions.</string>
+    <string name="instruction_text_8">For more details please contact website of ESIC at www. esic.org. in. or contact Regional Office or Branch Office.</string>
+    <string name="fta_text_2">With reference to your application and the subsequent interview held with us, we are pleased to offer you an appointment for the post of VBA (vivo Brand Advisor) at different retail shops of Rajasthan as per the company need &amp; business plans on the following terms and conditions:\n<br /></string>
+    <string name="fta_point_1">Your employment will be for a fixed period of One Year from ____ to _____. This Fixed Term Appointment neither creates any right of employment nor any preference in the employment and at the end of term, your services will automatically stand terminated..</string>
+    <string name="fta_point_2">You will be paid consolidated Gross Salary ____ per month as per the VBA Salary Slab applicable at the organisation under your capacity of role and designation. Statutory &amp; Compliance norms as applicable under the employment conditions.</string>
+    <string name="fta_point_3">As per the evaluation of your performance for existing FTA period i.e. last 12 months, if your performance will be found extra ordinary, company may award you an extension as per the recommendation of VBA Service Dept. Consequently, your next FTA period &amp; salary will be considered based on VBA Salary Policy &amp; Standards.</string>
+    <string name="fta_point_4">You are aware that the company has the process of brand promotion activities at different retail outlets, accordingly, you can be transferred in any of the retail outlet in Rajasthan, irrespective of the location or city e.g. Urban or UPC areas whereas the company has taken the assignment of brand promotion jobs anywhere in Rajasthan.</string>
+    <string name="fta_point_5"><b>Deputation</b> will be awarded as per “Employee Transfer Policy” of the company if required.</string>
+    <string name="company_name">For <b>Bubugao Communication Pvt. Ltd</b></string>
+    <string name="fta_t_and_c_text">TERMS &amp; CONDITION OF EMPLOYMENT \n– FIXED TERMS EMPLOYEES</string>
+    <string name="t_and_c_text_1"><b>Fixed Period Employment</b>: Your employment with <b>Bubugao Communication Pvt. Ltd.</b> shall be period for the 1 year and shall cease on completion of the period stated above. Renewal of your fixed term of appointment will be purely based on your performance and subsequent of recommendation of your Reporting Manager as well as the need of the organisation. Since the appointment is being made for a specific period and purpose there shall not be any right or a lien on the job and you will not be eligible to claim regular employment even if such a vacancy exists for the post held by you or otherwise. In case of termination of services before completion of fix period, the management will be liable to pay only notice period if applicable. Management is not liable to pay any compensation or wages/salary for the remaining employment period and no Layoff/Retrenchment compensation will be payable.</string>
+    <string name="t_and_c_text_2"><b>Notice Period</b>: Either party can terminate this employment by serving “Notice Period” of 10(ten) days or by paying 10(ten) days gross salary in lieu thereof. In case of short fall in notice period, the organisation may permit recovery from the dues against notice period. Similarly, Bubugao Communication Pvt. Ltd. reserves the right to pay wages/salary as applicable in lieu of Notice Period on termination of fixed term employment.</string>
+    <string name="t_and_c_text_3"><b>Termination/Separation</b>: Organisation expects you to work at the outlet in which you are placed with a high standard of initiative and efficiency. If found guilty of any criminal offence, irregular attendance, or continued absence without information, your services are liable to be terminated.</string>
+    <string name="t_and_c_text_A"><b>Major Misconduct</b>: Since this employment is only for a specific fixed term, hence the Company may terminate your services with immediate effect, if you will be found guilty of any major misconduct mentioned in the “<b>Model Standing Orders</b>” based on <b>Rajasthan Industrial Employment (Standing Orders Rules, 1963) and Company\’s Exit &amp; Resignation Policy</b>.</string>
+    <string name="t_and_c_text_B"><b>Performance</b>: If your performance is found to be consistently below the acceptable performance level for a period of continuous 2 months or more, then the company reserves the right to take disciplinary action against you; because it will be considered as the wilful slowing down the performance and undoubtedly it will directly affect the company business. The disciplinary action can be “<b>salary reduction based on VBA salary slab”, “demotion” or “termination”</b> of your services. Demotion may involve the change in designation or department and decrease in allowances if any.</string>
+    <string name="t_and_c_text_C"><b>Training Results</b>: The Company will make sufficient investments on improving your performance in terms of mentoring and training. But, if after training/s, your performance is not improving or your training test results are not as per the desired company business needs then it will be considered as an unnecessary cost and time loss to the company. Therefore, company may take necessary disciplinary action against you which can be the immediate termination of fixed term appointment too. The primary disciplinary action can be deduction or impose financial penalty as per related company policy.</string>
+    <string name="t_and_c_text_D"><b>Assignments/Deputation/Transfers</b>: Though you have been engaged for a specific position, Bubugao Communication Pvt. Ltd. reserves the right to send you on training / deputation /secondment/ assignments / transfers to any branch or location/department/post in Rajasthan wherever Company has its operations or may have operations in future.</string>
+    <string name="t_and_c_text_4"><b>Statement of Facts</b>: It must be specifically understood that this Agreement is made based on your proficiency on Technical/Professional skills you have declared to possess as per the application, and on the ability to handle any assignment/job independently anywhere in Rajasthan. In case of any material errors /suppression or any of your statements/particulars furnished are found to be false or misleading at a later date, on your performance is not up to the mark or falls short of the minimum standards set by Company, your appointment will be deemed to be null and void and Company shall have the right to terminate your services forthwith without giving any notice, notwithstanding any other terms and condition stipulated herein.</string>
+    <string name="t_and_c_text_5"><b>Reference/Background Checks</b>: Background verification will be made from your previous employers/reference, in case of having prior experience. If there is any adverse report against you which may be detrimental to the interests of the Company or if the information furnished by you is not true, Company reserves the right to terminate your services forthwith (notwithstanding any other provisions) or the grounds of misrepresentation of facts.</string>
+    <string name="t_and_c_text_6"><b>Address of Communication</b>: Your address as indicated in your application shall be deemed to be correct for sending any communication to you and every communication addressed to you at the given address shall be deemed to have served upon you. You shall also not refuse to accept any communication as offered to you for personal delivery. In case there is any change in your residential address, you will intimate the same in writing to HR Department within 3 days of such change and get the changes recorded.</string>
+    <string name="t_and_c_text_7"><b>Integrity</b>: You shall work honestly with utmost sincerity &amp; maintain high standards of integrity, loyalty and cordial relationship with the Retailer / Partner and other employees of Company. Your duties will include for efficient, satisfactory and economical operation in the area of responsibility that may be assigned to you from time to time. You shall diligently and satisfactory carry out the lawful orders/instructions/directions of the superiors in connection with the work assigned to you to the best of your skill and ability.</string>
+    <string name="t_and_c_text_8"><b>Adherence of Rules Procedures</b>: You will be governed by the Company\’s laid down Rules and Regulations, Policies &amp; Procedures which are in force during your tenure and if there is any breach of the same or non-performance of contractual obligation or the terms and conditions laid down in this agreement, you service could be terminated without any notice notwithstanding any other terms and conditions stipulated herein. Company further reserves the right to invoke other legal remedies as it deems fit to protect its legitimate interests.</string>
+    <string name="t_and_c_text_9"><b>Intellectual Property Rights</b>: Employees shall protect intellectual property rights of (Bubugao Communication Pvt. Ltd.). Intellectual property held by employees if any shall be declared at the time of joining. All intellectual property rights, including but not limited to, patents, copyrights, design, trademarks developed by you during your tenure with (Bubugao Communication Pvt. Ltd.) or using the (Bubugao Communication Pvt. Ltd.) infrastructure, or acquired in performance of or discharging official duties at the Organization shall be the sole and exclusive property of the (Bubugao Communication Pvt. Ltd.) and the same shall be deemed to the “work made for hire”. You shall execute / sign such documents for the purpose of assignment such intellectual property, as and when required by the organisation. (Bubugao Communication Pvt. Ltd.) reserves the right to proceed legally against you and recover damages, where any such intellectual property is sought to be protected by you independently of (Bubugao Communication Pvt. Ltd.)</string>
+    <string name="t_and_c_text_10"><b>Leave &amp; Other Benefits</b>: You will be entitled for Leaves as per Company\’s Leave Policy, based on the terms &amp; conditions mentioned therein. Grant of leave will depend upon the exigencies of work and shall be at the discretion of your Reporting Manager as well as Zone Management.</string>
+    <string name="t_and_c_text_11"><b>Unauthorised Absence</b>: You shall be present at your assigned place of work during normal working hours, or designated shift or during hours expressly designated and communicated to you. If you remain absent from work without prior approval, authorisation or sufficient and reasonable cause for more than <b>eight consecutive days</b>, it will have presumed that you are no longer interested in working with the organisation and have abandoned your service and would make you lose your lien on employment. In such case the organisation will have the tight to terminate your contract of services without, any reference to you and you will not be entitled to any notice or notice pay.</string>
+    <string name="t_and_c_text_12"><b>Medical Fitness</b>: Your continuation in the employment is subject to your being found and remaining medically fit. The management shall have the right to get you medically examined or re-examined at any time by our registered medical practitioner, whose finding will be final and binding.</string>
+    <string name="t_and_c_text_13"><b>Non-Disclosure Agreements</b>: You shall not, at any time, either during the employment, or after leaving the services of the organisation, divulge or disclose either directly or indirectly the trade secret, processes, inventions or any information that we may impart to you or you may acquire in the course of your employment with our organisation. <b>A detailed NDA need to sign along with this FTA</b>.</string>
+    <string name="t_and_c_text_14"><b>Safe custody of Assets</b>: You shall be responsible to ensure safe custody of Company assets, documents and or information in your custody and handover the same to designated person while proceeding on leave / transfer / separation or changing over of the shift (if any), or as specified by the organisation. (Bubugao Communication Pvt. Ltd.) resources shall be put to use only for official purposes.</string>
+    <string name="t_and_c_text_15"><b>Unauthorised Software</b>: You shall not install, download, copy, and duplicate any unauthorised or unlicensed software, programs, games attachments, on to your computer systems and be guided by policy/rules of the Company.</string>
+    <string name="t_and_c_text_16"><b>Conflict of Interest</b>: Your positions with the Company calls for whole time employment and you will devote yourself exclusively to the business of (Bubugao Communication Pvt. Ltd.). You will not take up any other work for remuneration (part time or otherwise) or work on advisory capacity or be interested directly or indirectly in any other trade business, during your employment with the Company without written permission. In case of any related part transaction the employees are to disclose the same and be not part such business decision.</string>
+    <string name="t_and_c_text_17"><b>Confidentiality</b>: You are expected to maintain utmost confidentiality in regard to the affairs of (Bubugao Communication Pvt. Ltd.) and shall keep secured of any information, whether written or oral, which relates to internal controls, computer or data processing programme, techniques or systems, or information concerning the business or financial affairs and method of operation or proposed, trade secrets, know-how, or inventions of (Bubugao Communication Pvt. Ltd.) or its affiliate, or any client, agent, contractor or vendor. You shall not disclose the identities and other related information of any of its clients, breach of this provision shall be treated as gross violation of the terms herein and your services are liable to be terminated without notice.</string>
+    <string name="t_and_c_text_18"><b>Submission of Documents</b>: This offer has been made based on the information furnished by you. However, if there is any discrepancy in the copies of the documents /certificates given by you as a proof in support of the above, (Bubugao Communication Pvt. Ltd.) reserves the right to revoke the offer.</string>
+    <string name="t_and_c_text_19"><b>Restraints</b>:</string>
+    <string name="t_and_c_text_19A"><b>Authorisation</b>: Only those authorised by a specific power of attorney may sign legal document, representing (Bubugao Communication Pvt. Ltd.).</string>
+    <string name="t_and_c_text_19B"><b>Smoking/Alcohol/Drugs</b>: We owe and assure a smoke free environment for our associates. Barring some areas, the entire office premises including conference rooms, lobbies, is declare as “No- Smoking Zone”. Also at the outlet where employees are situated consumption of Alcohol &amp; related drugs are strictly prohibited.</string>
+    <string name="t_and_c_text_19C"><b>Adherence</b>: to safe work place rules &amp; regulations as per Company policy to be ensured.</string>
+    <string name="t_and_c_text_19D"><b>Disputes</b>: Internal grievance redressed mechanism to be followed. All unresolved disputes of whatever nature will be subject to the jurisdiction of the courts at Jaipur, Rajasthan only.</string>
+    <string name="fta_hereby_text">This is to certify that I have gone through and understood all the terms and conditions mentioned in this agreement and I hereby accept and agree to abide by them:</string>
+    <string name="basic_details"><b>Basic Details/व्यक्तिगत विवरण</b></string>
+    <string name="bank_details"><b>Bank Details/बैंक विवरण</b></string>
+    <string name="provident_fund_details_optional"><b>Provident Fund Details(Optional)/भविष्य निधि विवरण</b></string>
+    <string name="company_details"><b>Company Details/कंपनी का विवरण</b></string>
+    <string name="emergency_contact_person_details"><b>Emergency Contact Person Details/आपातकालीन संपर्क व्यक्ति विवरण</b></string>
+    <string name="passport_size_image">Passport Size Image/पासपोर्ट आकार की तस्वीर</string>
+    <string name="employee_sign_image">Employee Sign Image/कर्मचारी हस्ताक्षर तस्वीर</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="add_image">Add Image</string>
+    <string name="aadhar_card_front_image">Aadhar Card Front Image/आधार कार्ड की सामने की तस्वीर</string>
+    <string name="pan_card_image">PAN Card Image/पैन कार्ड</string>
+    <string name="bank_proof_image">Bank Proof Image/बैंक प्रमाण</string>
+    <string name="last_company_experience_letter_image">Last Company Experience Letter Image</string>
+    <string name="pay_slip_experience_letter_image_1">Last Month Pay Slip Image/पिछले महीने की पे स्लिप</string>
+    <string name="pay_slip_experience_letter_image_2">Second Last Month Pay Slip Image/पिछले दूसरे महीने की पे स्लिप</string>
+    <string name="pay_slip_experience_letter_image_3">Third Last Month Pay Slip Image/पिछले तीसरे महीने की पे स्लिप</string>
+    <string name="resign_mail_image">Resign Mail Image/त्याग पत्र</string>
+    <string name="bank_statement_last_3_month_image">Bank Statement Last 3 Month Image/पिछले 3 महीने का बैंक विवरण</string>
+    <string name="vaccine_certificate_image">Vaccine Certificate Image/वैक्सीन प्रमाणपत्र</string>
+    <string name="resume">CV / Resume</string>
+    <string name="declaration_form_11">11. Name and Address of the Employer:\n <u>Bubugao Communication Private Limited</u></string>
+    <string name="declaration_form_12_c">(c). Name and Address of the Employer:\n <u>Bubugao Communication Private Limited</u>\nEmail Address:</string>
+    <string name="add_pdf">Add Pdf</string>
+    <string name="add">Add</string>
+    <string name="upload">Upload</string>
+    <string name="add_more">Add More</string>
+    <string name="save">Save</string>
+    <string name="submit">Submit</string>
+    <string name="employer_code">15000481490001099 (BBG)</string>
+    <string name="pfAText">I was employed in M/s (................................) and left service on (...................) prior to that, I was employed in (..................................) from (...................................) to (...............................)</string>
+    <string name="pfBText">I was member of (...........................................) Provident Fund and also/but not* of the Pension Fund from (Date of joining with immediate previous employer) to (..................) and my account number (s) was/were(........................)</string>
+    <string name="company"><u>Bubugao Communication Private Limited</u></string>
+    <string name="aadhar_card_back_image">Aadhar Card Back Image/आधार कार्ड के पीछे की तस्वीर</string>
+    <string name="last_month_pay_slip_image">Last Month Pay Slip Image</string>
+    <string name="offer_letter">Offer Letter/प्रस्ताव पत्र</string>
+
+    <string name="personal_information">Personal Information</string>
+    <string name="initial">Initial</string>
+    <string name="select_initial">Select initial</string>
+    <string name="enter_father_name"></string>
+    <string name="enter_mother_name"></string>
+    <string name="select_date_of_birth"></string>
+    <string name="gender">Gender</string>
+    <string name="select_gender"></string>
+
+    <!-- Form Titles -->
+
+    <string name="contact_information">Contact Information</string>
+    <string name="additional_information">Additional Information</string>
+    <string name="professional_information">Professional Information</string>
+
+    <!-- Personal Information Fields -->
+
+
+    <!-- Contact Information Fields -->
+
+    <string name="enter_email"></string>
+    <string name="phone">Phone Number</string>
+    <string name="enter_phone"></string>
+
+    <string name="alternate_phone">Alternate Phone</string>
+    <string name="enter_alternate_phone">Enter alternate contact number (optional)</string>
+
+    <!-- Address Information Fields -->
+    <string name="street_address">Street Address</string>
+    <string name="enter_street_address">Enter your street address</string>
+    <string name="address_line1">Address Line 1</string>
+    <string name="enter_address_line1">Enter house/flat number and street</string>
+    <string name="address_line2">Address Line 2</string>
+    <string name="enter_address_line2">Enter area/locality (optional)</string>
+    <string name="city">City</string>
+    <string name="enter_city">Enter your city</string>
+    <string name="state">State</string>
+    <string name="select_state">Select your state</string>
+    <string name="district">District</string>
+    <string name="select_district">Select your district</string>
+    <string name="pincode">Pincode</string>
+    <string name="enter_pincode"></string>
+
+    <!-- Professional Information Fields -->
+    <string name="occupation">Occupation</string>
+    <string name="select_occupation">Select your occupation</string>
+
+    <string name="enter_company_name">Enter your company name</string>
+
+    <string name="enter_designation"></string>
+    <string name="work_experience">Work Experience</string>
+    <string name="enter_work_experience">Enter years of experience</string>
+    <string name="annual_income">Annual Income</string>
+    <string name="enter_annual_income">Enter your annual income</string>
+
+    <!-- Button Labels -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="cancel">Cancel</string>
+
+    <!-- Progress Indicators -->
+    <string name="step_progress">Step %1$d of %2$d</string>
+    <string name="loading">Loading…</string>
+    <string name="please_wait">Please wait…</string>
+
+    <!-- Validation Messages -->
+    <string name="field_required">This field is required</string>
+    <string name="invalid_email">Please enter a valid email address</string>
+    <string name="invalid_phone">Please enter a valid 10-digit mobile number</string>
+    <string name="invalid_pincode">Please enter a valid 6-digit pincode</string>
+    <string name="invalid_name">Please enter a valid name</string>
+    <string name="invalid_date">Please select a valid date</string>
+
+    <!-- Success Messages -->
+    <string name="form_submitted_successfully">Form submitted successfully!</string>
+    <string name="data_saved_successfully">Data saved successfully!</string>
+
+    <!-- Error Messages -->
+    <string name="error_submitting_form">Error submitting form. Please try again.</string>
+    <string name="error_saving_data">Error saving data. Please try again.</string>
+    <string name="error_loading_data">Error loading data. Please try again.</string>
+    <string name="network_error">Network error. Please check your connection.</string>
+
+    <!-- Dialog Messages -->
+    <string name="submitting_form">Submitting form…</string>
+    <string name="confirm_submission">Are you sure you want to submit?</string>
+    <string name="confirm_exit">Are you sure you want to exit?</string>
+    <string name="unsaved_changes">You have unsaved changes. Do you want to save them?</string>
+
+    <!-- Tooltip Messages -->
+    <string name="tap_to_edit">Tap to edit</string>
+    <string name="required_field">Required field</string>
+    <string name="optional_field">Optional field</string>
+
+    <!-- Accessibility Labels -->
+    <string name="navigate_next">Navigate to next step</string>
+    <string name="navigate_previous">Navigate to previous step</string>
+    <string name="clear_field">Clear field</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="select_date">Select date</string>
+
+    <!-- Form Section Headers -->
+
+    <string name="additional_details">Additional Details</string>
+    <string name="documentation">Documentation</string>
+    <string name="review_submit">Review &amp; Submit</string>
+
+    <!-- Placeholder Text -->
+    <string name="placeholder_name">John Doe</string>
+    <string name="placeholder_email">example@email.com</string>
+    <string name="placeholder_phone">9876543210</string>
+    <string name="placeholder_address">123, Main Street</string>
+
+    <!--Hint Labels-->
+    <string name="name">Name/नाम</string>
+    <string name="email">Email/ईमेल</string>
+    <string name="contact_no">Contact No/संपर्क नंबर</string>
+    <string name="father_name">Father Name/पिता का नाम</string>
+    <string name="mother_name">Mother Name/माँ का नाम</string>
+    <string name="joining_date">Joining Date/कार्यग्रहण तिथि</string>
+    <string name="date_of_birth">Date of Birth/जन्म की तारीख</string>
+    <string name="aadhar_number">Aadhar Number/आधार नंबर</string>
+    <string name="pan_number">PAN Number/पैन नंबर</string>
+    <string name="pin_code">PIN Code/पिन कोड</string>
+    <string name="permanent_address">Permanent Address/स्थायी पता</string>
+    <string name="same_as_permanent_address">Same as Current Address/अस्थायी पते के समान</string>
+    <string name="current_address">Current Address/वर्तमान पता</string>
+    <string name="bank_a_c_number">Bank A/C Number/बैंक खाता संख्या</string>
+    <string name="ifsc_code">IFSC Code/आईएफएससी कोड</string>
+    <string name="uan_number">UAN Number/यूएएन नंबर</string>
+    <string name="esic_no">ESIC No/ईएसआईसी संख्या</string>
+    <string name="did_you_work_with_us_in_past">Did you work with us in past?/क्या आपने हमारे साथ अतीत में काम किया था?</string>
+    <string name="department">Department/विभाग</string>
+    <string name="designation">Designation/पद</string>
+    <string name="date_of_joining">Date of Joining/शामिल होने की तिथि</string>
+    <string name="date_of_leaving">Date of Leaving/छोड़ने का दिनांक</string>
+    <string name="do_you_have_any_relation_in_our_company">Do you have any relation in our Company?/क्या आपका हमारी कंपनी में कोई संबंध है?</string>
+    <string name="relation">Relation/रिश्ता</string>
+    <string name="person_name">Person Name/व्यक्ति का नाम</string>
+    <string name="you_are_not_able_to_edit_details_now">You are not able to edit details now/अब आप डिटेल्स को बदल नहीं सकते</string>
+    <string name="school">School/विद्यालय</string>
+    <string name="percentage">Percentage/प्रतिशत</string>
+    <string name="board">Board/तख्ता</string>
+    <string name="year_of_passing">Year Of Passing/उत्तीर्ण होने का वर्ष</string>
+    <string name="course">Course/पाठ्यक्रम</string>
+    <string name="college_name">College Name/कॉलेज का नाम</string>
+    <string name="university">University/विश्वविद्यालय</string>
+    <string name="_10th_details">10th Details/10वां विवरण</string>
+    <string name="_12th_details">12th Details/12वीं विवरण</string>
+    <string name="graduation_details">Graduation Details/ग्रेजुएशन विवरण</string>
+    <string name="post_graduation_details">Post Graduation Details/पोस्ट ग्रेजुएशन विवरण</string>
+    <string name="other_qualification_details">Other Qualification Details/अन्य योग्यता विवरण</string>
+    <string name="father">Father/पिता</string>
+    <string name="nominee_1">Nominee 1/नामांकित व्यक्ति 1</string>
+    <string name="father_dob">Father\'s DOB/पिता की जन्म तिथि</string>
+    <string name="amount_to_be_share">Amount to be Share (%)/शेयर की जाने वाली राशि (%)</string>
+    <string name="nominee_2">Nominee 2/नामांकित व्यक्ति 2</string>
+    <string name="mother">Mother/माता</string>
+    <string name="mother_dob">Mother\'s DOB/माता की जन्म तिथि</string>
+    <string name="nominee_3">Nominee 3/नामांकित व्यक्ति 3</string>
+    <string name="spouse">Spouse/पति या पत्नी</string>
+    <string name="spouse_name">Spouse Name/जीवनसाथी का नाम</string>
+    <string name="spouse_dob">Spouse DOB/जीवनसाथी की जन्म तिथि</string>
+    <string name="nominee_4">Nominee 4/नामांकित व्यक्ति 4</string>
+    <string name="guardian">Guardian/अभिभावक</string>
+    <string name="guardian_name">Guardian Name/अभिभावक का नाम</string>
+    <string name="guardian_dob">Guardian DOB/अभिभावक की जन्म तिथि</string>
+    <string name="nominee_5">Nominee 5/नामांकित व्यक्ति 5</string>
+    <string name="dob">DOB/जन्म तिथि</string>
+    <string name="nominee_6">Nominee 6/नामांकित व्यक्ति 6</string>
+    <string name="children_1">Children 1/संतान 1</string>
+    <string name="children_1_name">Children 1 Name/संतान 1 का नाम</string>
+    <string name="children_1_dob">Children 1 DOB/संतान 1 की जन्म तिथि</string>
+    <string name="nominee_7">Nominee 7/नामांकित व्यक्ति 7</string>
+    <string name="children_2">Children 2/संतान 2</string>
+    <string name="children_2_name">Children 2 Name/संतान 2 का नाम</string>
+    <string name="children_2_dob">Children 2 DOB/संतान 2 की जन्म तिथि</string>
+    <string name="other_documents_optional">Other Documents (Optional)/अन्य दस्तावेज (वैकल्पिक)</string>
+    <string name="enter_name"></string>
+    <string name="blood_group">Blood Group</string>
+    <string name="select_blood_group">Select Blood Group</string>
+    <string name="gender_and_blood">Personal Details</string>
+    <string name="select_gender_and_blood">Select Gender and Blood Group</string>
+    <string name="combined_fields" />
+    <string name="select_fields" />
+    <string name="enter_pin_code"></string>
+    <string name="enter_current_address"> </string>
+    <string name="enter_permanent_address"> </string>
+    <string name="enter_aadhar" />
+    <string name="enter_pan" />
+    <string name="select_date_of_joining" />
+    <string name="company_details_one">Past Details\n</string>
+    <string name="enter_department" />
+    <string name="enter_relation" />
+    <string name="enter_date" />
+    <string name="enter_person_name" />
+    <string name="enter_contact_no" />
+    <string name="select_relation" />
+    <string name="banking_details">Banking Details</string>
+    <string name="enter_esic_number" />
+    <string name="enter_uan_number" />
+    <string name="enter_ifsc_code" />
+    <string name="enter_account_number" />
+
+</resources>

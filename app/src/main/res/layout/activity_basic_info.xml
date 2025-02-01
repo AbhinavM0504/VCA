@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0069e8">
+
+    <!-- Enhanced AppBar with Frosted Glass Effect -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            >
+
+            <TextView
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="24sp"
+                android:fontFamily="@font/poppins_bold"
+                android:letterSpacing="0.03"/>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Main Content with Smooth Scrolling -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="32dp">
+            <!-- Animated Step Indicators with Custom Animation -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="5dp"
+                android:gravity="start">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Left Section: Text and Chip -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="16dp">
+
+                        <!-- Step Title -->
+                        <TextView
+                            android:id="@+id/stepTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Basic Information "
+                            android:textColor="@color/white"
+                            android:textSize="26sp"
+                            android:layout_marginBottom="5dp"
+                            android:fontFamily="@font/gotham_bold"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                        <!-- Step Indicator Chip -->
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/stepIndicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#0056c2"
+                            android:text="Step 1 of 4"
+                            android:textSize="12sp"
+                            android:textColor="#ffffff"
+                            app:chipIconEnabled="true"
+                            app:chipIconTint="#ffffff"
+                            app:chipStrokeWidth="1dp"
+                            app:chipStrokeColor="#00a3ff"
+                            app:iconStartPadding="4dp"
+                            app:iconEndPadding="4dp"
+                            app:textStartPadding="6dp"
+                            app:textEndPadding="6dp"
+                            app:chipCornerRadius="8dp" />
+
+                    </LinearLayout>
+
+                    <!-- Right Section: Icon -->
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_basic_info"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/stepperProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginBottom="24dp"
+                    app:indicatorColor="#FFFFFF"
+                    app:trackCornerRadius="4dp"
+                    app:trackColor="#0056c2" />
+
+            </LinearLayout>
+
+
+            <!-- Form Container with Soft Background -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="520dp"
+                android:background="@drawable/soft_rounded_background"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
+                android:padding="2dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/stepperViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/ic_next_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:padding="0dp"
+               android:layout_gravity="end"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:src="@drawable/ic_swipe"
+                app:tint="@color/white" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

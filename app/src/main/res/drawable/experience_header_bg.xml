@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base background color -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#2196F3" />
+        </shape>
+    </item>
+
+    <!-- Diagonal lines pattern instead of dots -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="45"
+                android:startColor="#11FFFFFF"
+                android:centerColor="#00FFFFFF"
+                android:endColor="#11FFFFFF"
+                android:type="linear"
+                android:centerX="0.5"
+                android:centerY="0.5" />
+        </shape>
+    </item>
+
+    <!-- Geometric shapes for modern look -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="45"
+                android:startColor="#33FFFFFF"
+                android:centerColor="#00FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <!-- Abstract circles -->
+    <item android:right="-100dp" android:top="-100dp">
+        <shape android:shape="oval">
+            <solid android:color="#22FFFFFF" />
+            <size android:width="200dp" android:height="200dp" />
+        </shape>
+    </item>
+
+    <item android:left="-50dp" android:bottom="-50dp">
+        <shape android:shape="oval">
+            <solid android:color="#11FFFFFF" />
+            <size android:width="100dp" android:height="100dp" />
+        </shape>
+    </item>
+</layer-list>

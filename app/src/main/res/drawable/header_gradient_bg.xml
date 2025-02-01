@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base gradient background -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="45"
+                android:startColor="#2196F3"
+                android:centerColor="#1E88E5"
+                android:endColor="#1976D2"
+                android:type="linear" />
+            <corners
+                android:topLeftRadius="16dp"
+                android:topRightRadius="16dp" />
+        </shape>
+    </item>
+
+    <!-- Subtle diagonal pattern overlay -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="135"
+                android:startColor="#15FFFFFF"
+                android:centerColor="#00FFFFFF"
+                android:endColor="#15FFFFFF"
+                android:type="linear" />
+            <corners
+                android:topLeftRadius="16dp"
+                android:topRightRadius="16dp" />
+        </shape>
+    </item>
+
+    <!-- Modern geometric accent -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="45"
+                android:startColor="#22FFFFFF"
+                android:centerColor="#00FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:type="linear" />
+            <corners
+                android:topLeftRadius="16dp"
+                android:topRightRadius="16dp" />
+        </shape>
+    </item>
+
+    <!-- Abstract circle top right -->
+    <item android:right="-80dp" android:top="-80dp">
+        <shape android:shape="oval">
+            <solid android:color="#18FFFFFF" />
+            <size android:width="160dp" android:height="160dp" />
+        </shape>
+    </item>
+
+    <!-- Abstract circle bottom left -->
+    <item android:left="-40dp" android:bottom="-40dp">
+        <shape android:shape="oval">
+            <solid android:color="#0FFFFFFF" />
+            <size android:width="80dp" android:height="80dp" />
+        </shape>
+    </item>
+
+    <!-- Additional subtle geometric accent -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="90"
+                android:startColor="#00FFFFFF"
+                android:centerColor="#08FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:type="linear" />
+            <corners
+                android:topLeftRadius="16dp"
+                android:topRightRadius="16dp" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/closeBtn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="-20dp"
+            android:background="@drawable/custom_fab_shape"
+            android:backgroundTint="@color/red"
+            android:padding="10dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Add Member Form"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!--Member Spinner-->
+        <LinearLayout
+            android:id="@+id/memberRelationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleTv"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background_outline"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/memberSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!--Person Name-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/memberRelationLayout"
+            android:layout_marginTop="5dp"
+            android:hint="Name"
+            app:startIconDrawable="@drawable/ic_username">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--DOB-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dobLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameLayout"
+            android:layout_margin="2dp"
+            android:focusableInTouchMode="false"
+            android:hint="DOB"
+            app:startIconDrawable="@drawable/ic_date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dobEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="false"
+                android:inputType="date"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/imageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dobLayout"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/background_outline"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/aadharTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Aadhar Card"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/aadharTv"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:orientation="horizontal">
+
+                <!--Front Aadhar Card-->
+                <RelativeLayout
+                    android:id="@+id/aadharCardFrontLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/frontTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:padding="2dp"
+                        android:text="Front Image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/frontCameraImgBtn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@null"
+                        android:src="@drawable/ic_camera"
+                        tools:ignore="ContentDescription" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@id/frontCameraImgBtn"
+                        android:background="@color/gray" />
+
+                    <!--Aadhar Card Front Iv-->
+                    <ImageView
+                        android:id="@+id/aadharCardFrontIv"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:layout_below="@id/view1"
+                        android:src="@drawable/ic_raw_image"
+                        android:visibility="visible"
+                        tools:ignore="ContentDescription" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <!--Back Aadhar Card-->
+                <RelativeLayout
+                    android:id="@+id/aadharCardBackLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/backTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:padding="2dp"
+                        android:text="Back Image"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/backCameraImgBtn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@null"
+                        android:src="@drawable/ic_camera"
+                        tools:ignore="ContentDescription" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@id/backCameraImgBtn"
+                        android:background="@color/gray" />
+
+                    <!--Aadhar Card Back Iv-->
+                    <ImageView
+                        android:id="@+id/aadharCardBackIv"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:layout_below="@id/view2"
+                        android:src="@drawable/ic_raw_image"
+                        android:visibility="visible"
+                        tools:ignore="ContentDescription" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!--Submit Button-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageLayout"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/app_background_color"
+            android:text="Add Member"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

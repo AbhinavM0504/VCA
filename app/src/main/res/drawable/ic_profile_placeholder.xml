@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Background Gradient -->
+    <path
+        android:pathData="M100,0 A100,100 0 1,1 100,200 A100,100 0 1,1 100,0"
+        android:fillColor="#4F46E5"/>
+
+    <!-- Pattern Overlay (simplified for Android) -->
+    <path
+        android:pathData="M0,0h200v200h-200z"
+        android:fillColor="#33FFFFFF"/>
+
+    <!-- Decorative Ring -->
+    <path
+        android:pathData="M100,5 A95,95 0 1,1 100,195 A95,95 0 1,1 100,5"
+        android:strokeWidth="2"
+        android:strokeColor="#1AFFFFFF"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"/>
+
+    <!-- User Figure -->
+    <group
+        android:translateX="40"
+        android:translateY="35">
+
+        <!-- Head -->
+        <path
+            android:pathData="M60,17 A28,28 0 1,1 60,73 A28,28 0 1,1 60,17"
+            android:fillColor="#FFFFFF"/>
+
+        <!-- Body -->
+        <path
+            android:pathData="M60,80 C60,80 40,85 30,100 C20,115 25,145 45,145 L75,145 C95,145 100,115 90,100 C80,85 60,80 60,80 Z"
+            android:fillColor="#FFFFFF"/>
+
+        <!-- Shoulder Accent -->
+        <path
+            android:pathData="M30,100 C35,90 85,90 90,100"
+            android:strokeWidth="2"
+            android:strokeColor="#1A000000"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000"/>
+
+        <!-- Shadow -->
+        <path
+            android:pathData="M25,145 A35,3 0 1,1 95,145 A35,3 0 1,1 25,145"
+            android:fillColor="#1A000000"
+            android:fillAlpha="0.3"/>
+    </group>
+
+    <!-- Fine Detail Overlay -->
+    <path
+        android:pathData="M100,2 A98,98 0 1,1 100,198 A98,98 0 1,1 100,2"
+        android:strokeWidth="0.5"
+        android:strokeColor="#33FFFFFF"
+        android:fillColor="#00000000"/>
+
+</vector>
