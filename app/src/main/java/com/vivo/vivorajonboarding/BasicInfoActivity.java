@@ -80,6 +80,7 @@ public class BasicInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basic_info);
 
         initializeViews();
+        initializeToolbar();
 
         setupCards();
         setupViewPager();
@@ -93,6 +94,17 @@ public class BasicInfoActivity extends AppCompatActivity {
         progressIndicator = findViewById(R.id.stepperProgress);
         swipe_icon=findViewById(R.id.ic_next_icon);
 
+    }
+    private void initializeToolbar() {
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            Objects.requireNonNull(toolbar.getNavigationIcon()).setTint(getResources().getColor(android.R.color.white));
+        }
+
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     private void setupCards() {
@@ -665,7 +677,7 @@ public class BasicInfoActivity extends AppCompatActivity {
                             ctx,
                             getString(R.string.aadhar_number),
                             getString(R.string.enter_aadhar),
-                            R.drawable.ic_aadhar_number,
+                            R.drawable.ic_aadhar_card_number,
                             true
                     );
 
@@ -1126,7 +1138,7 @@ public class BasicInfoActivity extends AppCompatActivity {
                             ctx,
                             getString(R.string.ifsc_code),
                             getString(R.string.enter_ifsc_code),
-                            R.drawable.ic_ifsc_code_one,
+                            R.drawable.ic_ifsc_code,
                             true
                     );
 

@@ -1,169 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#A52955"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Education Details Fields -->
-    <include layout="@layout/education_fields_layout" />
-
-    <!-- Document Upload Section -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardElevation="0dp"
-        >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="24dp">
-
-            <TextView
-                android:id="@+id/titleText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Upload your Marksheet"
-                android:textSize="24sp"
-                android:textColor="#1A1A1A"
-                android:fontFamily="@font/poppins_semibold"
-                android:lineSpacingMultiplier="1.2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <!-- Upload Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/uploadCard"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#E0E0E0"
-                app:strokeWidth="1dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/titleText">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_file_upload"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Select file"
-                        android:textSize="14sp"
-                        android:textColor="#BDBDBD"
-                        android:fontFamily="@font/poppins_medium"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Divider -->
-            <TextView
-                android:id="@+id/dividerText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="or"
-                android:textSize="14sp"
-                android:textColor="#757575"
-                android:fontFamily="@font/poppins_regular"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/uploadCard"/>
-
-            <!-- Camera Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cameraButton"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="20dp"
-                android:text="Open Camera &amp; Take Photo"
-                android:textSize="14sp"
-                android:fontFamily="@font/poppins_medium"
-                app:icon="@drawable/ic_camera"
-                app:iconGravity="textStart"
-                app:iconTint="#E8F5F0"
-                android:backgroundTint="#E62C67"
-                app:cornerRadius="12dp"
-                android:textColor="#FFFFFF"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dividerText"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Action Buttons -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="16dp"
-        android:baselineAligned="false">
-
-        <!-- First Row - Upload Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/uploadButton"
-            style="@style/CustomOutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Upload"
-            android:textColor="#A52955"
-            app:icon="@drawable/ic_upload_button"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@null" />
-
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp">
+            android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/addButton"
-                android:layout_width="0dp"
+            <!-- Header Section - Reduced padding -->
+            <TextView
+                android:id="@+id/cardTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:text="Add"
-                android:textColor="#A52955"
-                app:icon="@drawable/ic_add_one"
-                app:iconTint="@null"
-                app:iconGravity="textStart"
-                app:iconPadding="8dp"
-                style="@style/CustomOutlinedButton"/>
+                android:background="#7A203D"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="12dp"
+                android:text="Educational Details"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/deleteButton"
-                android:layout_width="0dp"
+            <!-- Content Container - Reduced padding -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                android:text="Delete"
-                android:textColor="#A52955"
-                app:icon="@drawable/ic_delete"
-                app:iconTint="@null"
-                app:iconGravity="textStart"
-                app:iconPadding="8dp"
-                style="@style/CustomOutlinedButton"/>
+                android:orientation="vertical"
+                android:padding="12dp">
 
+                <!-- School and Percentage Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- School Field - Reduced error space -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:hint="School Name"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeColor="#A52955"
+                        app:hintTextColor="#A52955"
+                        app:errorEnabled="false"
+                        app:startIconDrawable="@drawable/ic_school_name"
+                        app:startIconTint="@null">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/schoolEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:maxLines="1"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Percentage Field - Reduced error space -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:hint="Percentage"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:errorEnabled="false"
+                        app:startIconDrawable="@drawable/ic_percent"
+                        app:boxStrokeColor="#A52955"
+                        app:hintTextColor="#A52955"
+                        app:startIconTint="@null"
+                        app:suffixText="%">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/percentageEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal"
+                            android:maxLength="5"
+                            android:maxLines="1"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <!-- Board and Year Row - Reduced top margin -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <!-- Board Field - Reduced error space -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Board"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeColor="#A52955"
+                        app:errorEnabled="false"
+                        app:startIconDrawable="@drawable/ic_board_name"
+                        app:startIconTint="@null">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/boardEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:maxLines="1"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Year Field - Reduced error space -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:hint="Year of Passing"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeColor="#A52955"
+                        app:hintTextColor="#A52955"
+                        app:errorEnabled="false"
+                        app:startIconDrawable="@drawable/ic_cal"
+                        app:startIconTint="@null">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/yearOfPassingEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <!-- Document Upload Section - Reduced margins -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#E0E0E0"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:id="@+id/titleText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Upload your Marksheet"
+                            android:textColor="#A52955"
+                            android:textSize="16sp"/>
+
+                        <!-- Upload Card - Reduced height -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/uploadCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E0E0E0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ic_file_upload"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="Select file"
+                                    android:textColor="#BDBDBD"
+                                    android:textSize="14sp"/>
+
+                                <TextView
+                                    android:id="@+id/selectedFileText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textColor="@color/primary"
+                                    android:textSize="12sp"
+                                    android:visibility="gone"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:id="@+id/dividerText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="or"
+                            android:textColor="#757575"
+                            android:textSize="14sp"/>
+
+                        <!-- Camera Button - Reduced height -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/cameraButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="12dp"
+                            android:backgroundTint="#7A203D"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Open Camera"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_camera"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconTint="@color/white"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Action Buttons Section - Reduced margins and heights -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/uploadButton"
+                        style="@style/CustomOutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Upload"
+                        android:textSize="14sp"
+                        android:textColor="#7A203D"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_upload_button"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="#7A203D"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/addButton"
+                            style="@style/CustomOutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:text="Add"
+                            android:textSize="14sp"
+                            android:textColor="#7A203D"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_add_one"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconTint="#7A203D"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/deleteButton"
+                            style="@style/CustomOutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"
+                            android:text="Delete"
+                            android:textSize="14sp"
+                            android:textColor="#7A203D"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_delete"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconTint="@null"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.core.widget.NestedScrollView>

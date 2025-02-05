@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#015A46"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:id="@+id/formContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header Section -->
+            <TextView
+                android:id="@+id/cardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#014432"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="16dp"
+                android:text="@string/nominee_1"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+            <!-- Content Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Relation Selection Section -->
+                <!-- Relation Selection Header -->
+                <TextView
+                    android:id="@+id/relationHeaderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Relation"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#015A46"
+                    android:layout_marginBottom="2dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/relationInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Relation"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeColor="#015A46"
+                    app:hintTextColor="#015A46"
+                    app:errorEnabled="true">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/relationSpinnerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="0dp"
+                        app:cardCornerRadius="12dp">
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scrollbars="none">
+
+                            <LinearLayout
+                                android:id="@+id/relationSpinnerContainer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp"/>
+
+                        </HorizontalScrollView>
+                    </androidx.cardview.widget.CardView>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Relative Name Field -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nameInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Relative Name"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeColor="#015A46"
+                    app:hintTextColor="#015A46"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_username_one_one"
+                    app:startIconTint="@null">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/relativeNameEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Date of Birth Field -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dobInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="Date of Birth"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeColor="#015A46"
+                    app:hintTextColor="#015A46"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_cal_green_one"
+                    app:startIconTint="@null">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dobEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:focusable="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Percentage Field -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/percentageInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="Percentage"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeColor="#015A46"
+                    app:hintTextColor="#015A46"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_percent"
+                    app:startIconTint="#015A46"
+                    app:suffixText="%">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/percentageEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Action Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/addButton"
+                        style="@style/CustomOutlinedButtonOne"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="Add"
+                        android:textSize="14sp"
+                        android:textColor="#014432"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_add_one"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="#014432"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/deleteButton"
+                        style="@style/CustomOutlinedButtonOne"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:text="Delete"
+                        android:textSize="14sp"
+                        android:textColor="#014432"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_delete_green"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@null"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

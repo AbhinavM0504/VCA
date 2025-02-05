@@ -4,12 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F2F5">
+    android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -18,299 +19,294 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Welcome Header -->
-            <TextView
+            <!-- Top Bar -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:textColor="#202020"
-                android:layout_marginBottom="8dp"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
 
-            <!-- Subtitle -->
-            <TextView
+                <ImageButton
+                    android:id="@+id/backBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circular_ripple_bg"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="@color/black"/>
+            </LinearLayout>
+
+            <!-- Profile Section -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dashboard"
-                android:textSize="24sp"
-                android:textColor="#606060"
-                android:layout_marginBottom="24dp"/>
-
-            <!-- Progress Circle -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                app:cardCornerRadius="100dp"
-                app:cardElevation="12dp"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:layout_marginBottom="32dp">
 
-                <ImageView
+                <FrameLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_profile_placeholder"
+                        android:background="@drawable/circular_background"
+                        android:padding="24dp"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ABHINAV MAHESHWARI"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"/>
+
+                <!-- Progress Bar -->
+                <ProgressBar
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_profile_placeholder"
-                    android:contentDescription="Profile Image"
-                    android:padding="16dp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:progress="5"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5% Profile Completed"
+                    android:textColor="#4CAF50"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
 
-
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Grid Layout for Buttons -->
+            <!-- Grid of Cards -->
             <androidx.gridlayout.widget.GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:columnCount="2"
-                app:rowCount="4"
-                android:layout_marginBottom="36dp"
-                android:layout_marginTop="16dp">
+                app:rowCount="2"
+                app:columnCount="2">
 
-                <!-- Personal Details Button -->
+                <!-- Personal Info Card -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/personalDetailsCard"
+                    android:id="@+id/basicInfo"
                     android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    app:layout_columnWeight="1"
+                    android:layout_height="200dp"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="8dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp"
+                    app:layout_columnWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_username_one"
-                           />
+                        android:padding="16dp"
+                        android:background="#0069e8">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Personal Details"
-                            android:textAlignment="center"
-                            android:textColor="#202020"
+                            android:text="Add your Personal info"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Share your basic details to complete your onboarding process"
+                            android:textColor="@color/white"
                             android:layout_marginTop="8dp"/>
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="16dp">
 
+
+
+
+                        </LinearLayout>
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Documents Button -->
+                <!-- Financial Preferences Card -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/documentsCard"
+                    android:id="@+id/educationalInfo"
                     android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    app:layout_columnWeight="1"
+                    android:layout_height="200dp"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="8dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp"
+                    app:layout_columnWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_document"
-                            app:tint="#FF9800"/>
+                        android:padding="16dp"
+                        android:background="#A52955">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Documents"
-                            android:textAlignment="center"
-                            android:textColor="#202020"
+                            android:text="Add Educational Details"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Provide your educational details to complete your onboarding process"
+                            android:textColor="@color/white"
                             android:layout_marginTop="8dp"/>
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="16dp">
 
+
+
+
+                        </LinearLayout>
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Nominee Details Button -->
+                <!-- Lifestyle Preferences Card -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/nomineeCard"
+                    android:id="@+id/nominationInfo"
                     android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    app:layout_columnWeight="1"
+                    android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="8dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp"
+                    app:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:background="#015A46">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Nomination Details"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Provide your nomination details to complete your onboarding process"
+                            android:textColor="@color/white"
+                            android:layout_marginTop="8dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="16dp">
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Other Preferences Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/experienceInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp"
+                    app:layout_columnWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_nominee"
-                           />
+                        android:padding="16dp"
+                        android:background="#1A3369">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nominee Details"
-                            android:textAlignment="center"
-                            android:textColor="#202020"
+                            android:text="Add Past Experience"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Share your past experience details to complete your onboarding process"
+                            android:textColor="@color/white"
                             android:layout_marginTop="8dp"/>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="16dp">
+
+
+
+                        </LinearLayout>
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
-
-                <!-- Police Details Button -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/policeCard"
+                    android:id="@+id/InsuranceNomination"
                     android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    app:layout_columnWeight="1"
+                    android:layout_height="200dp"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="8dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp"
+                    app:layout_columnWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_police"
-                            app:tint="#F44336"/>
+                        android:padding="16dp"
+                        android:background="#4F1A69">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Policy Details"
-                            android:textAlignment="center"
-                            android:textColor="#202020"
-                            android:layout_marginTop="8dp"/>
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Other Documents Button -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/otherDocsCard"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    app:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="8dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_other_docs"
-                            />
+                            android:text="Add Insurance Nomination"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Other Documents"
-                            android:textAlignment="center"
-                            android:textColor="#202020"
+                            android:text="Share your insurance nomination details to complete your onboarding process"
+                            android:textColor="@color/white"
                             android:layout_marginTop="8dp"/>
 
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Upload Details Button -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/uploadCard"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    app:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="8dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_upload_button"
-                            app:tint="#00BCD4"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Upload Details"
-                            android:textAlignment="center"
-                            android:textColor="#202020"
-                            android:layout_marginTop="8dp"/>
+                            android:orientation="horizontal"
+                            android:layout_marginTop="16dp">
 
+
+
+                        </LinearLayout>
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
-
             </androidx.gridlayout.widget.GridLayout>
-
-            <!-- Welcome Documents Section -->
-
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
-
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
@@ -337,5 +333,4 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
         app:layout_anchor="@id/bottomAppBar"/>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

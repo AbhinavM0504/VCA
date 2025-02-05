@@ -35,13 +35,7 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
 
     // Views
     private NestedScrollView scrollView;
-    private MaterialCardView personalDetailsCard;
-    private MaterialCardView documentsCard;
-    private MaterialCardView nomineeCard;
-    private MaterialCardView policeCard;
-    private MaterialCardView otherDocsCard;
-    private MaterialCardView uploadCard;
-    private CircularProgressIndicator progressIndicator;
+    private MaterialCardView personalDetailsCard,educationCard,nominationCard,experienceCard;
     private BottomAppBar bottomAppBar;
     private BottomNavigationView bottomNavigationView;
     private FloatingActionButton fab;
@@ -58,12 +52,10 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
 
     private void initializeViews() {
         scrollView = findViewById(R.id.scrollView);
-        personalDetailsCard = findViewById(R.id.personalDetailsCard);
-        documentsCard = findViewById(R.id.documentsCard);
-        nomineeCard = findViewById(R.id.nomineeCard);
-        policeCard = findViewById(R.id.policeCard);
-        otherDocsCard = findViewById(R.id.otherDocsCard);
-        uploadCard = findViewById(R.id.uploadCard);
+        personalDetailsCard = findViewById(R.id.basicInfo);
+        educationCard=findViewById(R.id.educationalInfo);
+        nominationCard=findViewById(R.id.nominationInfo);
+        experienceCard=findViewById(R.id.experienceInfo);
         bottomAppBar = findViewById(R.id.bottomAppBar);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fab = findViewById(R.id.fab);
@@ -71,21 +63,28 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
 
     private void setupClickListeners() {
         personalDetailsCard.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, PersonalActivity.class);
+            Intent intent = new Intent(UserDashboardActivity.this, BasicInfoActivity.class);
             startActivity(intent);
         });
 
-        documentsCard.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, DocumentActivity.class);
+        educationCard.setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, EducationActivity.class);
             startActivity(intent);
         });
 
-        nomineeCard.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, NomineeActivity.class);
+        nominationCard.setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, NominationActivity.class);
+            startActivity(intent);
+        });
+        nominationCard.setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, NominationActivity.class);
             startActivity(intent);
         });
 
-        fab.setOnClickListener(v -> showAddOptionsDialog());
+        experienceCard.setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, PastExperienceDetailsActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setupBottomNavigation() {
@@ -147,29 +146,7 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
         finish();
     }
 
-    private void showAddOptionsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add New");
-        String[] options = {"Document", "Personal Detail", "Other"};
-        builder.setItems(options, (dialog, which) -> {
-            Intent intent;
-            switch (which) {
-                case 0:
-                    intent = new Intent(this, DocumentActivity.class);
-                    startActivity(intent);
-                    break;
-                case 1:
-                    intent = new Intent(this, PersonalActivity.class);
-                    startActivity(intent);
-                    break;
-                case 2:
-                    intent = new Intent(this, QualificationActivity.class);
-                    startActivity(intent);
-                    break;
-            }
-        });
-        builder.show();
-    }
+
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

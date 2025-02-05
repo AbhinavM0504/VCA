@@ -67,6 +67,8 @@
     <color name="surface_variant">#F3F3F3</color>
 
     <color name="shimmer_color">#DFDFDF</color>
+    <color name="selected_relation_bg">#E6F3F0</color>
+    <color name="selected_relation_text">#015A46</color>
 
 <color name="ripple_color">#1F000000</color>
 <color name="background_start">#EEF2FF</color>
@@ -76,7 +78,9 @@
     <color name="red">#DA0909</color>
     <color name="gray">#B6B4B4</color>
     <color name="selected_item_bg">#F0F7FF</color>
-    <color name="outline_button_stroke_color">#E6A52955</color>
+    <color name="outline_button_stroke_color">#7A203D</color>
+    <color name="outline_button_stroke_color_one">#014432</color>
+    <color name="outline_button_stroke_color_blue">#142750</color>
 
     <!--Dashboard background color-->
     <color name="dashboardBackground">#320101</color>
@@ -191,5 +195,8 @@
     <color name="on_primary_container">#002019</color>
     <color name="surface_container_high">#EEE8E6</color>
     <color name="blue_shade">#E6EEF8</color>
+    <color name="gray_400">#9CA3AF</color>
+    <color name="relation_bg">#A3D5C4</color>
+    <color name="green_shade">#E5EDE9</color>
 
 </resources>

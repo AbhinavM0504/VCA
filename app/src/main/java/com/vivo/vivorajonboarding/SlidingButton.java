@@ -233,7 +233,7 @@ public class SlidingButton extends FrameLayout {
         animator.start();
     }
 
-    private void resetSlide() {
+    public void resetSlide() {
         resetAnimator = ValueAnimator.ofFloat(slideButton.getTranslationX(), 0);
         resetAnimator.setDuration(SLIDE_DURATION);
         resetAnimator.setInterpolator(new DecelerateInterpolator());

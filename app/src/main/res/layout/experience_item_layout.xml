@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#757575"
                 app:chipBackgroundColor="@color/app_background_color"
-                app:chipIcon="@drawable/ic_calendar"
+                app:chipIcon="@drawable/ic_calender"
                 app:chipIconTint="#757575"
                 tools:text="Start: Jan 2023" />
 
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#757575"
                 app:chipBackgroundColor="@color/app_background_color"
-                app:chipIcon="@drawable/ic_calendar"
+                app:chipIcon="@drawable/ic_calender"
                 app:chipIconTint="#757575"
                 tools:text="End: Present" />
         </com.google.android.material.chip.ChipGroup>

@@ -9,8 +9,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.vivo.vivorajonboarding.fragment.EducationCardFragment;
 import com.vivo.vivorajonboarding.model.EducationCard;
+import com.vivo.vivorajonboarding.transformer.CardPageTransformer;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EducationActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
@@ -25,8 +28,22 @@ public class EducationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_education_details);
 
         initializeViews();
+        initializeToolbar();
         setupViewPager();
         updateProgress();
+    }
+
+
+    private void initializeToolbar() {
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            Objects.requireNonNull(toolbar.getNavigationIcon()).setTint(getResources().getColor(android.R.color.white));
+        }
+
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     private void initializeViews() {
@@ -40,6 +57,10 @@ public class EducationActivity extends AppCompatActivity {
     private void setupViewPager() {
         pagerAdapter = new EducationPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
+
+        // Add the page transformer
+        viewPager.setPageTransformer(new CardPageTransformer());
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -82,7 +103,7 @@ public class EducationActivity extends AppCompatActivity {
 
         @Override
         public Fragment createFragment(int position) {
-            return EducationCardFragment.newInstance(educationCards.get(position));
+            return EducationCardFragment.newInstance(educationCards.get(position), position);
         }
 
         @Override

@@ -11,9 +11,7 @@
         android:fillColor="#4F46E5"/>
 
     <!-- Pattern Overlay (simplified for Android) -->
-    <path
-        android:pathData="M0,0h200v200h-200z"
-        android:fillColor="#33FFFFFF"/>
+
 
     <!-- Decorative Ring -->
     <path
