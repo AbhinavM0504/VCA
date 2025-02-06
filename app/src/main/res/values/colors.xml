@@ -202,5 +202,8 @@
     <color name="relation_bg_purple">#6A1B9A</color>
     <color name="selected_relation_bg_pruple">#D1B3E0</color>
     <color name="selected_relation_text_purple">#4A0072</color>
+    <color name="gradient_end_one">#4285F4</color>
+    <color name="gradient_start_one">#1A73E8</color>
+    <color name="text_input_stroke_color">#1A73E8</color>
 
 </resources>
