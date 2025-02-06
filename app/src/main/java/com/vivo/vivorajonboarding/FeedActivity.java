@@ -143,7 +143,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarView
         } else if (itemId == R.id.nav_feed) {
             return true; // Already in FeedActivity
         } else if (itemId == R.id.nav_notifications) {
-            intent = new Intent(this, FeedActivity.class);
+            intent = new Intent(this, Notifications.class);
         } else if (itemId == R.id.nav_more) {
             intent = new Intent(this, MoreActivity.class);
         }

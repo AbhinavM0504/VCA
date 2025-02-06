@@ -75,8 +75,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumViewH
             Glide.with(itemView.getContext())
                     .load(album.getCoverImageUrl())
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.placeholder_image)
+                    .placeholder(R.drawable.ic_profile_placeholder)
+                    .error(R.drawable.ic_profile_placeholder)
                     .into(albumCover);
         }
     }

@@ -191,7 +191,7 @@ public class MoreActivity extends AppCompatActivity implements NavigationBarView
         } else if (itemId == R.id.nav_feed) {
             intent = new Intent(this, FeedActivity.class);
         } else if (itemId == R.id.nav_notifications) {
-            intent = new Intent(this, LandingPageActivity.class);
+            intent = new Intent(this, Notifications.class);
         } else if (itemId == R.id.nav_more) {
             return true;
         }

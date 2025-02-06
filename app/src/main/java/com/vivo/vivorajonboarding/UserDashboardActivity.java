@@ -35,7 +35,7 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
 
     // Views
     private NestedScrollView scrollView;
-    private MaterialCardView personalDetailsCard,educationCard,nominationCard,experienceCard;
+    private MaterialCardView personalDetailsCard,educationCard,nominationCard,experienceCard,insuranceCard,previewCard;
     private BottomAppBar bottomAppBar;
     private BottomNavigationView bottomNavigationView;
     private FloatingActionButton fab;
@@ -56,6 +56,8 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
         educationCard=findViewById(R.id.educationalInfo);
         nominationCard=findViewById(R.id.nominationInfo);
         experienceCard=findViewById(R.id.experienceInfo);
+        insuranceCard=findViewById(R.id.InsuranceNomination);
+        previewCard=findViewById(R.id.PreviewDetails);
         bottomAppBar = findViewById(R.id.bottomAppBar);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fab = findViewById(R.id.fab);
@@ -83,6 +85,14 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
 
         experienceCard.setOnClickListener(v -> {
             Intent intent = new Intent(UserDashboardActivity.this, PastExperienceDetailsActivity.class);
+            startActivity(intent);
+        });
+        insuranceCard.setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, InsuranceNominationActivity.class);
+            startActivity(intent);
+        });
+        previewCard.setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, PreviewActivity.class);
             startActivity(intent);
         });
     }
@@ -127,7 +137,7 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
         } else if (itemId == R.id.nav_feed) {
             intent = new Intent(this, FeedActivity.class);
         } else if (itemId == R.id.nav_notifications) {
-            intent = new Intent(this, FeedActivity.class);
+            intent = new Intent(this, Notifications.class);
         } else if (itemId == R.id.nav_more) {
             intent = new Intent(this, MoreActivity.class);
         }

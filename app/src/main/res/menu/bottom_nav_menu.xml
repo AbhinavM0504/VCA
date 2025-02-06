@@ -17,12 +17,12 @@
         android:enabled="false"/>
 
     <item
-        android:id="@+id/nav_notifications"
-        android:icon="@drawable/ic_notification"
-        android:title="Notifications"/>
-
-    <item
         android:id="@+id/nav_more"
         android:icon="@drawable/ic_more"
         android:title="More"/>
+
+    <item
+        android:id="@+id/nav_notifications"
+        android:icon="@drawable/ic_notification"
+        android:title="Notifications"/>
 </menu>

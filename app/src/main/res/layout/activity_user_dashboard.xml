@@ -112,11 +112,13 @@
                             android:textStyle="bold"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Share your basic details to complete your onboarding process"
-                            android:textColor="@color/white"
-                            android:layout_marginTop="8dp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Share your basic details to complete your onboarding process"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="8dp"
+                        android:letterSpacing="0.05"/>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -161,6 +163,7 @@
                             android:layout_height="wrap_content"
                             android:text="Provide your educational details to complete your onboarding process"
                             android:textColor="@color/white"
+                            android:letterSpacing="0.05"
                             android:layout_marginTop="8dp"/>
 
                         <LinearLayout
@@ -206,6 +209,7 @@
                             android:layout_height="wrap_content"
                             android:text="Provide your nomination details to complete your onboarding process"
                             android:textColor="@color/white"
+                            android:letterSpacing="0.05"
                             android:layout_marginTop="8dp"/>
 
                         <LinearLayout
@@ -249,6 +253,7 @@
                             android:layout_height="wrap_content"
                             android:text="Share your past experience details to complete your onboarding process"
                             android:textColor="@color/white"
+                            android:letterSpacing="0.05"
                             android:layout_marginTop="8dp"/>
 
                         <LinearLayout
@@ -291,6 +296,7 @@
                             android:layout_height="wrap_content"
                             android:text="Share your insurance nomination details to complete your onboarding process"
                             android:textColor="@color/white"
+                            android:letterSpacing="0.05"
                             android:layout_marginTop="8dp"/>
 
                         <LinearLayout
@@ -299,6 +305,48 @@
                             android:orientation="horizontal"
                             android:layout_marginTop="16dp">
 
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/PreviewDetails"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="4dp"
+                    app:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="199dp"
+                        android:background="#A2A54F"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Preview Your Details"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:letterSpacing="0.05"
+                            android:text="Preview your submitted details to complete your onboarding process."
+                            android:textColor="@color/white" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal">
 
 
                         </LinearLayout>

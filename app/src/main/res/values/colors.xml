@@ -198,5 +198,9 @@
     <color name="gray_400">#9CA3AF</color>
     <color name="relation_bg">#A3D5C4</color>
     <color name="green_shade">#E5EDE9</color>
+    <color name="green">#2CB9B0</color>
+    <color name="relation_bg_purple">#6A1B9A</color>
+    <color name="selected_relation_bg_pruple">#D1B3E0</color>
+    <color name="selected_relation_text_purple">#4A0072</color>
 
 </resources>
