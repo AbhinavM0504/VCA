@@ -35,8 +35,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     public void onBindViewHolder(@NonNull FeedViewHolder holder, int position) {
         FeedPost post = posts.get(position);
 
-        // Set up carousel
-        CarouselAdapter carouselAdapter = new CarouselAdapter(post.getImageResources());
+        // Set up carousel with the new images List<String>
+        CarouselAdapter carouselAdapter = new CarouselAdapter(post.getImages());
         holder.imageCarousel.setAdapter(carouselAdapter);
 
         // Set up dot indicators
@@ -45,12 +45,18 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                     // You can customize the dot appearance here if needed
                 }).attach();
 
+        // Set the text fields using the new model's getters
         holder.postTitle.setText(post.getTitle());
         holder.postDescription.setText(post.getDescription());
-        holder.postDate.setText(post.getDate());
-
-
+        holder.postDate.setText(post.getRelativeTime());
     }
+
+
+    public void updatePosts(List<FeedPost> newPosts) {
+        this.posts = newPosts;
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

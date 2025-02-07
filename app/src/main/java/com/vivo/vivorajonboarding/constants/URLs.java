@@ -4,7 +4,7 @@ public class URLs {
 
     public static final String APP_BASE_URL = "https://vivorajonbording.com/api/vso_api/";
     //Login Activity
-    public static final String LOGIN_URL = APP_BASE_URL + "login.php";
+    public static final String LOGIN_URL = "https://vivorajonbording.com/api/vso_api/abhinav_test_api/" + "login.php";
     //User Dashboard Activity
     public static final String GET_PROFILE_DATA_URL = APP_BASE_URL + "getProfileData.php";
     public static final String CHECK_AND_SEND_REQUEST_URL = APP_BASE_URL + "checkAndSendRequest.php";

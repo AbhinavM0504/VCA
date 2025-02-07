@@ -1,24 +1,30 @@
 package com.vivo.vivorajonboarding.model;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 public class AlbumModel {
+    @SerializedName("album_id")
+    private int albumId;
+
+    @SerializedName("album_name")
     private String albumName;
+
+    @SerializedName("cover_image_url")
     private String coverImageUrl;
-    private List<String> imageUrls;
+
+    @SerializedName("image_count")
     private int imageCount;
 
-    public AlbumModel(String albumName, String coverImageUrl, List<String> imageUrls) {
-        this.albumName = albumName;
-        this.coverImageUrl = coverImageUrl;
-        this.imageUrls = imageUrls;
-        this.imageCount = imageUrls.size();
-    }
+    // Getters and Setters
+    public int getAlbumId() { return albumId; }
+    public void setAlbumId(int albumId) { this.albumId = albumId; }
 
-    // Getters and setters
     public String getAlbumName() { return albumName; }
-    public String getCoverImageUrl() { return coverImageUrl; }
-    public List<String> getImageUrls() { return imageUrls; }
-    public int getImageCount() { return imageCount; }
-}
+    public void setAlbumName(String albumName) { this.albumName = albumName; }
 
+    public String getCoverImageUrl() { return coverImageUrl; }
+    public void setCoverImageUrl(String coverImageUrl) { this.coverImageUrl = coverImageUrl; }
+
+    public int getImageCount() { return imageCount; }
+    public void setImageCount(int imageCount) { this.imageCount = imageCount; }
+}

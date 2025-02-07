@@ -28,7 +28,6 @@ public class AlbumActivity extends AppCompatActivity {
 
         String albumName = getIntent().getStringExtra("albumName");
         List<String> images = getIntent().getStringArrayListExtra("images");
-
         setupToolbar(albumName);
         setupViews();
         setupRecyclerView(images);

@@ -21,15 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-        <!-- Profile Picture -->
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileImage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_profile_placeholder"
-            android:layout_gravity="start"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#EEEEEE"/>
+
 
         <!-- Greeting Text -->
         <LinearLayout
@@ -93,24 +85,40 @@
             android:layout_height="wrap_content">
 
             <!-- Bills Container -->
-            <HorizontalScrollView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/promotionalBannersScroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:scrollbars="none"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
 
-                <LinearLayout
-                    android:id="@+id/promotionalBannersContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </HorizontalScrollView>
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/bannerViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp" />
+
+                    <LinearLayout
+                        android:id="@+id/dotsIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignBottom="@id/bannerViewPager"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center"
+                        android:background="@drawable/dots_background">
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
 
 

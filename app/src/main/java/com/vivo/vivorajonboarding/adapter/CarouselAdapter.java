@@ -6,14 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import com.vivo.vivorajonboarding.R;
 import java.util.List;
 
 public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.CarouselViewHolder> {
-    private List<Integer> images;
+    private List<String> imageUrls;
 
-    public CarouselAdapter(List<Integer> images) {
-        this.images = images;
+    public CarouselAdapter(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     @NonNull
@@ -26,12 +27,20 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
 
     @Override
     public void onBindViewHolder(@NonNull CarouselViewHolder holder, int position) {
-        holder.imageView.setImageResource(images.get(position));
+        String imageUrl = imageUrls.get(position);
+
+        // Load image using Glide
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.placeholder_image) // Add a placeholder drawable
+                .error(R.drawable.placeholder_image) // Add an error drawable
+                .centerCrop()
+                .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return images.size();
+        return imageUrls.size();
     }
 
     static class CarouselViewHolder extends RecyclerView.ViewHolder {

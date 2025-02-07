@@ -5,19 +5,26 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.vivo.vivorajonboarding.adapter.FeedAdapter;
 import com.vivo.vivorajonboarding.model.FeedPost;
+import com.vivo.vivorajonboarding.model.ApiResponse;
+import com.vivo.vivorajonboarding.api.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FeedActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
@@ -25,10 +32,9 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarView
     private BottomNavigationView bottomNavigationView;
     private RecyclerView feedRecyclerView;
     private FeedAdapter feedAdapter;
-    private List<FeedPost> feedPosts;
     private FloatingActionButton fab;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    // Constants for gradient colors
     private static final int COLOR_CYAN = 0xFF2B2B2B;
     private static final int COLOR_BLUE = 0xFF2B2B2B;
 
@@ -41,22 +47,65 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarView
         setupRecyclerView();
         setupBottomNavigation();
         setupFAB();
-        initializePosts();
+        setupSwipeRefresh();
+        loadFeedData();
     }
 
     private void initializeViews() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fab = findViewById(R.id.fab);
         feedRecyclerView = findViewById(R.id.feedRecyclerView);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+    }
+
+    private void setupRecyclerView() {
+        feedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        feedRecyclerView.addItemDecoration(new FeedItemSpacing(this));
+        // Initialize adapter with empty list
+        feedAdapter = new FeedAdapter(new ArrayList<>());
+        feedRecyclerView.setAdapter(feedAdapter);
+    }
+
+    private void setupSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(this::loadFeedData);
+    }
+
+    private void loadFeedData() {
+        RetrofitClient.getInstance()
+                .getApi()
+                .getFeed()
+                .enqueue(new Callback<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        swipeRefreshLayout.setRefreshing(false);
+
+                        if (response.isSuccessful() && response.body() != null) {
+                            ApiResponse apiResponse = response.body();
+                            if ("success".equals(apiResponse.getStatus())) {
+                                // Use the updatePosts method from adapter instead of directly manipulating the list
+                                feedAdapter.updatePosts(apiResponse.getData());
+                            } else {
+                                showError("Error: " + apiResponse.getMessage());
+                            }
+                        } else {
+                            showError("Error loading feed");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        showError("Network error: " + t.getMessage());
+                    }
+                });
+    }
+
+    private void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void setupFAB() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToUserDashboard();
-            }
-        });
+        fab.setOnClickListener(v -> navigateToUserDashboard());
     }
 
     private void navigateToUserDashboard() {
@@ -64,16 +113,9 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarView
         startActivityWithAnimation(intent);
     }
 
-    private void setupRecyclerView() {
-        feedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        feedRecyclerView.addItemDecoration(new FeedItemSpacing(this));
-    }
-
     private void setupBottomNavigation() {
         bottomNavigationView.setOnItemSelectedListener(this);
         setupNavigationColors();
-
-        // Set the active item
         bottomNavigationView.setSelectedItemId(R.id.nav_feed);
     }
 
@@ -90,47 +132,6 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarView
 
         ColorStateList colorStateList = new ColorStateList(states, colors);
         bottomNavigationView.setItemTextColor(colorStateList);
-
-    }
-
-    private void initializePosts() {
-        feedPosts = new ArrayList<>();
-        addSamplePosts();
-        feedAdapter = new FeedAdapter(feedPosts);
-        feedRecyclerView.setAdapter(feedAdapter);
-    }
-
-    private void addSamplePosts() {
-        feedPosts.add(new FeedPost(
-                Arrays.asList(R.drawable.image1, R.drawable.image, R.drawable.image2),
-                "Welcome to the Future!",
-                "We're thrilled to have you join our innovative team. Get ready to embark on an exciting journey where your ideas will shape tomorrow.",
-                "Just now"
-        ));
-
-        feedPosts.add(new FeedPost(
-                Arrays.asList(R.drawable.image, R.drawable.image2),
-                "Our Culture & Values",
-                "Innovation, collaboration, and excellence define us. Discover how our values drive everything we do and how you can be part of this vision.",
-                "2 hours ago"
-        ));
-
-        feedPosts.add(new FeedPost(
-                Arrays.asList(R.drawable.image, R.drawable.image2, R.drawable.image1, R.drawable.image2),
-                "Your Journey Starts Here",
-                "Explore our comprehensive benefits package, learning opportunities, and growth paths designed to help you thrive.",
-                "4 hours ago"
-        ));
-
-        // Additional sample posts
-        for (int i = 0; i < 3; i++) {
-            feedPosts.add(new FeedPost(
-                    Arrays.asList(R.drawable.image1, R.drawable.image, R.drawable.image2),
-                    "Welcome to the Future!",
-                    "We're thrilled to have you join our innovative team. Get ready to embark on an exciting journey where your ideas will shape tomorrow.",
-                    "Just now"
-            ));
-        }
     }
 
     @Override

@@ -1,24 +1,65 @@
-// FeedPost.java
 package com.vivo.vivorajonboarding.model;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class FeedPost {
-    private List<Integer> imageResources;
-    private String title;
-    private String description;
-    private String date;
+    @SerializedName("id")
+    private int id;
 
-    public FeedPost(List<Integer> imageResources, String title, String description, String date) {
-        this.imageResources = imageResources;
-        this.title = title;
-        this.description = description;
-        this.date = date;
+    @SerializedName("title")
+    private String title;
+
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("images")
+    private List<String> images;
+
+    @SerializedName("relative_time")
+    private String relativeTime;
+
+
+    public int getId() {
+        return id;
     }
 
-    // Getters
-    public List<Integer> getImageResources() { return imageResources; }
-    public String getTitle() { return title; }
-    public String getDescription() { return description; }
-    public String getDate() { return date; }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public String getRelativeTime() {
+        return relativeTime;
+    }
+
+    public void setRelativeTime(String relativeTime) {
+        this.relativeTime = relativeTime;
+    }
+
+    // Add getters and setters
+    // Constructor omitted for brevity
 }

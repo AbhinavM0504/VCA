@@ -3,31 +3,36 @@ package com.vivo.vivorajonboarding;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.vivo.vivorajonboarding.adapter.AlbumsAdapter;
 import com.vivo.vivorajonboarding.model.AlbumModel;
+import com.vivo.vivorajonboarding.api.RetrofitClient;
+import com.vivo.vivorajonboarding.model.ApiResponseAlbum;
+import com.vivo.vivorajonboarding.model.ApiResponseImages;
+import com.vivo.vivorajonboarding.model.ImageModel;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class GalleryActivity extends AppCompatActivity {
     private RecyclerView albumsRecyclerView;
     private AlbumsAdapter albumsAdapter;
-    private List<AlbumModel> albums;
+    private List<AlbumModel> albums = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
         setupToolbar();
-        initializeData();
         setupRecyclerView();
+        fetchAlbums();
     }
 
     private void setupToolbar() {
@@ -42,43 +47,6 @@ public class GalleryActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
-    private void initializeData() {
-        albums = new ArrayList<>();
-        // Dummy data
-        List<String> workImages = Arrays.asList(
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/300/400",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/300/400",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/300"
-
-        );
-        List<String> eventsImages = Arrays.asList(
-                "https://picsum.photos/400/500",
-                "https://picsum.photos/500/600"
-        );
-
-        albums.add(new AlbumModel("Work Photos", workImages.get(0), workImages));
-        albums.add(new AlbumModel("Events", eventsImages.get(0), eventsImages));
-    }
-
     private void setupRecyclerView() {
         albumsRecyclerView = findViewById(R.id.albumsRecyclerView);
         albumsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -86,14 +54,68 @@ public class GalleryActivity extends AppCompatActivity {
         albumsRecyclerView.setAdapter(albumsAdapter);
     }
 
-    private void onAlbumClick(AlbumModel album) {
-        Intent intent = new Intent(this, AlbumActivity.class);
-        intent.putExtra("albumName", album.getAlbumName());
-        intent.putStringArrayListExtra("images", new ArrayList<>(album.getImageUrls()));
+    private void fetchAlbums() {
+        RetrofitClient.getInstance().getApi().getAlbums().enqueue(new Callback<ApiResponseAlbum>() {
+            @Override
+            public void onResponse(Call<ApiResponseAlbum> call, Response<ApiResponseAlbum> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponseAlbum apiResponse = response.body();
+                    if ("success".equals(apiResponse.getStatus())) {
+                        albums.clear();
+                        albums.addAll(apiResponse.getData());
+                        albumsAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(GalleryActivity.this,
+                                apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
 
-        // Shared element transition
-        ActivityOptions options = ActivityOptions
-                .makeSceneTransitionAnimation(this);
-        startActivity(intent, options.toBundle());
+            @Override
+            public void onFailure(Call<ApiResponseAlbum> call, Throwable t) {
+                Toast.makeText(GalleryActivity.this,
+                        "Failed to fetch albums: " + t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void onAlbumClick(AlbumModel album) {
+        RetrofitClient.getInstance().getApi().getAlbumImages(album.getAlbumId())
+                .enqueue(new Callback<ApiResponseImages>() {
+                    @Override
+                    public void onResponse(Call<ApiResponseImages> call, Response<ApiResponseImages> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            ApiResponseImages apiResponse = response.body();
+                            if ("success".equals(apiResponse.getStatus())) {
+                                ArrayList<String> imageUrls = new ArrayList<>();
+                                for (ImageModel image : apiResponse.getData()) {
+                                    imageUrls.add(image.getImageUrl());
+                                }
+
+                                // Launch AlbumActivity with the fetched images
+                                Intent intent = new Intent(GalleryActivity.this, AlbumActivity.class);
+                                intent.putExtra("albumId", album.getAlbumId());
+                                intent.putExtra("albumName", album.getAlbumName());
+                                intent.putStringArrayListExtra("images", imageUrls);
+
+                                ActivityOptions options = ActivityOptions
+                                        .makeSceneTransitionAnimation(GalleryActivity.this);
+                                startActivity(intent, options.toBundle());
+                            } else {
+                                Toast.makeText(GalleryActivity.this,
+                                        apiResponse.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponseImages> call, Throwable t) {
+                        Toast.makeText(GalleryActivity.this,
+                                "Failed to fetch album images: " + t.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

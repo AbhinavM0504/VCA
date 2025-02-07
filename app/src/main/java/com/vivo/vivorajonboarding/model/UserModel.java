@@ -1,7 +1,7 @@
 package com.vivo.vivorajonboarding.model;
 
 public class UserModel {
-    private String id, userid, password, designation, department, grade, branch, zone,
+    private String id, userid, password, userName,designation, department, grade, branch, zone,
             employee_level, category, user_status, salary, create_at, update_at, candidate_category,
             app_version, image, notification_count;
 
@@ -150,5 +150,13 @@ public class UserModel {
 
     public void setNotification_count(String notification_count) {
         this.notification_count = notification_count;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

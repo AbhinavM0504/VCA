@@ -1,9 +1,7 @@
+// LoginActivity.java
 package com.vivo.vivorajonboarding;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,23 +9,15 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vivo.vivorajonboarding.common.NetworkChangeListener;
-import com.vivo.vivorajonboarding.constants.Prevalent;
 import com.vivo.vivorajonboarding.constants.URLs;
 import com.vivo.vivorajonboarding.model.UserModel;
 
@@ -40,191 +30,194 @@ import java.util.Map;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "LoginActivity";
 
-    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
-
-    //views
-    private TextInputEditText usernameEt, passwordEt;
+    private TextInputEditText usernameEt;
+    private TextInputEditText passwordEt;
     private CheckBox rememberCbx;
-    private Button loginBtn;
-    private TextView forgotPwdTv;
 
-    //Loading Dialog
-    LoadingDialog loadingDialog;
-
-    //Shared Preference variable
-    SharedPreferences sharedPreferences;
-    public static final String MyPREFERENCES = "prefs";
-
-    public static final String user_id = "id";
-    public static final String user_password = "password";
+    private SessionManager sessionManager;
+    private LoadingDialog loadingDialog;
+    private NetworkChangeListener networkChangeListener;
+    private VolleyRequestManager requestManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setupWindow();
         setContentView(R.layout.activity_login);
 
-        initialization();
-
-        //check if user is logged in
-        checkUserLoggedIn();
-
-        //handle login button
-        loginBtn.setOnClickListener(view -> {
-            String username = Objects.requireNonNull(usernameEt.getText()).toString().trim();
-            String password = Objects.requireNonNull(passwordEt.getText()).toString().trim();
-
-            if (TextUtils.isEmpty(username)) {
-                usernameEt.setError("Username Required...");
-                usernameEt.requestFocus();
-            } else if (TextUtils.isEmpty(password)) {
-                passwordEt.setError("Password Required...");
-                passwordEt.requestFocus();
-            } else {
-                login(username, password);
-            }
-        });
+        initializeComponents();
+        checkPreviousLogin();
+        setupLoginButton();
     }
 
-    private void checkUserLoggedIn() {
-        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        final String userid = sharedPreferences.getString(user_id, "");
-        final String password = sharedPreferences.getString(user_password, "");
+    private void setupWindow() {
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+    }
 
-        //check for logged in or not
-        if (!userid.isEmpty() || !password.isEmpty()) {
-            login(userid, password);
+    private void initializeComponents() {
+        usernameEt = findViewById(R.id.usernameEt);
+        passwordEt = findViewById(R.id.passwordEt);
+        rememberCbx = findViewById(R.id.rememberCbx);
+
+        sessionManager = new SessionManager(this);
+        loadingDialog = new LoadingDialog(this);
+        networkChangeListener = new NetworkChangeListener();
+        requestManager = new VolleyRequestManager(this);
+    }
+
+    private void checkPreviousLogin() {
+        if (sessionManager.isLoggedIn() && sessionManager.isRememberMeEnabled()) {
+            UserModel savedUser = sessionManager.getUserDetails();
+            if (savedUser.getUserid() != null && savedUser.getPassword() != null) {
+                performLogin(savedUser.getUserid(), savedUser.getPassword());
+            }
         }
     }
 
-    @Override
-    protected void onStart() {
-        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeListener, intentFilter);
-        super.onStart();
+    private void setupLoginButton() {
+        findViewById(R.id.loginBtn).setOnClickListener(view -> {
+            String username = Objects.requireNonNull(usernameEt.getText()).toString().trim();
+            String password = Objects.requireNonNull(passwordEt.getText()).toString().trim();
+
+            if (validateInputs(username, password)) {
+                performLogin(username, password);
+            }
+        });
     }
 
-    @Override
-    protected void onStop() {
-        unregisterReceiver(networkChangeListener);
-        super.onStop();
+    private boolean validateInputs(String username, String password) {
+        if (TextUtils.isEmpty(username)) {
+            usernameEt.setError("Username Required...");
+            usernameEt.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(password)) {
+            passwordEt.setError("Password Required...");
+            passwordEt.requestFocus();
+            return false;
+        }
+        return true;
     }
 
-    private void login(String username, String password) {
+    private void performLogin(String username, String password) {
         loadingDialog.showDialog("Signing In");
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.LOGIN_URL, response -> {
-            loadingDialog.hideDialog();
-            Log.d("LOGIN RESPONSE", response);
-
-            try {
-                JSONArray jsonArray = new JSONArray(response);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject object = jsonArray.getJSONObject(i);
-
-                    UserModel userModel = new UserModel();
-                    userModel.setId(object.getString("id"));
-                    userModel.setUserid(object.getString("userid"));
-                    userModel.setPassword(object.getString("password"));
-                    userModel.setDesignation(object.getString("designation"));
-                    userModel.setDepartment(object.getString("department"));
-                    userModel.setGrade(object.getString("grade"));
-                    userModel.setBranch(object.getString("branch"));
-                    userModel.setZone(object.getString("zone"));
-                    userModel.setEmployee_level(object.getString("employee_level"));
-                    userModel.setCategory(object.getString("category"));
-                    userModel.setUser_status(object.getString("user_status"));
-                    userModel.setSalary(object.getString("salary"));
-                    userModel.setCreate_at(object.getString("create_at"));
-                    userModel.setUpdate_at(object.getString("update_at"));
-                    userModel.setCandidate_category(object.getString("candidate_category"));
-                    userModel.setApp_version(object.getString("app_version"));
-                    userModel.setImage(object.getString("image"));
-
-                    //store current login details
-                    Prevalent.currentOnlineUser = userModel;
-
-                    if (userModel.getCategory().equalsIgnoreCase("user")) {
-
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(user_id, userModel.getUserid());
-                        editor.putString(user_password, userModel.getPassword());
-
-                        //save login details to shared preference
-                        if (rememberCbx.isChecked()) {
-                            editor.apply();
-                        }
-
-                        Log.d("DATA LOGIN : ", userModel.getUserid() + " : " + userModel.getCategory());
-
-                        //redirect user to dashboard
-                        startActivity(new Intent(LoginActivity.this, UserDashboardActivity.class)
-                                .putExtra("userid", userModel.getUserid())
-                                .putExtra("category", userModel.getCategory()));
-                        finish();
-
-                    } else {
-                        showToast(response.trim());
-                    }
-
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                showToast("Please check your details..!!!");
-            }
-        }, error -> {
-            Log.e("LOGIN ERROR", error.toString());
-            loadingDialog.hideDialog();
-            showToast(error.toString());
-        }) {
+        StringRequest loginRequest = new StringRequest(
+                Request.Method.POST,
+                URLs.LOGIN_URL,
+                this::handleLoginResponse,
+                this::handleLoginError
+        ) {
             @NonNull
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", username);
-                params.put("password", password);
-                params.put("versionCode", String.valueOf(BuildConfig.VERSION_CODE));
-                params.put("versionName", BuildConfig.VERSION_NAME);
-                params.put("androidVersion", Build.VERSION.RELEASE);
-                params.put("androidSDK", String.valueOf(Build.VERSION.SDK_INT));
-                return params;
+                return createLoginParams(username, password);
             }
         };
-        stringRequest.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 30000;
-            }
 
-            @Override
-            public int getCurrentRetryCount() {
-                return 30000;
-            }
+        requestManager.addToRequestQueue(loginRequest);
+    }
 
-            @Override
-            public void retry(VolleyError error) {
-                Log.e("RETRY ERROR", error.toString());
-                showToast(error.toString());
+    private void handleLoginResponse(String response) {
+        loadingDialog.hideDialog();
+        Log.d(TAG, "Login response: " + response);
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            if (jsonArray.length() > 0) {
+                processUserData(jsonArray.getJSONObject(0));
+            } else {
+                showToast("Invalid credentials");
             }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        } catch (JSONException e) {
+            Log.e(TAG, "JSON parsing error: ", e);
+            showToast("Invalid response from server");
+        }
+    }
+
+    private void processUserData(JSONObject userObject) throws JSONException {
+        UserModel userModel = parseUserModel(userObject);
+
+        if ("user".equalsIgnoreCase(userModel.getCategory())) {
+            sessionManager.createLoginSession(userModel, rememberCbx.isChecked());
+            saveAppVersionInfo();
+            navigateToUserDashboard(userModel);
+        } else {
+            showToast("Invalid user category");
+        }
+    }
+
+    private UserModel parseUserModel(JSONObject object) throws JSONException {
+        UserModel userModel = new UserModel();
+        userModel.setId(object.getString("id"));
+        userModel.setUserName(object.getString("username"));
+        userModel.setUserid(object.getString("userid"));
+        userModel.setPassword(object.getString("password"));
+        userModel.setEmployee_level(object.getString("employee_level"));
+        userModel.setCategory(object.getString("category"));
+        userModel.setUser_status(object.getString("user_status"));
+        userModel.setCandidate_category(object.getString("candidate_category"));
+        return userModel;
+    }
+
+    private void saveAppVersionInfo() {
+        sessionManager.saveAppVersionInfo(
+                String.valueOf(BuildConfig.VERSION_CODE),
+                BuildConfig.VERSION_NAME,
+                Build.VERSION.RELEASE,
+                String.valueOf(Build.VERSION.SDK_INT)
+        );
+    }
+
+    private void navigateToUserDashboard(UserModel userModel) {
+        Intent intent = new Intent(LoginActivity.this, LandingPageActivity.class)
+                .putExtra("userid", userModel.getUserid())
+                .putExtra("category", userModel.getCategory());
+        startActivity(intent);
+        finish();
+    }
+
+    private void handleLoginError(VolleyError error) {
+        loadingDialog.hideDialog();
+        Log.e(TAG, "Login error: ", error);
+        showToast("Login failed: " + error.getMessage());
+    }
+
+    private Map<String, String> createLoginParams(String username, String password) {
+        Map<String, String> params = new HashMap<>();
+        params.put("username", username);
+        params.put("password", password);
+        params.put("versionCode", String.valueOf(BuildConfig.VERSION_CODE));
+        params.put("versionName", BuildConfig.VERSION_NAME);
+        params.put("androidVersion", Build.VERSION.RELEASE);
+        params.put("androidSDK", String.valueOf(Build.VERSION.SDK_INT));
+        return params;
     }
 
     private void showToast(String message) {
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void initialization() {
-        usernameEt = findViewById(R.id.usernameEt);
-        passwordEt = findViewById(R.id.passwordEt);
-        rememberCbx = findViewById(R.id.rememberCbx);
-        loginBtn = findViewById(R.id.loginBtn);
-        forgotPwdTv = findViewById(R.id.forgotPwdTv);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerNetworkReceiver();
+    }
 
-        loadingDialog = new LoadingDialog(this);
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(networkChangeListener);
+    }
+
+    private void registerNetworkReceiver() {
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, intentFilter);
     }
 }
