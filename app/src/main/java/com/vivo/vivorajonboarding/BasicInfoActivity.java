@@ -1,10 +1,10 @@
 package com.vivo.vivorajonboarding;
 
-import static com.android.volley.VolleyLog.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -39,6 +40,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -50,7 +53,12 @@ import com.vivo.vivorajonboarding.adapter.GenderSpinnerAdapter;
 import com.vivo.vivorajonboarding.model.FormCard;
 import com.vivo.vivorajonboarding.model.FormField;
 import com.vivo.vivorajonboarding.model.GenderItem;
+import com.vivo.vivorajonboarding.model.UserModel;
 import com.vivo.vivorajonboarding.transformer.CardPageTransformer;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,9 +69,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import android.util.Log;
 
-import timber.log.Timber;
-
+import com.android.volley.NetworkError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 public class BasicInfoActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
@@ -73,6 +88,9 @@ public class BasicInfoActivity extends AppCompatActivity {
     private SlidingButton submitButton;
     private List<FormCard> cards;
     private ImageView swipe_icon;
+    private ProgressDialog progressDialog;
+    private static final String TAG = "FormSubmission";
+    private  String userId;// More specific tag for filtering
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +99,7 @@ public class BasicInfoActivity extends AppCompatActivity {
 
         initializeViews();
         initializeToolbar();
-
+        checkUserLoggedIn();
         setupCards();
         setupViewPager();
 
@@ -106,6 +124,19 @@ public class BasicInfoActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
+    private void checkUserLoggedIn() {
+        SessionManager sessionManager = new SessionManager(this);
+        if (sessionManager.isLoggedIn() ) {
+            UserModel user = sessionManager.getUserDetails();
+            userId=(user.getUserid());
+            Log.d(TAG, "\n======= Form Submission Data ======="+userId);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
 
     private void setupCards() {
         cards = new ArrayList<>();
@@ -151,6 +182,7 @@ public class BasicInfoActivity extends AppCompatActivity {
                     );
                     spinnerParams.setMarginEnd(dpToPx(ctx, 0));
                     titleSpinner.setLayoutParams(spinnerParams);
+                    titleSpinner.setTag("title_spinner");
 
                     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                             ctx,
@@ -160,7 +192,7 @@ public class BasicInfoActivity extends AppCompatActivity {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     titleSpinner.setAdapter(adapter);
 
-                    // Name Input
+                    // Name Input with validation
                     TextInputLayout nameInput = createTextInputLayout(
                             ctx,
                             getString(R.string.name),
@@ -168,6 +200,26 @@ public class BasicInfoActivity extends AppCompatActivity {
                             R.drawable.ic_username_one_one,
                             true
                     );
+
+                    TextInputEditText nameEditText = (TextInputEditText) nameInput.getEditText();
+                    if (nameEditText != null) {
+                        nameEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
+                        nameEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String name = nameEditText.getText().toString().trim();
+                                if (name.isEmpty()) {
+                                    nameInput.setError("Name is required");
+                                } else if (!name.matches("^[a-zA-Z\\s]+$")) {
+                                    nameInput.setError("Name should only contain letters and spaces");
+                                } else if (name.length() < 2) {
+                                    nameInput.setError("Name should be at least 2 characters long");
+                                } else {
+                                    nameInput.setError(null);
+                                    nameInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
+                    }
 
                     layout.addView(titleSpinner);
                     layout.addView(nameInput);
@@ -192,6 +244,26 @@ public class BasicInfoActivity extends AppCompatActivity {
                             true
                     );
 
+                    TextInputEditText fatherNameEditText = (TextInputEditText) fatherNameInput.getEditText();
+                    if (fatherNameEditText != null) {
+                        fatherNameEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
+                        fatherNameEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String fatherName = fatherNameEditText.getText().toString().trim();
+                                if (fatherName.isEmpty()) {
+                                    fatherNameInput.setError("Father's name is required");
+                                } else if (!fatherName.matches("^[a-zA-Z\\s]+$")) {
+                                    fatherNameInput.setError("Father's name should only contain letters and spaces");
+                                } else if (fatherName.length() < 2) {
+                                    fatherNameInput.setError("Father's name should be at least 2 characters long");
+                                } else {
+                                    fatherNameInput.setError(null);
+                                    fatherNameInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
+                    }
+
                     layout.addView(fatherNameInput);
                     return layout;
                 }
@@ -205,6 +277,7 @@ public class BasicInfoActivity extends AppCompatActivity {
                 ctx -> {
                     LinearLayout layout = createHorizontalLayout(ctx);
                     layout.setPadding(dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 0));
+
                     TextInputLayout motherNameInput = createTextInputLayout(
                             ctx,
                             getString(R.string.mother_name),
@@ -212,6 +285,26 @@ public class BasicInfoActivity extends AppCompatActivity {
                             R.drawable.ic_mother_name,
                             true
                     );
+
+                    TextInputEditText motherNameEditText = (TextInputEditText) motherNameInput.getEditText();
+                    if (motherNameEditText != null) {
+                        motherNameEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
+                        motherNameEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String motherName = motherNameEditText.getText().toString().trim();
+                                if (motherName.isEmpty()) {
+                                    motherNameInput.setError("Mother's name is required");
+                                } else if (!motherName.matches("^[a-zA-Z\\s]+$")) {
+                                    motherNameInput.setError("Mother's name should only contain letters and spaces");
+                                } else if (motherName.length() < 2) {
+                                    motherNameInput.setError("Mother's name should be at least 2 characters long");
+                                } else {
+                                    motherNameInput.setError(null);
+                                    motherNameInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
+                    }
 
                     layout.addView(motherNameInput);
                     return layout;
@@ -239,7 +332,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                         dobInput.setFocusable(false);
                         dobInput.setClickable(true);
 
-                        // Setup date picker
                         dobInput.setOnClickListener(v -> {
                             Calendar calendar = Calendar.getInstance();
                             int year = calendar.get(Calendar.YEAR);
@@ -249,15 +341,33 @@ public class BasicInfoActivity extends AppCompatActivity {
                             DatePickerDialog datePickerDialog = new DatePickerDialog(
                                     ctx,
                                     (view, selectedYear, selectedMonth, selectedDay) -> {
-                                        String selectedDate = String.format(Locale.getDefault(),
-                                                "%02d/%02d/%d", selectedDay, selectedMonth + 1, selectedYear);
-                                        dobInput.setText(selectedDate);
+                                        Calendar birthDate = Calendar.getInstance();
+                                        birthDate.set(selectedYear, selectedMonth, selectedDay);
+                                        Calendar today = Calendar.getInstance();
+                                        int age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
+                                        if (today.get(Calendar.DAY_OF_YEAR) < birthDate.get(Calendar.DAY_OF_YEAR)) {
+                                            age--;
+                                        }
+
+                                        if (age < 18) {
+                                            dobLayout.setError("You must be at least 18 years old");
+                                        } else if (age > 100) {
+                                            dobLayout.setError("Please enter a valid date of birth");
+                                        } else {
+                                            String selectedDate = String.format(Locale.getDefault(),
+                                                    "%02d/%02d/%d", selectedDay, selectedMonth + 1, selectedYear);
+                                            dobInput.setText(selectedDate);
+                                            dobLayout.setError(null);
+                                            dobLayout.setErrorEnabled(false);
+                                        }
                                     },
                                     year, month, day
                             );
 
-                            // Set max date to current date
                             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                            Calendar minDate = Calendar.getInstance();
+                            minDate.add(Calendar.YEAR, -100);
+                            datePickerDialog.getDatePicker().setMinDate(minDate.getTimeInMillis());
                             datePickerDialog.show();
                         });
                     }
@@ -266,9 +376,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                     return layout;
                 }
         ));
-
-
-
 
         fields.add(new FormField(
                 getString(R.string.combined_fields),
@@ -422,6 +529,9 @@ public class BasicInfoActivity extends AppCompatActivity {
                     mainLayout.addView(genderCard);
                     mainLayout.addView(bloodGroupCard);
 
+                    // Add tag to the container LinearLayout
+                    mainLayout.setTag("combined_fields_container");
+
                     return mainLayout;
                 }
         ));
@@ -487,6 +597,23 @@ public class BasicInfoActivity extends AppCompatActivity {
                     if (phoneEditText != null) {
                         phoneEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
                         phoneEditText.setInputType(InputType.TYPE_CLASS_PHONE);
+
+                        // Add phone validation
+                        phoneEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String phone = phoneEditText.getText().toString().trim();
+                                if (phone.isEmpty()) {
+                                    phoneInput.setError("Phone number is required");
+                                } else if (phone.length() != 10) {
+                                    phoneInput.setError("Phone number must be 10 digits");
+                                } else if (!phone.matches("^[6-9]\\d{9}$")) {
+                                    phoneInput.setError("Please enter a valid Indian mobile number");
+                                } else {
+                                    phoneInput.setError(null);
+                                    phoneInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
                     }
 
                     layout.addView(phoneInput);
@@ -514,6 +641,21 @@ public class BasicInfoActivity extends AppCompatActivity {
                     TextInputEditText emailEditText = (TextInputEditText) emailInput.getEditText();
                     if (emailEditText != null) {
                         emailEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+                        // Add email validation
+                        emailEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String email = emailEditText.getText().toString().trim();
+                                if (email.isEmpty()) {
+                                    emailInput.setError("Email address is required");
+                                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                                    emailInput.setError("Please enter a valid email address");
+                                } else {
+                                    emailInput.setError(null);
+                                    emailInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
                     }
 
                     layout.addView(emailInput);
@@ -542,6 +684,23 @@ public class BasicInfoActivity extends AppCompatActivity {
                     if (pinEditText != null) {
                         pinEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
                         pinEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                        // Add PIN code validation
+                        pinEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String pin = pinEditText.getText().toString().trim();
+                                if (pin.isEmpty()) {
+                                    pinInput.setError("PIN code is required");
+                                } else if (pin.length() != 6) {
+                                    pinInput.setError("PIN code must be 6 digits");
+                                } else if (!pin.matches("^[1-9][0-9]{5}$")) {
+                                    pinInput.setError("Please enter a valid PIN code");
+                                } else {
+                                    pinInput.setError(null);
+                                    pinInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
                     }
 
                     layout.addView(pinInput);
@@ -566,10 +725,28 @@ public class BasicInfoActivity extends AppCompatActivity {
                             true
                     );
                     addressInput.setTag("current_address_input");
+
                     TextInputEditText addressEditText = (TextInputEditText) addressInput.getEditText();
                     if (addressEditText != null) {
                         addressEditText.setMinLines(1);
-                        addressEditText.setGravity(  Gravity.START);
+                        addressEditText.setGravity(Gravity.START);
+
+                        // Add address validation
+                        addressEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String address = addressEditText.getText().toString().trim();
+                                if (address.isEmpty()) {
+                                    addressInput.setError("Current address is required");
+                                } else if (address.length() < 10) {
+                                    addressInput.setError("Please enter a complete address");
+                                } else if (!address.matches("^[\\w\\s,.-]+$")) {
+                                    addressInput.setError("Address contains invalid characters");
+                                } else {
+                                    addressInput.setError(null);
+                                    addressInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
                     }
 
                     layout.addView(addressInput);
@@ -591,9 +768,8 @@ public class BasicInfoActivity extends AppCompatActivity {
                             LinearLayout.LayoutParams.WRAP_CONTENT
                     ));
 
-                    // Checkbox
                     MaterialCheckBox sameAsCurrentCheckbox = new MaterialCheckBox(ctx);
-                    sameAsCurrentCheckbox.setText(getString(R.string.same_as_permanent_address)); // Using getString instead of direct R.string
+                    sameAsCurrentCheckbox.setText(getString(R.string.same_as_permanent_address));
                     sameAsCurrentCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                     sameAsCurrentCheckbox.setTypeface(ResourcesCompat.getFont(ctx, R.font.poppins_regular));
                     sameAsCurrentCheckbox.setTextColor(ContextCompat.getColor(ctx, R.color.text_primary));
@@ -604,7 +780,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                     checkboxParams.setMargins(dpToPx(ctx, 4), 0, 0, dpToPx(ctx, 8));
                     sameAsCurrentCheckbox.setLayoutParams(checkboxParams);
 
-                    // Permanent Address Input with proper layout params
                     LinearLayout addressContainer = new LinearLayout(ctx);
                     addressContainer.setLayoutParams(new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -628,20 +803,44 @@ public class BasicInfoActivity extends AppCompatActivity {
                         addressEditText.setMinLines(1);
                         addressEditText.setGravity(Gravity.TOP | Gravity.START);
                         addressEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+
+                        // Add permanent address validation
+                        addressEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus && !sameAsCurrentCheckbox.isChecked()) {
+                                String address = addressEditText.getText().toString().trim();
+                                if (address.isEmpty()) {
+                                    addressInput.setError("Permanent address is required");
+                                } else if (address.length() < 10) {
+                                    addressInput.setError("Please enter a complete address");
+                                } else if (!address.matches("^[\\w\\s,.-]+$")) {
+                                    addressInput.setError("Address contains invalid characters");
+                                } else {
+                                    addressInput.setError(null);
+                                    addressInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
                     }
 
-                    // Checkbox listener
+                    // Enhanced checkbox listener with validation
                     sameAsCurrentCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                         View rootView = mainLayout.getRootView();
                         TextInputLayout currentAddressLayout = rootView.findViewWithTag("current_address_input");
 
                         if (isChecked) {
                             addressInput.setEnabled(false);
-                            if (addressEditText != null) {
-                                addressEditText.setEnabled(false);
-                                if (currentAddressLayout != null && currentAddressLayout.getEditText() != null) {
-                                    String currentAddress = currentAddressLayout.getEditText().getText().toString();
+                            if (addressEditText != null && currentAddressLayout != null &&
+                                    currentAddressLayout.getEditText() != null) {
+                                String currentAddress = currentAddressLayout.getEditText().getText().toString();
+                                if (!currentAddress.trim().isEmpty()) {
                                     addressEditText.setText(currentAddress);
+                                    addressInput.setError(null);
+                                    addressInput.setErrorEnabled(false);
+                                } else {
+                                    sameAsCurrentCheckbox.setChecked(false);
+                                    addressInput.setEnabled(true);
+                                    Toast.makeText(ctx, "Please fill current address first",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {
@@ -685,6 +884,40 @@ public class BasicInfoActivity extends AppCompatActivity {
                     if (aadharEditText != null) {
                         aadharEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(12)});
                         aadharEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                        // Add focus change listener for validation
+                        aadharEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String aadhar = aadharEditText.getText().toString();
+                                if (aadhar.isEmpty()) {
+                                    aadharInput.setError("Aadhar number is required");
+                                } else if (aadhar.length() != 12) {
+                                    aadharInput.setError("Aadhar number must be 12 digits");
+                                } else if (!aadhar.matches("^[0-9]{12}$")) {
+                                    aadharInput.setError("Invalid Aadhar number format");
+                                } else {
+                                    aadharInput.setError(null);
+                                }
+                            }
+                        });
+
+                        // Add text change listener for real-time validation
+                        aadharEditText.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                if (s.length() > 0 && !s.toString().matches("^[0-9]*$")) {
+                                    aadharInput.setError("Only numbers are allowed");
+                                } else {
+                                    aadharInput.setError(null);
+                                }
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {}
+                        });
                     }
 
                     layout.addView(aadharInput);
@@ -762,7 +995,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                 }
         ));
 
-
         fields.add(new FormField(
                 getString(R.string.date_of_joining),
                 getString(R.string.select_date_of_joining),
@@ -783,7 +1015,15 @@ public class BasicInfoActivity extends AppCompatActivity {
                         dojInput.setFocusable(false);
                         dojInput.setClickable(true);
 
-                        // Setup date picker
+                        // Add focus change listener for validation
+                        dojInput.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus && dojInput.getText().toString().isEmpty()) {
+                                dojLayout.setError("Date of joining is required");
+                            } else {
+                                dojLayout.setError(null);
+                            }
+                        });
+
                         dojInput.setOnClickListener(v -> {
                             Calendar calendar = Calendar.getInstance();
                             int year = calendar.get(Calendar.YEAR);
@@ -793,14 +1033,23 @@ public class BasicInfoActivity extends AppCompatActivity {
                             DatePickerDialog datePickerDialog = new DatePickerDialog(
                                     ctx,
                                     (view, selectedYear, selectedMonth, selectedDay) -> {
-                                        String selectedDate = String.format(Locale.getDefault(),
-                                                "%02d/%02d/%d", selectedDay, selectedMonth + 1, selectedYear);
-                                        dojInput.setText(selectedDate);
+                                        Calendar selectedDate = Calendar.getInstance();
+                                        selectedDate.set(selectedYear, selectedMonth, selectedDay);
+
+                                        // Validate selected date
+                                        if (selectedDate.after(Calendar.getInstance())) {
+                                            dojLayout.setError("Date cannot be in the future");
+                                            dojInput.setText("");
+                                        } else {
+                                            String formattedDate = String.format(Locale.getDefault(),
+                                                    "%02d/%02d/%d", selectedDay, selectedMonth + 1, selectedYear);
+                                            dojInput.setText(formattedDate);
+                                            dojLayout.setError(null);
+                                        }
                                     },
                                     year, month, day
                             );
 
-                            // Set max date to current date
                             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                             datePickerDialog.show();
                         });
@@ -811,14 +1060,13 @@ public class BasicInfoActivity extends AppCompatActivity {
                 }
         ));
 
-        // Person Name Field
         fields.add(new FormField(
-                getString(R.string.person_name),
+                getString(R.string.emergency_person_name),
                 getString(R.string.enter_person_name),
                 InputType.TYPE_CLASS_TEXT,
                 ctx -> {
-                    LinearLayout layout = new LinearLayout(ctx); // Changed to vertical layout
-                    layout.setOrientation(LinearLayout.VERTICAL); // Set vertical orientation
+                    LinearLayout layout = new LinearLayout(ctx);
+                    layout.setOrientation(LinearLayout.VERTICAL);
                     layout.setPadding(dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 0));
 
                     TextView headerText = new TextView(ctx);
@@ -829,7 +1077,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                     headerText.setPadding(0, 0, 0, dpToPx(ctx, 10));
                     layout.addView(headerText);
 
-                    // Divider
                     View divider = new View(ctx);
                     divider.setBackgroundColor(Color.LTGRAY);
                     divider.setLayoutParams(new LinearLayout.LayoutParams(
@@ -840,11 +1087,12 @@ public class BasicInfoActivity extends AppCompatActivity {
 
                     TextInputLayout nameInput = createTextInputLayout(
                             ctx,
-                            getString(R.string.person_name),
+                            getString(R.string.emergency_person_name),
                             getString(R.string.enter_person_name),
                             R.drawable.ic_username_one_one,
                             true
                     );
+
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -855,6 +1103,41 @@ public class BasicInfoActivity extends AppCompatActivity {
                     TextInputEditText nameEditText = (TextInputEditText) nameInput.getEditText();
                     if (nameEditText != null) {
                         nameEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                        // Add focus change listener for validation
+                        nameEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String name = nameEditText.getText().toString().trim();
+                                if (name.isEmpty()) {
+                                    nameInput.setError("Emergency contact name is required");
+                                } else if (name.length() < 2) {
+                                    nameInput.setError("Name must be at least 2 characters");
+                                } else if (!name.matches("^[a-zA-Z\\s]*$")) {
+                                    nameInput.setError("Only letters and spaces are allowed");
+                                } else {
+                                    nameInput.setError(null);
+                                }
+                            }
+                        });
+
+                        // Add text change listener for real-time validation
+                        nameEditText.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                String input = s.toString();
+                                if (!input.matches("^[a-zA-Z\\s]*$")) {
+                                    nameInput.setError("Only letters and spaces are allowed");
+                                } else {
+                                    nameInput.setError(null);
+                                }
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {}
+                        });
                     }
 
                     layout.addView(nameInput);
@@ -862,9 +1145,8 @@ public class BasicInfoActivity extends AppCompatActivity {
                 }
         ));
 
-// Contact Number Field
         fields.add(new FormField(
-                getString(R.string.contact_no),
+                getString(R.string.emergency_contact_no),
                 getString(R.string.enter_contact_no),
                 InputType.TYPE_CLASS_NUMBER,
                 ctx -> {
@@ -873,7 +1155,7 @@ public class BasicInfoActivity extends AppCompatActivity {
 
                     TextInputLayout contactInput = createTextInputLayout(
                             ctx,
-                            getString(R.string.contact_no),
+                            getString(R.string.emergency_contact_no),
                             getString(R.string.enter_contact_no),
                             R.drawable.ic_phone_two,
                             true
@@ -883,6 +1165,40 @@ public class BasicInfoActivity extends AppCompatActivity {
                     if (contactEditText != null) {
                         contactEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
                         contactEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                        // Add focus change listener for validation
+                        contactEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String contact = contactEditText.getText().toString();
+                                if (contact.isEmpty()) {
+                                    contactInput.setError("Emergency contact number is required");
+                                } else if (contact.length() != 10) {
+                                    contactInput.setError("Contact number must be 10 digits");
+                                } else if (!contact.matches("^[6-9]\\d{9}$")) {
+                                    contactInput.setError("Invalid mobile number format");
+                                } else {
+                                    contactInput.setError(null);
+                                }
+                            }
+                        });
+
+                        // Add text change listener for real-time validation
+                        contactEditText.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                if (s.length() > 0 && !s.toString().matches("^[0-9]*$")) {
+                                    contactInput.setError("Only numbers are allowed");
+                                } else {
+                                    contactInput.setError(null);
+                                }
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {}
+                        });
                     }
 
                     layout.addView(contactInput);
@@ -890,9 +1206,8 @@ public class BasicInfoActivity extends AppCompatActivity {
                 }
         ));
 
-// Relation Spinner Field
         fields.add(new FormField(
-                getString(R.string.relation),
+                getString(R.string.emergency_relation),
                 getString(R.string.select_relation),
                 InputType.TYPE_CLASS_TEXT,
                 ctx -> {
@@ -900,14 +1215,14 @@ public class BasicInfoActivity extends AppCompatActivity {
                     mainLayout.setPadding(dpToPx(ctx, 2), dpToPx(ctx, 2), dpToPx(ctx, 2), dpToPx(ctx, 0));
                     mainLayout.setWeightSum(2);
 
-                    CardView relationCard = new CardView(ctx);
+                    MaterialCardView relationCard = new MaterialCardView(ctx);
                     relationCard.setCardElevation(dpToPx(ctx, 2));
                     relationCard.setRadius(dpToPx(ctx, 12));
                     relationCard.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.white));
                     relationCard.setUseCompatPadding(true);
                     LinearLayout.LayoutParams relationCardParams = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
-                            dpToPx(ctx, 80),
+                            dpToPx(ctx, 100),
                             1.0f
                     );
                     relationCardParams.setMarginStart(dpToPx(ctx, 4));
@@ -925,9 +1240,19 @@ public class BasicInfoActivity extends AppCompatActivity {
                     );
                     iconParams.setMarginEnd(dpToPx(ctx, 12));
                     relationIcon.setLayoutParams(iconParams);
-                    relationIcon.setImageResource(R.drawable.ic_relation);  // Make sure you have this icon
+                    relationIcon.setImageResource(R.drawable.ic_relation);
                     relationIcon.setColorFilter(null);
                     relationIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+                    // Create an error TextView for displaying validation messages
+                    TextView errorText = new TextView(ctx);
+                    errorText.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    ));
+                    errorText.setTextColor(ContextCompat.getColor(ctx, R.color.error_red));
+                    errorText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                    errorText.setVisibility(View.GONE);
 
                     Spinner relationSpinner = new Spinner(ctx, Spinner.MODE_DROPDOWN);
                     LinearLayout.LayoutParams spinnerParams = new LinearLayout.LayoutParams(
@@ -936,6 +1261,7 @@ public class BasicInfoActivity extends AppCompatActivity {
                             1.0f
                     );
                     relationSpinner.setLayoutParams(spinnerParams);
+                    relationSpinner.setTag("relation_spinner");
 
                     List<String> relationList = new ArrayList<>(Arrays.asList(
                             "Select Relation", "Father", "Mother", "Brother", "Sister",
@@ -949,7 +1275,8 @@ public class BasicInfoActivity extends AppCompatActivity {
                             TextView view = (TextView) super.getView(position, convertView, parent);
                             view.setTypeface(ResourcesCompat.getFont(ctx, R.font.poppins_medium));
                             view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                            view.setTextColor(ContextCompat.getColor(ctx, R.color.text_primary));
+                            view.setTextColor(ContextCompat.getColor(ctx, position == 0 ?
+                                    R.color.text_hint : R.color.text_primary));
                             return view;
                         }
 
@@ -973,32 +1300,63 @@ public class BasicInfoActivity extends AppCompatActivity {
 
                     relationAdapter.setDropDownViewResource(R.layout.custom_dropdown_item);
                     relationSpinner.setAdapter(relationAdapter);
-                    relationSpinner.setBackgroundResource(R.drawable.spinner_ripple_bg);
 
-                    ImageView relationDropdownArrow = new ImageView(ctx);
-                    LinearLayout.LayoutParams arrowParams = new LinearLayout.LayoutParams(
-                            dpToPx(ctx, 24),
-                            dpToPx(ctx, 24)
-                    );
-                    arrowParams.setMarginStart(dpToPx(ctx, 8));
-                    relationDropdownArrow.setLayoutParams(arrowParams);
-                    relationDropdownArrow.setImageResource(R.drawable.ic_dropdown_arrow);
-                    relationDropdownArrow.setColorFilter(ContextCompat.getColor(ctx, R.color.text_secondary));
+                    // Add validation for the spinner
+                    relationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        private boolean isInitialSelection = true;
 
-                    // Set up animation for the spinner
-                    setupSpinnerAnimation(relationSpinner, relationDropdownArrow);
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            // Skip validation for the initial automatic selection
+                            if (isInitialSelection) {
+                                isInitialSelection = false;
+                                return;
+                            }
+
+                            if (position == 0) {
+                                errorText.setText("Please select a relation");
+                                errorText.setVisibility(View.VISIBLE);
+                                relationCard.setStrokeColor(ContextCompat.getColor(ctx, R.color.error_red));
+                                relationCard.setStrokeWidth(dpToPx(ctx, 1));
+                            } else {
+                                errorText.setVisibility(View.GONE);
+                                relationCard.setStrokeWidth(0);
+                                String selectedRelation = relationList.get(position);
+                                Log.d(TAG, "Selected relation: " + selectedRelation);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            errorText.setText("Please select a relation");
+                            errorText.setVisibility(View.VISIBLE);
+                            relationCard.setStrokeColor(ContextCompat.getColor(ctx, R.color.error_red));
+                            relationCard.setStrokeWidth(dpToPx(ctx, 1));
+                        }
+                    });
 
                     // Add views to their respective layouts
                     relationSpinnerLayout.addView(relationIcon);
                     relationSpinnerLayout.addView(relationSpinner);
-                    relationSpinnerLayout.addView(relationDropdownArrow);
                     relationCard.addView(relationSpinnerLayout);
-                    mainLayout.addView(relationCard);
+
+                    // Create a vertical layout to hold the card and error text
+                    LinearLayout containerLayout = new LinearLayout(ctx);
+                    containerLayout.setOrientation(LinearLayout.VERTICAL);
+                    containerLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,  // Width matches parent
+                            dpToPx(ctx, 80)
+                    ));
+
+                    containerLayout.addView(relationCard);
+                    containerLayout.addView(errorText);
+
+
+                    mainLayout.addView(containerLayout);
 
                     return mainLayout;
                 }
         ));
-
 
         return fields;
     }
@@ -1050,7 +1408,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                                     boolean isVisible = "Yes".equals(selectedButton.getTag());
                                     companyDetailsLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
                                     mainContainer.post(() -> {
-                                        Timber.tag(TAG).d("createPastDetails: Function Called");
                                         companyDetailsLayout.requestLayout();
                                         mainContainer.requestLayout();
                                         notifyViewPagerHeightChanged(mainContainer);
@@ -1072,7 +1429,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                                     boolean isVisible = "Yes".equals(selectedButton.getTag());
                                     relationDetailsLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
                                     mainContainer.post(() -> {
-                                        Timber.tag(TAG).d("createPastDetails: Function Called");
                                         relationDetailsLayout.requestLayout();
                                         mainContainer.requestLayout();
                                         notifyViewPagerHeightChanged(mainContainer);
@@ -1118,6 +1474,23 @@ public class BasicInfoActivity extends AppCompatActivity {
                     if (accountEditText != null) {
                         accountEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
                         accountEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                        // Add validation on focus change
+                        accountEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String accountNumber = accountEditText.getText().toString();
+                                if (accountNumber.isEmpty()) {
+                                    accountInput.setError("Account number is required");
+                                } else if (accountNumber.length() < 9) {
+                                    accountInput.setError("Account number must be at least 9 digits");
+                                } else if (!accountNumber.matches("^[0-9]{9,18}$")) {
+                                    accountInput.setError("Invalid account number format");
+                                } else {
+                                    accountInput.setError(null);
+                                    accountInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
                     }
 
                     layout.addView(accountInput);
@@ -1142,7 +1515,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                             true
                     );
 
-                    // Add search icon at the end
                     ifscInput.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);
                     ifscInput.setEndIconDrawable(ResourcesCompat.getDrawable(ctx.getResources(), R.drawable.search_icon, null));
 
@@ -1150,6 +1522,21 @@ public class BasicInfoActivity extends AppCompatActivity {
                     if (ifscEditText != null) {
                         ifscEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
                         ifscEditText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+
+                        // Add validation on focus change
+                        ifscEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus) {
+                                String ifsc = ifscEditText.getText().toString().toUpperCase();
+                                if (ifsc.isEmpty()) {
+                                    ifscInput.setError("IFSC code is required");
+                                } else if (!ifsc.matches("^[A-Z]{4}0[A-Z0-9]{6}$")) {
+                                    ifscInput.setError("Invalid IFSC format. Should be like ABCD0123456");
+                                } else {
+                                    ifscInput.setError(null);
+                                    ifscInput.setErrorEnabled(false);
+                                }
+                            }
+                        });
                     }
 
                     layout.addView(ifscInput);
@@ -1157,16 +1544,14 @@ public class BasicInfoActivity extends AppCompatActivity {
                 }
         ));
 
-
-
         // UAN Number (Optional)
         fields.add(new FormField(
                 getString(R.string.uan_number),
                 getString(R.string.enter_uan_number),
                 InputType.TYPE_CLASS_NUMBER,
                 ctx -> {
-                    LinearLayout layout = new LinearLayout(ctx); // Changed to vertical layout
-                    layout.setOrientation(LinearLayout.VERTICAL); // Set vertical orientation
+                    LinearLayout layout = new LinearLayout(ctx);
+                    layout.setOrientation(LinearLayout.VERTICAL);
                     layout.setPadding(dpToPx(ctx, 8), dpToPx(ctx, 30), dpToPx(ctx, 8), dpToPx(ctx, 0));
 
                     TextView headerText = new TextView(ctx);
@@ -1177,7 +1562,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                     headerText.setPadding(0, 0, 0, dpToPx(ctx, 10));
                     layout.addView(headerText);
 
-                    // Divider
                     View divider = new View(ctx);
                     divider.setBackgroundColor(Color.LTGRAY);
                     divider.setLayoutParams(new LinearLayout.LayoutParams(
@@ -1185,7 +1569,6 @@ public class BasicInfoActivity extends AppCompatActivity {
                             dpToPx(ctx, 1)
                     ));
                     layout.addView(divider);
-
 
                     TextInputLayout uanInput = createTextInputLayout(
                             ctx,
@@ -1198,15 +1581,29 @@ public class BasicInfoActivity extends AppCompatActivity {
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
                     );
-                    uanInput.setPadding(0,dpToPx(ctx,20),0,dpToPx(ctx,0));
-
+                    uanInput.setPadding(0, dpToPx(ctx, 20), 0, dpToPx(ctx, 0));
                     uanInput.setLayoutParams(layoutParams);
-
 
                     TextInputEditText uanEditText = (TextInputEditText) uanInput.getEditText();
                     if (uanEditText != null) {
                         uanEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(12)});
                         uanEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                        // Add validation on focus change
+                        uanEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus && !uanEditText.getText().toString().isEmpty()) {
+                                String uan = uanEditText.getText().toString();
+                                if (!uan.matches("^[0-9]{12}$")) {
+                                    uanInput.setError("UAN must be exactly 12 digits");
+                                } else {
+                                    uanInput.setError(null);
+                                    uanInput.setErrorEnabled(false);
+                                }
+                            } else {
+                                uanInput.setError(null);
+                                uanInput.setErrorEnabled(false);
+                            }
+                        });
                     }
 
                     layout.addView(uanInput);
@@ -1235,6 +1632,22 @@ public class BasicInfoActivity extends AppCompatActivity {
                     if (esicEditText != null) {
                         esicEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
                         esicEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                        // Add validation on focus change
+                        esicEditText.setOnFocusChangeListener((v, hasFocus) -> {
+                            if (!hasFocus && !esicEditText.getText().toString().isEmpty()) {
+                                String esic = esicEditText.getText().toString();
+                                if (!esic.matches("^[0-9]{10}$")) {
+                                    esicInput.setError("ESIC number must be exactly 10 digits");
+                                } else {
+                                    esicInput.setError(null);
+                                    esicInput.setErrorEnabled(false);
+                                }
+                            } else {
+                                esicInput.setError(null);
+                                esicInput.setErrorEnabled(false);
+                            }
+                        });
                     }
 
                     layout.addView(esicInput);
@@ -1261,14 +1674,11 @@ public class BasicInfoActivity extends AppCompatActivity {
                     RecyclerView.Adapter<?> adapter = viewPager.getAdapter();
 
                     if (adapter instanceof FormCardAdapter) {
-                        Timber.tag(TAG).d("Initiating ViewPager height adjustment");
-                        ((FormCardAdapter) adapter).adjustViewPagerHeight(viewPager);
-                    } else {
-                        Timber.tag(TAG).w("ViewPager adapter is not FormCardAdapter");
+                        adjustHeight(0);
                     }
                 }
             } catch (Exception e) {
-                Timber.tag(TAG).e(e, "Error in notifyViewPagerHeightChanged");
+                e.printStackTrace();
             }
         });
     }
@@ -1379,7 +1789,7 @@ public class BasicInfoActivity extends AppCompatActivity {
         // Designation input
         TextInputLayout designationInput = createTextInputLayout(
                 ctx,
-                getString(R.string.designation),
+                getString(R.string.previous_designation),
                 getString(R.string.enter_designation),
                 R.drawable.ic_designation_one,
                 true
@@ -1389,14 +1799,14 @@ public class BasicInfoActivity extends AppCompatActivity {
         layout.addView(designationInput);
 
         // Date of Joining input
-        TextInputLayout dojInput = createDateInput(ctx, getString(R.string.date_of_joining));
+        TextInputLayout dojInput = createDateInput(ctx, getString(R.string.previous_date_of_joining));
 
 
         dojInput.setLayoutParams(params);
         layout.addView(dojInput);
 
         // Date of Leaving input
-        TextInputLayout dolInput = createDateInput(ctx, getString(R.string.date_of_leaving));
+        TextInputLayout dolInput = createDateInput(ctx, getString(R.string.previous_date_of_leaving));
 
 
         dolInput.setLayoutParams(params);
@@ -1417,7 +1827,7 @@ public class BasicInfoActivity extends AppCompatActivity {
         // Name Input
         TextInputLayout nameInput = createTextInputLayout(
                 ctx,
-                getString(R.string.name),
+                getString(R.string.relative_name),
                 getString(R.string.enter_name),
                 R.drawable.ic_username_one_one,
                 true
@@ -1436,9 +1846,10 @@ public class BasicInfoActivity extends AppCompatActivity {
 
 
 
+
         TextInputLayout relationInput = createTextInputLayout(
                 ctx,
-                getString(R.string.relation),
+                getString(R.string.employee_relation),
                 getString(R.string.enter_relation),
                 R.drawable.ic_relation,
                 true
@@ -1450,7 +1861,7 @@ public class BasicInfoActivity extends AppCompatActivity {
 
         TextInputLayout designationInput = createTextInputLayout(
                 ctx,
-                getString(R.string.designation),
+                getString(R.string.employee_designation),
                 getString(R.string.enter_designation),
                 R.drawable.ic_designation_one,
                 true
@@ -1505,7 +1916,7 @@ public class BasicInfoActivity extends AppCompatActivity {
 
 
     private TextInputLayout createTextInputLayout(Context context, String hint, String helperText,
-                                                  int startIconRes, boolean allCaps) {
+                                                  int startIconRes, boolean required) {
         TextInputLayout textInputLayout = new TextInputLayout(
                 new ContextThemeWrapper(context, R.style.Widget_Custom_TextInputLayout_OutlinedBox)
         );
@@ -1525,9 +1936,19 @@ public class BasicInfoActivity extends AppCompatActivity {
         textInputLayout.setStartIconTintMode(null); // Remove any tint mode
         textInputLayout.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE);
 
+        // Set required status as a tag
+        textInputLayout.setTag(R.id.required_field_tag, required);
+        
+        // Add asterisk to hint if required
+        if (required) {
+            textInputLayout.setHint(hint + " *");
+        } else {
+            textInputLayout.setHint(hint);
+        }
+
         TextInputEditText editText = new TextInputEditText(context);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        if (allCaps) {
+        if (required) {
             editText.setAllCaps(true);
         }
         editText.setPadding(
@@ -1653,13 +2074,17 @@ public class BasicInfoActivity extends AppCompatActivity {
     }
 
     private void onSubmitForm() {
-        // Validate all fields across all cards
+        Log.d(TAG, "Starting form submission process...");
+        
+        // Validate all fields
         boolean isValid = validateAllFields();
+        Log.d(TAG, "Form validation result: " + isValid);
 
         if (isValid) {
             // Collect all form data
+            Log.d(TAG, "Collecting form data...");
             FormData formData = collectFormData();
-
+            
             // Process the form submission
             processFormSubmission(formData);
         }
@@ -1675,23 +2100,42 @@ public class BasicInfoActivity extends AppCompatActivity {
                 if (cardView != null) {
                     LinearLayout formContainer = cardView.findViewById(R.id.formContainer);
                     if (formContainer != null) {
-                        // Validate each field in the form container
                         for (int j = 0; j < formContainer.getChildCount(); j++) {
                             View field = formContainer.getChildAt(j);
-                            if (field instanceof TextInputLayout textInputLayout) {
-                                TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
+                            try {
+                                if (field instanceof TextInputLayout) {
+                                    TextInputLayout textInputLayout = (TextInputLayout) field;
+                                    TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
 
-                                if (editText != null && Objects.requireNonNull(editText.getText()).toString().trim().isEmpty()) {
-                                    textInputLayout.setError(getString(R.string.field_required));
-                                    isValid = false;
-                                } else {
-                                    textInputLayout.setError(null);
+                                    if (editText != null) {
+                                        String value = editText.getText() != null ? 
+                                                     editText.getText().toString().trim() : "";
+                                        
+                                        boolean isRequired = Boolean.TRUE.equals(textInputLayout.getTag(R.id.required_field_tag));
+                                        if (isRequired && value.isEmpty()) {
+                                            textInputLayout.setError(getString(R.string.field_required));
+                                            isValid = false;
+                                            Log.d(TAG, "Validation Failed - Empty required field: " + textInputLayout.getHint());
+                                        } else {
+                                            textInputLayout.setError(null);
+                                        }
+                                    }
                                 }
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error validating field: " + field, e);
+                                isValid = false;
                             }
                         }
                     }
                 }
             }
+        }
+
+        if (!isValid) {
+            Log.d(TAG, "Form validation failed - some required fields are empty");
+            showError(getString(R.string.please_fill_required_fields));
+        } else {
+            Log.d(TAG, "Form validation successful");
         }
 
         return isValid;
@@ -1701,76 +2145,353 @@ public class BasicInfoActivity extends AppCompatActivity {
         FormData formData = new FormData();
         FormCardAdapter adapter = (FormCardAdapter) viewPager.getAdapter();
 
+        Log.d(TAG, "=== Starting Form Data Collection ===");
+
         if (adapter != null) {
             for (int i = 0; i < cards.size(); i++) {
+                Log.d(TAG, "Collecting data from card " + (i + 1));
                 View cardView = adapter.getCardView(i);
                 if (cardView != null) {
                     LinearLayout formContainer = cardView.findViewById(R.id.formContainer);
                     if (formContainer != null) {
-                        // Collect data from each field
-                        for (int j = 0; j < formContainer.getChildCount(); j++) {
-                            View field = formContainer.getChildAt(j);
-                            if (field instanceof TextInputLayout textInputLayout) {
-                                TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
-
-                                if (editText != null) {
-                                    String fieldId = editText.getResources().getResourceEntryName(editText.getId());
-                                    String value = Objects.requireNonNull(editText.getText()).toString().trim();
-                                    formData.addField(fieldId, value);
-                                }
-                            } else if (field instanceof LinearLayout) {
-                                // Handle spinner containers
-                                Spinner spinner = findSpinnerInContainer((LinearLayout) field);
-                                if (spinner != null) {
-                                    String fieldId = spinner.getResources().getResourceEntryName(spinner.getId());
-                                    String value = spinner.getSelectedItem().toString();
-                                    formData.addField(fieldId, value);
-                                }
-                            }
-                        }
+                        collectDataFromContainer(formContainer, formData);
                     }
                 }
             }
         }
 
+        // Log all collected data
+        Log.d(TAG, "=== Collected Form Data Summary ===");
+        for (Map.Entry<String, String> entry : formData.getFields().entrySet()) {
+            Log.d(TAG, String.format("Field: '%s' = '%s'", entry.getKey(), entry.getValue()));
+        }
+        Log.d(TAG, "=== End Form Data Summary ===");
+
         return formData;
     }
 
-    private Spinner findSpinnerInContainer(LinearLayout container) {
+    private void collectDataFromContainer(ViewGroup container, FormData formData) {
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View child = container.getChildAt(i);
+
+            try {
+                if (child instanceof TextInputLayout) {
+                    // Existing TextInputLayout handling code remains the same
+                    TextInputLayout til = (TextInputLayout) child;
+                    TextInputEditText editText = (TextInputEditText) til.getEditText();
+                    CharSequence hint = til.getHint();
+
+                    if (editText != null && hint != null) {
+                        String fieldName = hint.toString()
+                                .split("/")[0]
+                                .toLowerCase()
+                                .replace(" ", "_")
+                                .replace("*", "")
+                                .trim();
+                        String value = editText.getText() != null ? editText.getText().toString().trim() : "";
+                        formData.addField(fieldName, value);
+                        Log.d(TAG, String.format("TextInput - %s: %s", fieldName, value));
+                    }
+                } else if (child instanceof LinearLayout) {
+                    // Handle the emergency relation spinner within CardView
+                    ViewGroup layout = (ViewGroup) child;
+                    for (int j = 0; j < layout.getChildCount(); j++) {
+                        View cardView = layout.getChildAt(j);
+                        if (cardView instanceof CardView) {
+                            // Get the LinearLayout inside CardView that contains the spinner
+                            ViewGroup cardContent = (ViewGroup) ((CardView) cardView).getChildAt(0);
+                            if (cardContent != null) {
+                                // Find Spinner within the card content
+                                for (int k = 0; k < cardContent.getChildCount(); k++) {
+                                    View spinnerView = cardContent.getChildAt(k);
+                                    if (spinnerView instanceof Spinner) {
+                                        Spinner spinner = (Spinner) spinnerView;
+                                        if ("relation_spinner".equals(spinner.getTag())) {
+                                            Object selectedItem = spinner.getSelectedItem();
+                                            if (selectedItem != null && !"Select Relation".equals(selectedItem.toString())) {
+                                                formData.addField("emergency_relation", selectedItem.toString());
+                                                Log.d(TAG, "Added emergency_relation: " + selectedItem.toString());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Handle existing combined fields container
+                    if ("combined_fields_container".equals(child.getTag())) {
+                        // Existing combined fields handling code remains the same
+                        ViewGroup containerGroup = (ViewGroup) child;
+                        for (int j = 0; j < containerGroup.getChildCount(); j++) {
+                            View cardView = containerGroup.getChildAt(j);
+                            if (cardView instanceof CardView) {
+                                ViewGroup cardContent = (ViewGroup) ((CardView) cardView).getChildAt(0);
+                                for (int k = 0; k < cardContent.getChildCount(); k++) {
+                                    View spinnerContainer = cardContent.getChildAt(k);
+                                    if (spinnerContainer instanceof Spinner) {
+                                        Spinner spinner = (Spinner) spinnerContainer;
+                                        Object selectedItem = spinner.getSelectedItem();
+
+                                        if (selectedItem instanceof GenderItem) {
+                                            GenderItem genderItem = (GenderItem) selectedItem;
+                                            formData.addField("gender", genderItem.getText());
+                                            Log.d(TAG, "Added gender: " + genderItem.getText());
+                                        } else if (selectedItem instanceof String) {
+                                            String value = (String) selectedItem;
+                                            if (value.contains("+") || value.contains("-")) {
+                                                formData.addField("blood_group", value);
+                                                Log.d(TAG, "Added blood_group: " + value);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Handle other existing fields
+                    Spinner titleSpinner = findSpinnerByTag((ViewGroup) child, "title_spinner");
+                    if (titleSpinner != null && titleSpinner.getSelectedItem() != null) {
+                        String title = titleSpinner.getSelectedItem().toString();
+                        formData.addField("initial", title);
+                        Log.d(TAG, "Added initial: " + title);
+                    }
+
+                    // Handle Radio Groups
+                    RadioGroup pastWorkRadioGroup = findRadioGroupByTag((ViewGroup) child, "pastWorkRadioGroup");
+                    if (pastWorkRadioGroup != null) {
+                        int selectedId = pastWorkRadioGroup.getCheckedRadioButtonId();
+                        if (selectedId != -1) {
+                            RadioButton selectedButton = pastWorkRadioGroup.findViewById(selectedId);
+                            String value = selectedButton != null ? selectedButton.getTag().toString() : "";
+                            formData.addField("past_work_experience", value);
+                            Log.d(TAG, "Added past_work_experience: " + value);
+                        }
+                    }
+
+                    RadioGroup relationRadioGroup = findRadioGroupByTag((ViewGroup) child, "relationRadioGroup");
+                    if (relationRadioGroup != null) {
+                        int selectedId = relationRadioGroup.getCheckedRadioButtonId();
+                        if (selectedId != -1) {
+                            RadioButton selectedButton = relationRadioGroup.findViewById(selectedId);
+                            String value = selectedButton != null ? selectedButton.getTag().toString() : "";
+                            formData.addField("has_company_relation", value);
+                            Log.d(TAG, "Added has_company_relation: " + value);
+                        }
+                    }
+
+                    // Continue recursive search
+                    collectDataFromContainer((ViewGroup) child, formData);
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error collecting data from view: " + child.getClass().getSimpleName(), e);
+            }
+        }
+    }
+
+    // Helper method to find spinner by tag
+    private Spinner findSpinnerByTag(ViewGroup container, String targetTag) {
         for (int i = 0; i < container.getChildCount(); i++) {
             View child = container.getChildAt(i);
             if (child instanceof Spinner) {
-                return (Spinner) child;
+                String tag = (String) child.getTag();
+                if (targetTag.equals(tag)) {
+                    return (Spinner) child;
+                }
+            } else if (child instanceof ViewGroup) {
+                Spinner result = findSpinnerByTag((ViewGroup) child, targetTag);
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+        return null;
+    }
+
+    // Helper method to find RadioGroup by tag
+    private RadioGroup findRadioGroupByTag(ViewGroup container, String targetTag) {
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View child = container.getChildAt(i);
+            if (child instanceof RadioGroup) {
+                String tag = (String) child.getTag();
+                if (targetTag.equals(tag)) {
+                    return (RadioGroup) child;
+                }
+            } else if (child instanceof ViewGroup) {
+                RadioGroup result = findRadioGroupByTag((ViewGroup) child, targetTag);
+                if (result != null) {
+                    return result;
+                }
             }
         }
         return null;
     }
 
     private void processFormSubmission(FormData formData) {
-        // Here you would typically:
-        // 1. Show a loading indicator
+        // Show loading dialog
         showLoadingDialog();
 
-        // 2. Make an API call or save to database
-        saveFormData(formData);
+        // Log all collected form data with clear separation
+        Log.d(TAG, "\n======= Form Submission Data =======");
+        for (Map.Entry<String, String> entry : formData.getFields().entrySet()) {
+            Log.d(TAG, String.format("Field: %-30s | Value: %s", entry.getKey(), entry.getValue()));
+        }
+        Log.d(TAG, "====== End Form Data ======\n");
+
+        // Create JSON object from form data
+        JSONObject jsonBody = new JSONObject();
+        try {
+            for (Map.Entry<String, String> entry : formData.getFields().entrySet()) {
+                // Ensure null values are handled properly
+                String value = entry.getValue();
+                jsonBody.put(entry.getKey(), value != null ? value.trim() : "");
+            }
+            jsonBody.put("userId",userId);
+            Log.d(TAG, "Request JSON Body: " + jsonBody.toString(2)); // Pretty print JSON
+        } catch (JSONException e) {
+            Log.e(TAG, "Error creating JSON body", e);
+            showError(getString(R.string.error_processing_form));
+            hideLoadingDialog();
+            return;
+        }
+
+        // Make API request
+        String apiUrl = "https://vivorajonbording.com/api/vso_api/abhinav_test_api/submit_basic_info.php";
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                apiUrl,
+                jsonBody,
+                response -> {
+                    hideLoadingDialog();
+                    Log.d(TAG, "API Response: " + response.toString());
+
+                    try {
+                        boolean success = response.getBoolean("success");
+                        String message = response.getString("message");
+
+                        if (success) {
+                            Log.i(TAG, "Form submission successful: " + message);
+                            showSuccess(message);
+                            finish();
+                        } else {
+                            // Handle validation errors
+                            if (response.has("errors")) {
+                                JSONArray errors = response.getJSONArray("errors");
+                                StringBuilder errorLog = new StringBuilder("\nValidation Errors:\n");
+                                StringBuilder userMessage = new StringBuilder();
+
+                                for (int i = 0; i < errors.length(); i++) {
+                                    String error = errors.getString(i);
+                                    errorLog.append("- ").append(error).append("\n");
+                                    userMessage.append("• ").append(error).append("\n");
+                                }
+
+                                Log.e(TAG, errorLog.toString());
+                                showValidationErrors(userMessage.toString());
+                            } else {
+                                Log.e(TAG, "API Error: " + message);
+                                showError(message);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Error parsing API response", e);
+                        Log.e(TAG, "Raw response: " + response.toString());
+                        showError(getString(R.string.error_processing_response));
+                    }
+                },
+                error -> {
+                    hideLoadingDialog();
+                    String errorMessage = getVolleyError(error);
+
+                    // Log detailed network error information
+                    Log.e(TAG, "\n====== API Error Details ======");
+                    Log.e(TAG, "Error Type: " + error.getClass().getSimpleName());
+                    Log.e(TAG, "Error Message: " + errorMessage);
+                    if (error.networkResponse != null) {
+                        Log.e(TAG, "Status Code: " + error.networkResponse.statusCode);
+                        Log.e(TAG, "Response Data: " + new String(error.networkResponse.data));
+                        Log.e(TAG, "Headers: " + error.networkResponse.headers);
+                    }
+                    Log.e(TAG, "====== End Error Details ======\n");
+
+                    showError(errorMessage);
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        // Set timeout for the request
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000, // 30 seconds timeout
+                0,     // no retries
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        // Add request to queue
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
+
+    // Helper method to show validation errors
+    private void showValidationErrors(String errorMessage) {
+        // Implement your UI logic to show validation errors
+        // For example, using a custom dialog or error view
+        submitButton.resetSlide();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.validation_error_title)
+                .setMessage(errorMessage)
+                .setPositiveButton(R.string.ok, null)
+                .show();
     }
 
     private void showLoadingDialog() {
-        // Show a loading dialog
-        // You can implement your own loading dialog here
-        Toast.makeText(this, getString(R.string.submitting_form), Toast.LENGTH_SHORT).show();
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(getString(R.string.submitting_form));
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.show();
     }
 
-    private void saveFormData(FormData formData) {
-        // Implement your data saving logic here
-        // This could be an API call, database operation, etc.
-
-        // For demo purposes, we'll just show a success message
-        Toast.makeText(this, getString(R.string.form_submitted_successfully), Toast.LENGTH_LONG).show();
-
-        // Close the activity or navigate to the next screen
-        finish();
+    private void hideLoadingDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
+
+    private void showSuccess(String message) {
+
+    }
+
+    private void showError(String message) {
+        submitButton.resetSlide();
+        new AlertDialog.Builder(this)
+            .setTitle(getString(R.string.error))
+            .setMessage(message)
+            .setPositiveButton(getString(R.string.ok), null)
+            .show();
+    }
+
+    private String getVolleyError(VolleyError error) {
+        if (error instanceof NetworkError) {
+            return getString(R.string.error_network);
+        } else if (error instanceof ServerError) {
+            return getString(R.string.error_server);
+        } else if (error instanceof TimeoutError) {
+            return getString(R.string.error_timeout);
+        } else {
+            return getString(R.string.error_unknown);
+        }
+    }
+
+
 
     private static int dpToPx(Context context, int dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density);
@@ -1781,7 +2502,9 @@ public class BasicInfoActivity extends AppCompatActivity {
         private final Map<String, String> fields = new HashMap<>();
 
         public void addField(String fieldId, String value) {
-            fields.put(fieldId, value);
+            if (fieldId != null && !fieldId.isEmpty()) {
+                fields.put(fieldId, value != null ? value : "");
+            }
         }
 
         public Map<String, String> getFields() {

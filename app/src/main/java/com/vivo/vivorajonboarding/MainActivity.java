@@ -6,6 +6,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,7 @@ import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.dynamicanimation.animation.SpringForce;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.card.MaterialCardView;
+import com.vivo.vivorajonboarding.model.UserModel;
 
 
 import pl.droidsonroids.gif.GifDrawable;
@@ -269,7 +271,28 @@ public class MainActivity extends AppCompatActivity {
         SessionManager sessionManager = new SessionManager(this);
 
         if (sessionManager.isLoggedIn()) {
-            // Redirect to LandingPageActivity if logged in
+            // Get all user details
+            UserModel user = sessionManager.getUserDetails();
+            SessionManager.AppVersionInfo appInfo = sessionManager.getAppVersionInfo();
+
+            // Log all session values
+            Log.d("SessionCheck", "User is logged in");
+            Log.d("SessionCheck", "ID: " + user.getId());
+            Log.d("SessionCheck", "Username: " + user.getUserName());
+            Log.d("SessionCheck", "UserID: " + user.getUserid());
+            Log.d("SessionCheck", "Employee Level: " + user.getEmployee_level());
+            Log.d("SessionCheck", "Category: " + user.getCategory());
+            Log.d("SessionCheck", "User Status: " + user.getUser_status());
+            Log.d("SessionCheck", "Candidate Category: " + user.getCandidate_category());
+            Log.d("SessionCheck", "Remember Me: " + sessionManager.isRememberMeEnabled());
+
+            // Log app version information
+            Log.d("SessionCheck", "App Version Code: " + appInfo.getVersionCode());
+            Log.d("SessionCheck", "App Version Name: " + appInfo.getVersionName());
+            Log.d("SessionCheck", "Android Version: " + appInfo.getAndroidVersion());
+            Log.d("SessionCheck", "Android SDK: " + appInfo.getAndroidSDK());
+
+            // Redirect to LandingPageActivity
             Intent intent = new Intent(this, LandingPageActivity.class);
             startActivity(intent);
             finish();
