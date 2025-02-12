@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#A52955"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -15,66 +17,191 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
-            <!-- Header Section - Reduced padding -->
+            <!-- Header Section -->
             <TextView
                 android:id="@+id/cardTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#7A203D"
                 android:fontFamily="@font/poppins_semibold"
-                android:padding="12dp"
+                android:padding="16dp"
                 android:text="Educational Details"
                 android:textColor="@color/white"
                 android:textSize="16sp"/>
 
-            <!-- Content Container - Reduced padding -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="16dp"
+                android:layout_marginTop="8dp">
 
-                <!-- School and Percentage Row -->
+                <!-- School Education Fields -->
                 <LinearLayout
+                    android:id="@+id/schoolFields"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
 
-                    <!-- School Field - Reduced error space -->
+                    <!-- School and Percentage Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- School Field -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:hint="School Name"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxStrokeColor="#A52955"
+                            app:hintTextColor="#A52955"
+                            app:startIconDrawable="@drawable/ic_school_name"
+                            app:startIconTint="@null">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/schoolEt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textCapWords"
+                                android:maxLines="1"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Board Field -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"
+                            android:hint="Board"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxStrokeColor="#A52955"
+                            app:hintTextColor="#A52955"
+                            app:startIconDrawable="@drawable/ic_board_name"
+                            app:startIconTint="@null">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/boardEt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textCapWords"
+                                android:maxLines="1"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Graduation Fields -->
+                <LinearLayout
+                    android:id="@+id/graduationFields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Course Field -->
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="Course"
                         android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
-                        android:hint="School Name"
+                        android:layout_marginBottom="8dp"
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
                         app:boxCornerRadiusBottomStart="12dp"
                         app:boxCornerRadiusBottomEnd="12dp"
                         app:boxStrokeColor="#A52955"
                         app:hintTextColor="#A52955"
-                        app:errorEnabled="false"
-                        app:startIconDrawable="@drawable/ic_school_name"
+                        app:startIconDrawable="@drawable/ic_education_course"
                         app:startIconTint="@null">
-
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/schoolEt"
+                            android:id="@+id/courseEt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapWords"
                             android:maxLines="1"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Percentage Field - Reduced error space -->
+                    <!-- University Field -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="University"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="8dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeColor="#A52955"
+                        app:hintTextColor="#A52955"
+                        app:startIconDrawable="@drawable/ic_board_name"
+                        app:startIconTint="@null">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/universityEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:maxLines="1"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- College Field -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="College"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="8dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeColor="#A52955"
+                        app:hintTextColor="#A52955"
+                        app:startIconDrawable="@drawable/ic_school_name"
+                        app:startIconTint="@null">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/collegeEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:maxLines="1"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <!-- Common Fields -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <!-- Percentage Field -->
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="8dp"
+                       android:layout_marginEnd="8dp"
                         android:hint="Percentage"
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
@@ -95,41 +222,8 @@
                             android:maxLength="5"
                             android:maxLines="1"/>
                     </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
 
-                <!-- Board and Year Row - Reduced top margin -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
-
-                    <!-- Board Field - Reduced error space -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
-                        android:hint="Board"
-                        app:boxCornerRadiusTopStart="12dp"
-                        app:boxCornerRadiusTopEnd="12dp"
-                        app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp"
-                        app:boxStrokeColor="#A52955"
-                        app:errorEnabled="false"
-                        app:startIconDrawable="@drawable/ic_board_name"
-                        app:startIconTint="@null">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/boardEt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textCapWords"
-                            android:maxLines="1"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Year Field - Reduced error space -->
+                    <!-- Year Field -->
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
@@ -157,112 +251,20 @@
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
-                <!-- Document Upload Section - Reduced margins -->
-                <com.google.android.material.card.MaterialCardView
+                <!-- Document Upload Section -->
+                <include
+                    layout="@layout/upload_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="#E0E0E0"
-                    app:strokeWidth="1dp">
+                    android:layout_marginTop="24dp"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="12dp">
-
-                        <TextView
-                            android:id="@+id/titleText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Upload your Marksheet"
-                            android:textColor="#A52955"
-                            android:textSize="16sp"/>
-
-                        <!-- Upload Card - Reduced height -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/uploadCard"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:layout_marginTop="12dp"
-                            app:cardCornerRadius="16dp"
-                            app:cardElevation="0dp"
-                            app:strokeColor="#E0E0E0"
-                            app:strokeWidth="1dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
-                                    android:src="@drawable/ic_file_upload"/>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="8dp"
-                                    android:fontFamily="@font/poppins_medium"
-                                    android:text="Select file"
-                                    android:textColor="#BDBDBD"
-                                    android:textSize="14sp"/>
-
-                                <TextView
-                                    android:id="@+id/selectedFileText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:fontFamily="@font/poppins_regular"
-                                    android:textColor="@color/primary"
-                                    android:textSize="12sp"
-                                    android:visibility="gone"/>
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <TextView
-                            android:id="@+id/dividerText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="12dp"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="or"
-                            android:textColor="#757575"
-                            android:textSize="14sp"/>
-
-                        <!-- Camera Button - Reduced height -->
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/cameraButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:layout_marginTop="12dp"
-                            android:backgroundTint="#7A203D"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Open Camera"
-                            android:textAllCaps="false"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp"
-                            app:cornerRadius="12dp"
-                            app:icon="@drawable/ic_camera"
-                            app:iconGravity="textStart"
-                            app:iconPadding="8dp"
-                            app:iconTint="@color/white"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Action Buttons Section - Reduced margins and heights -->
+                <!-- Action Buttons Section -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/uploadButton"
@@ -270,6 +272,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:text="Upload"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:textSize="14sp"
                         android:textColor="#7A203D"
                         app:cornerRadius="12dp"
@@ -291,6 +295,7 @@
                             android:layout_height="56dp"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
                             android:text="Add"
                             android:textSize="14sp"
                             android:textColor="#7A203D"
@@ -309,6 +314,7 @@
                             android:layout_marginStart="8dp"
                             android:text="Delete"
                             android:textSize="14sp"
+                            android:layout_marginEnd="8dp"
                             android:textColor="#7A203D"
                             app:cornerRadius="12dp"
                             app:icon="@drawable/ic_delete"
@@ -316,6 +322,21 @@
                             app:iconPadding="8dp"
                             app:iconTint="@null"/>
                     </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/exitButton"
+                        style="@style/CustomOutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Exit"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:textSize="14sp"
+                        android:textColor="#7A203D"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_logout"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="#7A203D"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -382,10 +382,21 @@ public class BasicInfoActivity extends AppCompatActivity {
                 getString(R.string.select_fields),
                 InputType.TYPE_CLASS_TEXT,
                 ctx -> {
-                    // Main container
-                    LinearLayout mainLayout = createHorizontalLayout(ctx);
+                    // Main container - Vertical orientation
+                    LinearLayout mainLayout = new LinearLayout(ctx);
+                    mainLayout.setOrientation(LinearLayout.VERTICAL);
                     mainLayout.setPadding(dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 0));
-                    mainLayout.setWeightSum(2);
+
+                    // First row container for gender and blood group
+                    LinearLayout firstRowLayout = new LinearLayout(ctx);
+                    firstRowLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    firstRowLayout.setWeightSum(2);
+                    LinearLayout.LayoutParams firstRowParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    firstRowParams.setMargins(0, 0, 0, dpToPx(ctx, 8));
+                    firstRowLayout.setLayoutParams(firstRowParams);
 
                     // Gender Spinner Section
                     CardView genderCard = new CardView(ctx);
@@ -394,8 +405,8 @@ public class BasicInfoActivity extends AppCompatActivity {
                     genderCard.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.white));
                     genderCard.setUseCompatPadding(true);
                     LinearLayout.LayoutParams genderCardParams = new LinearLayout.LayoutParams(
-                            dpToPx(ctx,60),
-                            dpToPx(ctx, 80), // Fixed height in dp, converted to pixels
+                            0,
+                            dpToPx(ctx, 80),
                             1.0f
                     );
                     genderCardParams.setMarginEnd(dpToPx(ctx, 4));
@@ -404,13 +415,17 @@ public class BasicInfoActivity extends AppCompatActivity {
                     LinearLayout genderSpinnerLayout = new LinearLayout(ctx);
                     genderSpinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
                     genderSpinnerLayout.setGravity(Gravity.CENTER_VERTICAL);
-                    genderSpinnerLayout.setPadding(dpToPx(ctx, 0), dpToPx(ctx, 0), dpToPx(ctx, 0), dpToPx(ctx, 0));
+                    genderSpinnerLayout.setPadding(dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8));
 
-                    // Gender Spinner
+                    LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(
+                            dpToPx(ctx, 24),
+                            dpToPx(ctx, 24)
+                    );
+
                     Spinner genderSpinner = new Spinner(ctx, Spinner.MODE_DROPDOWN);
                     LinearLayout.LayoutParams spinnerParams = new LinearLayout.LayoutParams(
-                            dpToPx(ctx,60),
-                            dpToPx(ctx, 80), // Fixed height in dp, converted to pixels
+                            0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
                             1.0f
                     );
                     genderSpinner.setLayoutParams(spinnerParams);
@@ -425,12 +440,12 @@ public class BasicInfoActivity extends AppCompatActivity {
                     genderSpinner.setBackgroundResource(R.drawable.spinner_ripple_bg);
 
                     ImageView genderDropdownArrow = new ImageView(ctx);
-                    LinearLayout.LayoutParams genderArrowParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams arrowParams = new LinearLayout.LayoutParams(
                             dpToPx(ctx, 24),
                             dpToPx(ctx, 24)
                     );
-                    genderArrowParams.setMarginStart(dpToPx(ctx, 0));
-                    genderDropdownArrow.setLayoutParams(genderArrowParams);
+                    arrowParams.setMarginStart(dpToPx(ctx, 8));
+                    genderDropdownArrow.setLayoutParams(arrowParams);
                     genderDropdownArrow.setImageResource(R.drawable.ic_dropdown_arrow);
                     genderDropdownArrow.setColorFilter(ContextCompat.getColor(ctx, R.color.text_secondary));
 
@@ -441,8 +456,8 @@ public class BasicInfoActivity extends AppCompatActivity {
                     bloodGroupCard.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.white));
                     bloodGroupCard.setUseCompatPadding(true);
                     LinearLayout.LayoutParams bloodGroupCardParams = new LinearLayout.LayoutParams(
-                            dpToPx(ctx,60),
-                            dpToPx(ctx, 80), // Fixed height in dp, converted to pixels
+                            0,
+                            dpToPx(ctx, 80),
                             1.0f
                     );
                     bloodGroupCardParams.setMarginStart(dpToPx(ctx, 4));
@@ -454,15 +469,9 @@ public class BasicInfoActivity extends AppCompatActivity {
                     bloodGroupSpinnerLayout.setPadding(dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8));
 
                     ImageView bloodGroupIcon = new ImageView(ctx);
-                    LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(
-                            dpToPx(ctx, 24),
-                            dpToPx(ctx, 24)
-                    );
-                    iconParams.setMarginEnd(dpToPx(ctx, 12));
                     bloodGroupIcon.setLayoutParams(iconParams);
                     bloodGroupIcon.setImageResource(R.drawable.ic_blood);
                     bloodGroupIcon.setColorFilter(null);
-                    bloodGroupIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
                     Spinner bloodGroupSpinner = new Spinner(ctx, Spinner.MODE_DROPDOWN);
                     bloodGroupSpinner.setLayoutParams(spinnerParams);
@@ -502,20 +511,88 @@ public class BasicInfoActivity extends AppCompatActivity {
                     bloodGroupSpinner.setBackgroundResource(R.drawable.spinner_ripple_bg);
 
                     ImageView bloodGroupDropdownArrow = new ImageView(ctx);
-                    LinearLayout.LayoutParams bloodGroupArrowParams = new LinearLayout.LayoutParams(
-                            dpToPx(ctx, 24),
-                            dpToPx(ctx, 24)
-                    );
-                    bloodGroupArrowParams.setMarginStart(dpToPx(ctx, 8));
-                    bloodGroupDropdownArrow.setLayoutParams(bloodGroupArrowParams);
+                    bloodGroupDropdownArrow.setLayoutParams(arrowParams);
                     bloodGroupDropdownArrow.setImageResource(R.drawable.ic_dropdown_arrow);
                     bloodGroupDropdownArrow.setColorFilter(ContextCompat.getColor(ctx, R.color.text_secondary));
 
-                    // Set up animations for both spinners
+                    // Second row container for marital status
+                    LinearLayout secondRowLayout = new LinearLayout(ctx);
+                    secondRowLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    LinearLayout.LayoutParams secondRowParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    secondRowLayout.setLayoutParams(secondRowParams);
+
+                    // Marital Status Spinner Section
+                    CardView maritalStatusCard = new CardView(ctx);
+                    maritalStatusCard.setCardElevation(dpToPx(ctx, 2));
+                    maritalStatusCard.setRadius(dpToPx(ctx, 12));
+                    maritalStatusCard.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.white));
+                    maritalStatusCard.setUseCompatPadding(true);
+                    LinearLayout.LayoutParams maritalStatusCardParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            dpToPx(ctx, 80)
+                    );
+                    maritalStatusCard.setLayoutParams(maritalStatusCardParams);
+
+                    LinearLayout maritalStatusSpinnerLayout = new LinearLayout(ctx);
+                    maritalStatusSpinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    maritalStatusSpinnerLayout.setGravity(Gravity.CENTER_VERTICAL);
+                    maritalStatusSpinnerLayout.setPadding(dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8), dpToPx(ctx, 8));
+
+                    ImageView maritalStatusIcon = new ImageView(ctx);
+                    maritalStatusIcon.setLayoutParams(iconParams);
+                    maritalStatusIcon.setImageResource(R.drawable.ic_marital_status);
+
+                    Spinner maritalStatusSpinner = new Spinner(ctx, Spinner.MODE_DROPDOWN);
+                    maritalStatusSpinner.setLayoutParams(spinnerParams);
+
+                    String[] maritalStatus = {"Single", "Married"};
+                    ArrayAdapter<String> maritalStatusAdapter = new ArrayAdapter<String>(ctx, R.layout.custom_spinner_item_1, maritalStatus) {
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            TextView view = (TextView) super.getView(position, convertView, parent);
+                            view.setTypeface(ResourcesCompat.getFont(ctx, R.font.poppins_medium));
+                            view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                            view.setTextColor(ContextCompat.getColor(ctx, R.color.text_primary));
+                            return view;
+                        }
+
+                        @Override
+                        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            TextView view = (TextView) super.getDropDownView(position, convertView, parent);
+                            view.setPadding(dpToPx(ctx, 16), dpToPx(ctx, 12), dpToPx(ctx, 16), dpToPx(ctx, 12));
+                            view.setTypeface(ResourcesCompat.getFont(ctx, R.font.poppins_regular));
+                            view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+
+                            if (position == maritalStatusSpinner.getSelectedItemPosition()) {
+                                view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.selected_item_bg));
+                                view.setTextColor(ContextCompat.getColor(ctx, R.color.red));
+                            } else {
+                                view.setBackgroundColor(Color.TRANSPARENT);
+                                view.setTextColor(ContextCompat.getColor(ctx, R.color.text_primary));
+                            }
+                            return view;
+                        }
+                    };
+
+                    maritalStatusAdapter.setDropDownViewResource(R.layout.custom_dropdown_item);
+                    maritalStatusSpinner.setAdapter(maritalStatusAdapter);
+                    maritalStatusSpinner.setBackgroundResource(R.drawable.spinner_ripple_bg);
+
+                    ImageView maritalStatusDropdownArrow = new ImageView(ctx);
+                    maritalStatusDropdownArrow.setLayoutParams(arrowParams);
+                    maritalStatusDropdownArrow.setImageResource(R.drawable.ic_dropdown_arrow);
+                    maritalStatusDropdownArrow.setColorFilter(ContextCompat.getColor(ctx, R.color.text_secondary));
+
+                    // Set up animations for all spinners
                     setupSpinnerAnimation(genderSpinner, genderDropdownArrow);
+                    setupSpinnerAnimation(maritalStatusSpinner, maritalStatusDropdownArrow);
                     setupSpinnerAnimation(bloodGroupSpinner, bloodGroupDropdownArrow);
 
-                    // Add views to their respective layouts
+                    // Add components to their layouts
                     genderSpinnerLayout.addView(genderSpinner);
                     genderSpinnerLayout.addView(genderDropdownArrow);
                     genderCard.addView(genderSpinnerLayout);
@@ -525,9 +602,19 @@ public class BasicInfoActivity extends AppCompatActivity {
                     bloodGroupSpinnerLayout.addView(bloodGroupDropdownArrow);
                     bloodGroupCard.addView(bloodGroupSpinnerLayout);
 
-                    // Add both cards to main layout
-                    mainLayout.addView(genderCard);
-                    mainLayout.addView(bloodGroupCard);
+                    maritalStatusSpinnerLayout.addView(maritalStatusIcon);
+                    maritalStatusSpinnerLayout.addView(maritalStatusSpinner);
+                    maritalStatusSpinnerLayout.addView(maritalStatusDropdownArrow);
+                    maritalStatusCard.addView(maritalStatusSpinnerLayout);
+
+                    // Add cards to their respective row layouts
+                    firstRowLayout.addView(genderCard);
+                    firstRowLayout.addView(bloodGroupCard);
+                    secondRowLayout.addView(maritalStatusCard);
+
+                    // Add rows to main layout
+                    mainLayout.addView(firstRowLayout);
+                    mainLayout.addView(secondRowLayout);
 
                     // Add tag to the container LinearLayout
                     mainLayout.setTag("combined_fields_container");
@@ -2224,24 +2311,32 @@ public class BasicInfoActivity extends AppCompatActivity {
                         // Existing combined fields handling code remains the same
                         ViewGroup containerGroup = (ViewGroup) child;
                         for (int j = 0; j < containerGroup.getChildCount(); j++) {
-                            View cardView = containerGroup.getChildAt(j);
-                            if (cardView instanceof CardView) {
-                                ViewGroup cardContent = (ViewGroup) ((CardView) cardView).getChildAt(0);
-                                for (int k = 0; k < cardContent.getChildCount(); k++) {
-                                    View spinnerContainer = cardContent.getChildAt(k);
-                                    if (spinnerContainer instanceof Spinner) {
-                                        Spinner spinner = (Spinner) spinnerContainer;
-                                        Object selectedItem = spinner.getSelectedItem();
+                            View rowLayout = containerGroup.getChildAt(j);
+                            if (rowLayout instanceof LinearLayout) {
+                                for (int l = 0; l < ((LinearLayout) rowLayout).getChildCount(); l++) {
+                                    View cardView = ((LinearLayout) rowLayout).getChildAt(l);
+                                    if (cardView instanceof CardView) {
+                                        ViewGroup cardContent = (ViewGroup) ((CardView) cardView).getChildAt(0);
+                                        for (int k = 0; k < cardContent.getChildCount(); k++) {
+                                            View spinnerContainer = cardContent.getChildAt(k);
+                                            if (spinnerContainer instanceof Spinner) {
+                                                Spinner spinner = (Spinner) spinnerContainer;
+                                                Object selectedItem = spinner.getSelectedItem();
 
-                                        if (selectedItem instanceof GenderItem) {
-                                            GenderItem genderItem = (GenderItem) selectedItem;
-                                            formData.addField("gender", genderItem.getText());
-                                            Log.d(TAG, "Added gender: " + genderItem.getText());
-                                        } else if (selectedItem instanceof String) {
-                                            String value = (String) selectedItem;
-                                            if (value.contains("+") || value.contains("-")) {
-                                                formData.addField("blood_group", value);
-                                                Log.d(TAG, "Added blood_group: " + value);
+                                                if (selectedItem instanceof GenderItem) {
+                                                    GenderItem genderItem = (GenderItem) selectedItem;
+                                                    formData.addField("gender", genderItem.getText());
+                                                    Log.d(TAG, "Added gender: " + genderItem.getText());
+                                                } else if (selectedItem instanceof String) {
+                                                    String value = (String) selectedItem;
+                                                    if (value.contains("+") || value.contains("-")) {
+                                                        formData.addField("blood_group", value);
+                                                        Log.d(TAG, "Added blood_group: " + value);
+                                                    } else if ("Single".equals(value) || "Married".equals(value)) {
+                                                        formData.addField("marital_status", value);
+                                                        Log.d(TAG, "Added marital_status: " + value);
+                                                    }
+                                                }
                                             }
                                         }
                                     }

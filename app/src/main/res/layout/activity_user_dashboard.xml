@@ -112,12 +112,12 @@
                             android:textStyle="bold"/>
 
                         <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Share your basic details to complete your onboarding process"
-                        android:textColor="@color/white"
-                        android:layout_marginTop="8dp"
-                        android:letterSpacing="0.05"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Share your basic details to complete your onboarding process"
+                            android:textColor="@color/white"
+                            android:layout_marginTop="8dp"
+                            android:letterSpacing="0.05"/>
 
 
                         <LinearLayout
@@ -133,7 +133,7 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Financial Preferences Card -->
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/educationalInfo"
                     android:layout_width="0dp"
@@ -177,6 +177,28 @@
 
                         </LinearLayout>
                     </LinearLayout>
+                    <FrameLayout
+                        android:id="@+id/educationalInfoOverlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_lock"
+                                app:tint="@color/white" />
+
+
+                        </LinearLayout>
+                    </FrameLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Lifestyle Preferences Card -->
@@ -221,6 +243,28 @@
 
                         </LinearLayout>
                     </LinearLayout>
+                    <FrameLayout
+                        android:id="@+id/nominationOverlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#7F000000">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_lock"
+                                app:tint="@color/white" />
+
+
+                        </LinearLayout>
+                    </FrameLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Other Preferences Card -->
@@ -266,6 +310,28 @@
 
                         </LinearLayout>
                     </LinearLayout>
+                    <FrameLayout
+                        android:id="@+id/experienceOverlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_lock"
+                                 app:tint="@color/white" />
+
+
+                        </LinearLayout>
+                    </FrameLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/InsuranceNomination"
@@ -309,6 +375,28 @@
 
                         </LinearLayout>
                     </LinearLayout>
+                    <FrameLayout
+                        android:id="@+id/insuranceOverlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_lock"
+                                app:tint="@color/white" />
+
+
+                        </LinearLayout>
+                    </FrameLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/PreviewDetails"
@@ -351,6 +439,27 @@
 
                         </LinearLayout>
                     </LinearLayout>
+                    <FrameLayout
+                        android:id="@+id/previewOverlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_lock"
+                                app:tint="@color/white" />
+
+                        </LinearLayout>
+                    </FrameLayout>
                 </com.google.android.material.card.MaterialCardView>
             </androidx.gridlayout.widget.GridLayout>
         </LinearLayout>

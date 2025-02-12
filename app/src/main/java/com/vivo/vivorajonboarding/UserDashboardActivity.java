@@ -39,6 +39,8 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
     private BottomAppBar bottomAppBar;
     private BottomNavigationView bottomNavigationView;
     private FloatingActionButton fab;
+    private View educationalInfoOverlay, nominationOverlay, experienceOverlay, insuranceOverlay, previewOverlay;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
         setContentView(R.layout.activity_user_dashboard);
 
         initializeViews();
+        setupOverlays();
         setupClickListeners();
         setupBottomNavigation();
     }
@@ -61,6 +64,26 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
         bottomAppBar = findViewById(R.id.bottomAppBar);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fab = findViewById(R.id.fab);
+        educationalInfoOverlay = findViewById(R.id.educationalInfoOverlay);
+        nominationOverlay = findViewById(R.id.nominationOverlay);
+        experienceOverlay = findViewById(R.id.experienceOverlay);
+        insuranceOverlay = findViewById(R.id.insuranceOverlay);
+        previewOverlay = findViewById(R.id.previewOverlay);
+    }
+    private void setupOverlays() {
+        // Only the basic info card will be clickable initially
+        educationCard.setEnabled(false);
+        nominationCard.setEnabled(false);
+        experienceCard.setEnabled(false);
+        insuranceCard.setEnabled(false);
+        previewCard.setEnabled(false);
+
+        // Make overlays visible
+        educationalInfoOverlay.setVisibility(View.VISIBLE);
+        nominationOverlay.setVisibility(View.VISIBLE);
+        experienceOverlay.setVisibility(View.VISIBLE);
+        insuranceOverlay.setVisibility(View.VISIBLE);
+        previewOverlay.setVisibility(View.VISIBLE);
     }
 
     private void setupClickListeners() {
@@ -69,30 +92,22 @@ public class UserDashboardActivity extends AppCompatActivity implements Navigati
             startActivity(intent);
         });
 
+        // Add click listeners for locked cards to show toast message
+        View.OnClickListener lockedCardListener = v ->
+                Toast.makeText(this, "Complete Basic Info first", Toast.LENGTH_SHORT).show();
+
+        educationalInfoOverlay.setOnClickListener(lockedCardListener);
+        nominationOverlay.setOnClickListener(lockedCardListener);
+        experienceOverlay.setOnClickListener(lockedCardListener);
+        insuranceOverlay.setOnClickListener(lockedCardListener);
+        previewOverlay.setOnClickListener(lockedCardListener);
+    }
+
+    public void unlockEducationalCard() {
+        educationCard.setEnabled(true);
+        educationalInfoOverlay.setVisibility(View.GONE);
         educationCard.setOnClickListener(v -> {
             Intent intent = new Intent(UserDashboardActivity.this, EducationActivity.class);
-            startActivity(intent);
-        });
-
-        nominationCard.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, NominationActivity.class);
-            startActivity(intent);
-        });
-        nominationCard.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, NominationActivity.class);
-            startActivity(intent);
-        });
-
-        experienceCard.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, PastExperienceDetailsActivity.class);
-            startActivity(intent);
-        });
-        insuranceCard.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, InsuranceNominationActivity.class);
-            startActivity(intent);
-        });
-        previewCard.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, PreviewActivity.class);
             startActivity(intent);
         });
     }

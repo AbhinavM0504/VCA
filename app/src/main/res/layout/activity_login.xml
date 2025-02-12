@@ -4,17 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
+    android:background="@drawable/login_background_five"
     tools:context=".LoginActivity">
-
-    <!-- Top Wave Shape -->
-    <View
-        android:id="@+id/topWaveShape"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@drawable/top_wave_bg"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <!-- Logo Container -->
     <LinearLayout
         android:id="@+id/logoContainer"
@@ -32,7 +23,8 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:contentDescription="Company Logo"
-            android:src="@drawable/vivo_white_logo" />
+            android:src="@drawable/vivo_white_logo"
+            app:tint="@color/black" />
 
 
     </LinearLayout>
