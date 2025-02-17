@@ -312,96 +312,131 @@ public class NomineeCardFragment extends Fragment {
     private void setupTextWatchers() {
         percentageEt.addTextChangedListener(new TextWatcher() {
             private String beforeText = "";
+            private boolean isUpdating = false;
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                beforeText = s.toString();
+                if (!isUpdating) {
+                    beforeText = s.toString().trim();
+                    if (!beforeText.isEmpty()) {
+                        try {
+                            float value = Float.parseFloat(beforeText);
+                            if (value >= 0 && value <= 100) {
+                                validatePercentageAndUpdateUI(beforeText);
+                            }
+                        } catch (NumberFormatException ignored) {
+                            // Ignore parsing errors during typing
+                        }
+                    }
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Do nothing here
+                // Update UI while typing
+                if (!isUpdating) {
+                    String currentText = s.toString().trim();
+                    if (!currentText.isEmpty()) {
+                        try {
+                            float value = Float.parseFloat(currentText);
+                            if (value >= 0 && value <= 100) {
+                                validatePercentageAndUpdateUI(currentText);
+                            }
+                        } catch (NumberFormatException ignored) {
+                            // Ignore parsing errors during typing
+                        }
+                    }
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (isUpdating) return;
+
                 String currentText = s.toString().trim();
+                isUpdating = true;
 
-                // Handle empty or null input
-                if (currentText.isEmpty()) {
-                    validatePercentageAndUpdateUI("0");
-                    return;
-                }
-
-                // Prevent multiple dots
-                if (currentText.contains(".")) {
-                    int dotCount = currentText.length() - currentText.replace(".", "").length();
-                    if (dotCount > 1) {
-                        percentageEt.setText(beforeText);
-                        percentageEt.setSelection(beforeText.length());
+                try {
+                    // Handle empty input
+                    if (currentText.isEmpty()) {
+                        percentageEt.setText("0");
+                        percentageEt.setSelection(1);
+                        validatePercentageAndUpdateUI("0");
+                        isUpdating = false;
                         return;
                     }
-                }
 
-                // Validate numeric input
-                try {
-                    float newValue = Float.parseFloat(currentText);
-                    validatePercentageAndUpdateUI(currentText);
+                    // Prevent multiple dots
+                    if (currentText.contains(".")) {
+                        int dotCount = currentText.length() - currentText.replace(".", "").length();
+                        if (dotCount > 1) {
+                            percentageEt.setText(beforeText);
+                            percentageEt.setSelection(beforeText.length());
+                            isUpdating = false;
+                            return;
+                        }
+                    }
+
+                    // Parse and validate the number
+                    float value = Float.parseFloat(currentText);
+                    if (value < 0 || value > 100) {
+                        percentageEt.setText(beforeText);
+                        percentageEt.setSelection(beforeText.length());
+                        percentageInputLayout.setError("Percentage must be between 0 and 100");
+                    } else {
+                        percentageInputLayout.setError(null);
+                        validatePercentageAndUpdateUI(currentText);
+                    }
                 } catch (NumberFormatException e) {
                     percentageEt.setText(beforeText);
                     percentageEt.setSelection(beforeText.length());
+                    percentageInputLayout.setError("Invalid percentage format");
+                } finally {
+                    isUpdating = false;
                 }
             }
         });
     }
 
     private void validatePercentageAndUpdateUI(String percentageStr) {
+        if (getActivity() == null) return;
+
         try {
-            NominationActivity activity = (NominationActivity) requireActivity();
+            NominationActivity activity = (NominationActivity) getActivity();
             float currentPercentage = percentageStr.isEmpty() ? 0 : Float.parseFloat(percentageStr);
 
             // Get total percentage excluding current nominee
             float totalOtherPercentage = activity.calculateTotalPercentage() -
-                    (nomineeCard.getPercentage() != null && !nomineeCard.getPercentage().isEmpty() ?
+                    (nomineeCard != null && nomineeCard.getPercentage() != null && !nomineeCard.getPercentage().isEmpty() ?
                             Float.parseFloat(nomineeCard.getPercentage()) : 0);
 
             float newTotalPercentage = totalOtherPercentage + currentPercentage;
 
-            // Update UI based on validation
             if (currentPercentage < 0 || currentPercentage > 100) {
                 percentageInputLayout.setError("Percentage must be between 0 and 100");
-                updateSubmitButtonVisibility(false);
                 return;
             }
 
             if (newTotalPercentage > 100) {
-                // Calculate maximum allowed input
                 float maxAllowed = 100 - totalOtherPercentage;
                 String formattedMax = String.format(Locale.US, "%.1f", maxAllowed);
 
-                // Reset to previous valid value
                 percentageEt.setText(formattedMax);
                 percentageEt.setSelection(formattedMax.length());
-
                 percentageInputLayout.setError("Total percentage cannot exceed 100%");
-                updateSubmitButtonVisibility(false);
                 return;
             }
 
             // Valid input
             percentageInputLayout.setError(null);
-            nomineeCard.setPercentage(percentageStr);
+            if (nomineeCard != null) {
+                nomineeCard.setPercentage(percentageStr);
+            }
 
-            // Update submit button visibility
-            boolean isValidTotal = Math.abs(newTotalPercentage - 100) < 0.01;
-            boolean areFieldsValid = validateFields(); // Implement this method to check name, DOB, etc.
-            updateSubmitButtonVisibility(isValidTotal && areFieldsValid);
-
-
-
+            // Update submit button visibility based on total percentage
+            activity.checkAndAddSubmitButton(position);
         } catch (NumberFormatException e) {
             percentageInputLayout.setError("Invalid percentage format");
-            updateSubmitButtonVisibility(false);
         }
     }
 
@@ -492,7 +527,9 @@ public class NomineeCardFragment extends Fragment {
                 submitButton.setEnabled(true);
 
                 // Reset the slide position without animation initially
-                submitButton.setTranslationX(0);
+                if (submitButton != null && submitButton.getWidth() > 0) {  // Add this check
+                    submitButton.resetSlide();
+                }
 
                 // Find and update the slide text
                 TextView slideText = submitButton.findViewById(R.id.slideText);
@@ -536,37 +573,31 @@ public class NomineeCardFragment extends Fragment {
     }
 
     public void toggleSubmitButton(boolean show) {
-        if (submitButton != null) {
-            if (show) {
-                // Check if the form is valid before showing
-                boolean isValid = isValidForSubmission();
-                if (isValid) {
-                    // Show the button
-                    submitButton.setVisibility(View.VISIBLE);
-                    submitButton.setEnabled(true);
+        if (submitButton == null) return;
 
-                    // Reset the slide position
-                    submitButton.resetSlide();
+        boolean shouldShowButton = show &&
+                isValidForSubmission() &&
+                getActivity() instanceof NominationActivity &&
+                position == ((NominationActivity) getActivity()).getNomineeCards().size() - 1;
 
-                    // Update text appearance
-                    TextView slideText = submitButton.findViewById(R.id.slideText);
-                    if (slideText != null) {
-                        slideText.setText("Slide to Submit");
-                        slideText.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
-                        slideText.setAlpha(1.0f);
-                    }
-                }
+        if (shouldShowButton) {
+            submitButton.setVisibility(View.VISIBLE);
+            submitButton.setEnabled(true);
+            submitButton.resetSlide();
+
+            TextView slideText = submitButton.findViewById(R.id.slideText);
+            if (slideText != null) {
+                slideText.setText("Slide to Submit");
+                slideText.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+                slideText.setAlpha(1.0f);
+            }
+        } else {
+            if (submitButton.getVisibility() == View.VISIBLE) {
+                submitButton.setEnabled(false);
+                submitButton.resetSlide();
+                submitButton.postDelayed(() -> submitButton.setVisibility(View.GONE), 300);
             } else {
-                // If currently visible, animate out
-                if (submitButton.getVisibility() == View.VISIBLE) {
-                    submitButton.setEnabled(false);
-                    submitButton.resetSlide();
-
-                    // Hide after animation completes
-                    submitButton.postDelayed(() -> {
-                        submitButton.setVisibility(View.GONE);
-                    }, 300); // Match SLIDE_DURATION from SlidingButton
-                }
+                submitButton.setVisibility(View.GONE);
             }
         }
     }
@@ -578,7 +609,10 @@ public class NomineeCardFragment extends Fragment {
         if (deleteButton != null) {
             deleteButton.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
         }
-        validateFields();
+        // Check submit button visibility
+        if (getActivity() instanceof NominationActivity) {
+            ((NominationActivity) getActivity()).checkAndAddSubmitButton(position);
+        }
     }
 
     public void resetRelationSpinner() {
@@ -615,6 +649,7 @@ public class NomineeCardFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        // Clean up slide complete listener to prevent memory leaks
         if (submitButton != null) {
             submitButton.setOnSlideCompleteListener(null);
         }

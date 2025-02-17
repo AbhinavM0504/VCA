@@ -3,15 +3,18 @@ package com.vivo.vivorajonboarding.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +31,32 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 import com.vivo.vivorajonboarding.PastExperienceDetailsActivity;
 import com.vivo.vivorajonboarding.R;
+import com.vivo.vivorajonboarding.api.ApiService;
+import com.vivo.vivorajonboarding.api.RetrofitClient;
+import com.vivo.vivorajonboarding.model.ApiResponse3;
 import com.vivo.vivorajonboarding.model.ExperienceCard;
+import com.vivo.vivorajonboarding.model.ExperienceSubmitRequest;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ExperienceCardFragment extends Fragment {
     private static final String ARG_EXPERIENCE_CARD = "experience_card";
@@ -147,7 +168,7 @@ public class ExperienceCardFragment extends Fragment {
 
     private void initializeViews(View view) {
         experienceImageIv = view.findViewById(R.id.experienceImageIv);
-        fileNameTv = new TextView(requireContext()); // Add this TextView to your layout
+        fileNameTv = view.findViewById(R.id.fileNameTv);
         ImageButton addExpImgBtn = view.findViewById(R.id.addExpImgBtn);
 
         TextInputEditText companyNameEt = view.findViewById(R.id.companyNameEt);
@@ -162,6 +183,11 @@ public class ExperienceCardFragment extends Fragment {
             startDateEt.setText(experienceCard.getStartDate());
             endDateEt.setText(experienceCard.getEndDate());
 
+            // Disable fields if card is submitted
+            if (experienceCard.isSubmitted()) {
+                disableAllFields(view);
+            }
+
             if (experienceCard.getFileUri() != null) {
                 fileUri = Uri.parse(experienceCard.getFileUri());
                 if (experienceCard.isPDF()) {
@@ -173,6 +199,15 @@ public class ExperienceCardFragment extends Fragment {
         }
 
         addExpImgBtn.setOnClickListener(v -> showFilePickerOptions());
+    }
+
+    private void disableAllFields(View view) {
+        // Disable all input fields
+        view.findViewById(R.id.companyNameEt).setEnabled(false);
+        view.findViewById(R.id.jobTitleEt).setEnabled(false);
+        view.findViewById(R.id.startDateEt).setEnabled(false);
+        view.findViewById(R.id.endDateEt).setEnabled(false);
+        view.findViewById(R.id.addExpImgBtn).setEnabled(false);
     }
 
     private void showFilePickerOptions() {
@@ -328,35 +363,274 @@ public class ExperienceCardFragment extends Fragment {
         MaterialButton saveExperienceBtn = view.findViewById(R.id.saveExperienceBtn);
 
         addButton.setOnClickListener(v -> {
+            saveCurrentCardData(); // Save before adding new card
             if (getActivity() instanceof PastExperienceDetailsActivity) {
                 ((PastExperienceDetailsActivity) getActivity()).addNewExperienceCard();
             }
         });
 
         deleteButton.setOnClickListener(v -> {
-            if (getActivity() instanceof PastExperienceDetailsActivity) {
-                ((PastExperienceDetailsActivity) getActivity()).removeCard(position);
+            if (!experienceCard.isMandatory()) {
+                showDeleteConfirmation();
             }
         });
 
+        // Modified save button listener
         saveExperienceBtn.setOnClickListener(v -> {
-            // Implement save functionality
-            saveExperienceData();
+            if (getActivity() instanceof PastExperienceDetailsActivity) {
+                PastExperienceDetailsActivity activity = (PastExperienceDetailsActivity) getActivity();
+
+                // First save current card data
+                saveCurrentCardData();
+
+                // Then get all cards (which will now include the updated current card)
+                List<ExperienceCard> allCards = activity.getAllExperienceCards();
+
+                // Add real-time validation logging
+                for (ExperienceCard card : allCards) {
+                    Log.d("CardData", "Company: " + card.getCompanyName());
+                    Log.d("CardData", "Job: " + card.getJobTitle());
+                    Log.d("CardData", "Start: " + card.getStartDate());
+                    Log.d("CardData", "End: " + card.getEndDate());
+                    Log.d("CardData", "File: " + card.getFileUri());
+                }
+
+                // Now validate and submit
+                if (validateAllCards()) {
+                    submitAllExperienceData();
+                }
+            }
         });
 
-        // Date picker listeners
         setupDatePickers(view);
     }
 
-    private void updateButtonsVisibility(View view) {
+
+    private void saveCurrentCardData() {
+        TextInputEditText companyNameEt = requireView().findViewById(R.id.companyNameEt);
+        TextInputEditText jobTitleEt = requireView().findViewById(R.id.jobTitleEt);
+        TextInputEditText startDateEt = requireView().findViewById(R.id.startDateEt);
+        TextInputEditText endDateEt = requireView().findViewById(R.id.endDateEt);
+
+        String companyName = companyNameEt.getText() != null ? companyNameEt.getText().toString().trim() : "";
+        String jobTitle = jobTitleEt.getText() != null ? jobTitleEt.getText().toString().trim() : "";
+        String startDate = startDateEt.getText() != null ? startDateEt.getText().toString().trim() : "";
+        String endDate = endDateEt.getText() != null ? endDateEt.getText().toString().trim() : "";
+
+        experienceCard.setCompanyName(companyName);
+        experienceCard.setJobTitle(jobTitle);
+        experienceCard.setStartDate(startDate);
+        experienceCard.setEndDate(endDate);
+
+        if (fileUri != null) {
+            experienceCard.setFileUri(fileUri.toString());
+            experienceCard.setPDF(isPDF);
+        }
+
+        // Add debug logging
+        Log.d("SaveCardData", "Saving card data:");
+        Log.d("SaveCardData", "Company: " + companyName);
+        Log.d("SaveCardData", "Job: " + jobTitle);
+        Log.d("SaveCardData", "Start: " + startDate);
+        Log.d("SaveCardData", "End: " + endDate);
+        Log.d("SaveCardData", "File: " + (fileUri != null ? fileUri.toString() : "null"));
+    }
+
+    private boolean validateAllCards() {
+        if (getActivity() instanceof PastExperienceDetailsActivity) {
+            PastExperienceDetailsActivity activity = (PastExperienceDetailsActivity) getActivity();
+            List<ExperienceCard> allCards = activity.getAllExperienceCards();
+
+            for (ExperienceCard card : allCards) {
+                if (!isCardComplete(card)) {
+                    Toast.makeText(requireContext(), "Please complete all experience cards before submitting", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void submitAllExperienceData() {
+        if (getActivity() instanceof PastExperienceDetailsActivity) {
+            PastExperienceDetailsActivity activity = (PastExperienceDetailsActivity) getActivity();
+            List<ExperienceCard> allCards = activity.getAllExperienceCards();
+
+            // Debug logging
+            for (int i = 0; i < allCards.size(); i++) {
+                ExperienceCard card = allCards.get(i);
+                Log.d("CardValidation", "Card " + i + ":");
+                Log.d("CardValidation", "Company: " + card.getCompanyName());
+                Log.d("CardValidation", "Job Title: " + card.getJobTitle());
+                Log.d("CardValidation", "Start Date: " + card.getStartDate());
+                Log.d("CardValidation", "End Date: " + card.getEndDate());
+                Log.d("CardValidation", "File URI: " + card.getFileUri());
+                Log.d("CardValidation", "Is Complete: " + isCardComplete(card));
+            }
+
+
+            
+
+
+            // Show loading dialog
+            ProgressDialog progressDialog = new ProgressDialog(requireContext());
+            progressDialog.setMessage("Submitting experience data...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+            // Create multipart request parts
+            List<MultipartBody.Part> files = new ArrayList<>();
+            List<ExperienceSubmitRequest.ExperienceData> experiences = new ArrayList<>();
+
+            try {
+                for (int i = 0; i < allCards.size(); i++) {
+                    ExperienceCard card = allCards.get(i);
+
+                    // Convert URI to File and compress if it's an image
+                    Uri fileUri = Uri.parse(card.getFileUri());
+                    File file;
+
+                    if (card.isPDF()) {
+                        file = new File(getRealPathFromURI(fileUri));
+                        RequestBody requestFile = RequestBody.create(MediaType.parse("application/pdf"), file);
+                        files.add(MultipartBody.Part.createFormData("file" + i, file.getName(), requestFile));
+                    } else {
+                        // Compress image before upload
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), fileUri);
+                        File cacheDir = requireContext().getCacheDir();
+                        file = new File(cacheDir, "image_" + i + ".jpg");
+
+                        FileOutputStream fos = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+                        fos.flush();
+                        fos.close();
+
+                        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+                        files.add(MultipartBody.Part.createFormData("file" + i, file.getName(), requestFile));
+                    }
+
+                    // Add experience data
+                    ExperienceSubmitRequest.ExperienceData expData = new ExperienceSubmitRequest.ExperienceData(
+                         card
+                    );
+                    experiences.add(expData);
+                }
+
+                // Create request body
+                String userId = ((PastExperienceDetailsActivity) getActivity()).getUserId();
+                ExperienceSubmitRequest request = new ExperienceSubmitRequest(userId, experiences);
+                RequestBody requestBody = RequestBody.create(
+                        MediaType.parse("application/json"),
+                        new Gson().toJson(request)
+                );
+
+                // Make API call
+                ApiService apiService = RetrofitClient.getInstance().getApi();
+                apiService.submitExperience(requestBody, files).enqueue(new Callback<ApiResponse3>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse3> call, Response<ApiResponse3> response) {
+                        progressDialog.dismiss();
+
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getMessage() != null) {
+                                // Mark all cards as submitted
+                                for (ExperienceCard card : allCards) {
+                                    card.setSubmitted(true);
+                                }
+                                activity.refreshAllFragments();
+                                Toast.makeText(requireContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                // Navigate to next screen or finish
+                                activity.finish();
+                            } else {
+                                Toast.makeText(requireContext(), response.body().getError(), Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Error submitting data", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse3> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            } catch (IOException e) {
+                progressDialog.dismiss();
+                Toast.makeText(requireContext(), "Error processing files: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    // Helper method to get real path from URI
+    private String getRealPathFromURI(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = requireContext().getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) return null;
+
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String path = cursor.getString(column_index);
+        cursor.close();
+        return path;
+    }
+
+
+
+    private boolean isCardComplete(ExperienceCard card) {
+        if (card == null) return false;
+
+        boolean hasCompanyName = card.getCompanyName() != null && !card.getCompanyName().trim().isEmpty();
+        boolean hasJobTitle = card.getJobTitle() != null && !card.getJobTitle().trim().isEmpty();
+        boolean hasStartDate = card.getStartDate() != null && !card.getStartDate().trim().isEmpty();
+        boolean hasEndDate = card.getEndDate() != null && !card.getEndDate().trim().isEmpty();
+        boolean hasFile = card.getFileUri() != null && !card.getFileUri().trim().isEmpty();
+
+        // Enhanced logging
+        Log.d("CardValidation", "Validating card:");
+        Log.d("CardValidation", "Company Name (" + card.getCompanyName() + "): " + hasCompanyName);
+        Log.d("CardValidation", "Job Title (" + card.getJobTitle() + "): " + hasJobTitle);
+        Log.d("CardValidation", "Start Date (" + card.getStartDate() + "): " + hasStartDate);
+        Log.d("CardValidation", "End Date (" + card.getEndDate() + "): " + hasEndDate);
+        Log.d("CardValidation", "File URI (" + card.getFileUri() + "): " + hasFile);
+
+        boolean isComplete = hasCompanyName && hasJobTitle && hasStartDate && hasEndDate && hasFile;
+        Log.d("CardValidation", "Is Complete: " + isComplete);
+
+        return isComplete;
+    }
+
+
+    private void showDeleteConfirmation() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Delete Education Record")
+                .setMessage("Are you sure you want to delete this education record?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    if (getActivity() instanceof PastExperienceDetailsActivity) {
+                        ((PastExperienceDetailsActivity) getActivity()).removeCard(position);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    public void updateButtonsVisibility(View view) {
+        if (view == null) return;
+
+        MaterialButton addButton = view.findViewById(R.id.addButton);
         MaterialButton deleteButton = view.findViewById(R.id.deleteButton);
         MaterialButton saveExperienceBtn = view.findViewById(R.id.saveExperienceBtn);
 
-        // Show delete button only for non-mandatory cards (after first card)
-        deleteButton.setVisibility(experienceCard.isMandatory() ? View.GONE : View.VISIBLE);
+        // Show delete button only for non-mandatory cards
+        deleteButton.setVisibility(!experienceCard.isMandatory() ? View.VISIBLE : View.GONE);
 
-        // Show save button only on the last card
+        // Show save button ONLY on the last card
         saveExperienceBtn.setVisibility(isLast ? View.VISIBLE : View.GONE);
+
+        // Show add button ONLY on the last card
+        addButton.setVisibility(isLast ? View.VISIBLE : View.GONE);
     }
 
     private void setupDatePickers(View view) {
@@ -395,32 +669,8 @@ public class ExperienceCardFragment extends Fragment {
         datePickerDialog.show();
     }
 
-    private void saveExperienceData() {
-        TextInputEditText companyNameEt = requireView().findViewById(R.id.companyNameEt);
-        TextInputEditText jobTitleEt = requireView().findViewById(R.id.jobTitleEt);
-        TextInputEditText startDateEt = requireView().findViewById(R.id.startDateEt);
-        TextInputEditText endDateEt = requireView().findViewById(R.id.endDateEt);
-
-        // Validate fields
-        if (companyNameEt.getText().toString().isEmpty() ||
-                jobTitleEt.getText().toString().isEmpty() ||
-                startDateEt.getText().toString().isEmpty() ||
-                endDateEt.getText().toString().isEmpty() ||
-                fileUri == null) {
-
-            Toast.makeText(requireContext(), "Please fill all fields and upload experience letter", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Update experience card data
-        experienceCard.setCompanyName(companyNameEt.getText().toString());
-        experienceCard.setJobTitle(jobTitleEt.getText().toString());
-        experienceCard.setStartDate(startDateEt.getText().toString());
-        experienceCard.setEndDate(endDateEt.getText().toString());
-        experienceCard.setFileUri(fileUri.toString());
-        experienceCard.setPDF(isPDF);
-
-        // Notify activity of save
-
+    // Add this method to update isLast flag
+    public void setIsLast(boolean isLast) {
+        this.isLast = isLast;
     }
 }

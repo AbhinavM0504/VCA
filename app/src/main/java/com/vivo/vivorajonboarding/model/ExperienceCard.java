@@ -12,9 +12,11 @@ public class ExperienceCard implements Serializable {
     private boolean isPDF;         // Flag to identify file type
     private boolean mandatory;
     private String fileName;       // For storing the name of uploaded file
+    private boolean isSubmitted;    // Add this field
 
     public ExperienceCard(boolean mandatory) {
         this.mandatory = mandatory;
+        this.isSubmitted = false;
     }
 
     // Existing getters and setters
@@ -57,6 +59,10 @@ public class ExperienceCard implements Serializable {
         experienceLetterPath = null;
         isPDF = false;
     }
+
+    // Add getter and setter
+    public boolean isSubmitted() { return isSubmitted; }
+    public void setSubmitted(boolean submitted) { isSubmitted = submitted; }
 
     @Override
     public String toString() {

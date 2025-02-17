@@ -68,6 +68,10 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true" />
         <activity
+            android:name=".DocumentUploadActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="true" />
+        <activity
             android:name=".PastExperienceDetailsActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true" />

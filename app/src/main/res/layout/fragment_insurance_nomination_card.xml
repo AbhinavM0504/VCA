@@ -146,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:weightSum="2">
 
                     <com.google.android.material.card.MaterialCardView
@@ -190,15 +190,7 @@
                                     app:tint="@color/white" />
                             </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/fileAadhaarFrontNameTv"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:gravity="center"
-                                android:textColor="#212121"
-                                android:visibility="gone"
-                                android:fontFamily="@font/poppins_regular"/>
+
 
                             <ImageView
                                 android:id="@+id/aadhaarFrontImageIv"
@@ -252,15 +244,7 @@
                                     app:tint="@color/white" />
                             </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/fileAadhaarBackNameTv"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:gravity="center"
-                                android:textColor="#212121"
-                                android:visibility="gone"
-                                android:fontFamily="@font/poppins_regular"/>
+
 
                             <ImageView
                                 android:id="@+id/aadhaarBackImageIv"
@@ -313,6 +297,19 @@
                         app:iconGravity="textStart"
                         app:iconPadding="8dp"
                         app:iconTint="@null"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/submitContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                   >
+
+                    <com.vivo.vivorajonboarding.SlidingButtonOne
+                        android:id="@+id/submitButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                         />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

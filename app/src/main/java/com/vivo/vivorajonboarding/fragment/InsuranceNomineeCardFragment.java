@@ -31,6 +31,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.vivo.vivorajonboarding.InsuranceNominationActivity;
 import com.vivo.vivorajonboarding.R;
+import com.vivo.vivorajonboarding.SlidingButton;
+import com.vivo.vivorajonboarding.SlidingButtonOne;
 import com.vivo.vivorajonboarding.model.InsuranceNomineeCard;
 import com.vivo.vivorajonboarding.model.NomineeCard;
 import com.vivo.vivorajonboarding.model.RelationItem;
@@ -53,10 +55,12 @@ public class InsuranceNomineeCardFragment extends Fragment {
     private TextView cardTitleText;
     private FloatingActionButton addAadhaarFrontImgBtn, addAadhaarBackImgBtn;
     private ImageView aadhaarFrontImageIv, aadhaarBackImageIv;
-    private TextView fileAadhaarFrontNameTv, fileAadhaarBackNameTv;
+
     private InsuranceNomineeCard nomineeCard;
     private int position;
     private String currentRelation;
+    private LinearLayout submitContainer;
+    private SlidingButtonOne submitButton;
 
     private final RelationItem[] relations = {
             new RelationItem("Father", R.drawable.ic_father_one),
@@ -109,7 +113,6 @@ public class InsuranceNomineeCardFragment extends Fragment {
                 }
         );
     }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_insurance_nomination_card, container, false);
@@ -125,12 +128,25 @@ public class InsuranceNomineeCardFragment extends Fragment {
         setupButtons();
         setupImageButtons();
         setupValidation();
+        initializeSubmitButton(view); // Add this new method call
 
         if (nomineeCard != null && nomineeCard.getRelation() != null) {
             populateExistingData();
         }
 
         return view;
+    }
+    private void initializeSubmitButton(View view) {
+        submitContainer = view.findViewById(R.id.submitContainer);
+        submitButton = view.findViewById(R.id.submitButton);
+
+        if (submitButton != null) {
+            submitButton.setOnSlideCompleteListener(() -> {
+                if (validateFields()) {
+                    ((InsuranceNominationActivity) requireActivity()).onSubmitForm();
+                }
+            });
+        }
     }
 
     private void initializeViews(View view) {
@@ -148,8 +164,7 @@ public class InsuranceNomineeCardFragment extends Fragment {
         addAadhaarBackImgBtn = view.findViewById(R.id.addAadhaarBackImgBtn);
         aadhaarFrontImageIv = view.findViewById(R.id.aadhaarFrontImageIv);
         aadhaarBackImageIv = view.findViewById(R.id.aadhaarBackImageIv);
-        fileAadhaarFrontNameTv = view.findViewById(R.id.fileAadhaarFrontNameTv);
-        fileAadhaarBackNameTv = view.findViewById(R.id.fileAadhaarBackNameTv);
+
 
         cardTitleText.setText(String.format(Locale.getDefault(), "Nominee %d", position + 1));
         deleteButton.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
@@ -277,7 +292,7 @@ public class InsuranceNomineeCardFragment extends Fragment {
 
         // Update UI
         updateRelationSelection(relationSpinnerContainer, newRelation);
-        validateFields();
+
 
         // If the selection affects available relations (like for children),
         // refresh the entire spinner
@@ -321,7 +336,7 @@ public class InsuranceNomineeCardFragment extends Fragment {
                         String date = String.format(Locale.getDefault(), "%02d/%02d/%d", dayOfMonth, month + 1, year);
                         dobEt.setText(date);
                         nomineeCard.setDateOfBirth(date);
-                        validateFields();
+
                     },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
@@ -343,7 +358,10 @@ public class InsuranceNomineeCardFragment extends Fragment {
                     .setTitle("Delete Nominee")
                     .setMessage("Are you sure you want to delete this nominee?")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        ((InsuranceNominationActivity) requireActivity()).removeCard(position);
+                        // Get activity before removing the card
+                        InsuranceNominationActivity activity =
+                                (InsuranceNominationActivity) requireActivity();
+                        activity.removeCard(position);
                     })
                     .setNegativeButton("No", null)
                     .show();
@@ -373,16 +391,12 @@ public class InsuranceNomineeCardFragment extends Fragment {
 
             if (isFront) {
                 aadhaarFrontImageIv.setImageBitmap(bitmap);
-                fileAadhaarFrontNameTv.setText("Aadhaar Front Image Selected");
-                fileAadhaarFrontNameTv.setVisibility(View.VISIBLE);
                 nomineeCard.setAadhaarFrontImage(imageUri.toString());
             } else {
                 aadhaarBackImageIv.setImageBitmap(bitmap);
-                fileAadhaarBackNameTv.setText("Aadhaar Back Image Selected");
-                fileAadhaarBackNameTv.setVisibility(View.VISIBLE);
                 nomineeCard.setAadhaarBackImage(imageUri.toString());
             }
-            validateFields();
+
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show();
@@ -400,7 +414,6 @@ public class InsuranceNomineeCardFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 nomineeCard.setRelativeName(s.toString());
-                validateFields();
             }
         });
     }
@@ -441,6 +454,8 @@ public class InsuranceNomineeCardFragment extends Fragment {
             isValid = false;
         }
 
+
+
         return isValid;
     }
 
@@ -457,8 +472,7 @@ public class InsuranceNomineeCardFragment extends Fragment {
                         frontImageUri
                 );
                 aadhaarFrontImageIv.setImageBitmap(frontBitmap);
-                fileAadhaarFrontNameTv.setText("Aadhaar Front Image Selected");
-                fileAadhaarFrontNameTv.setVisibility(View.VISIBLE);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -472,8 +486,6 @@ public class InsuranceNomineeCardFragment extends Fragment {
                         backImageUri
                 );
                 aadhaarBackImageIv.setImageBitmap(backBitmap);
-                fileAadhaarBackNameTv.setText("Aadhaar Back Image Selected");
-                fileAadhaarBackNameTv.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -481,7 +493,19 @@ public class InsuranceNomineeCardFragment extends Fragment {
     }
 
     public void toggleSubmitButton(boolean show) {
-        // Implementation for showing/hiding submit button if needed
+        if (submitContainer == null || submitButton == null) {
+            // Views might not be initialized yet
+            return;
+        }
+
+        // Always reset the button state when toggling visibility
+        submitButton.resetSlide();
+
+        // Update visibility
+        submitContainer.setVisibility(show ? View.VISIBLE : View.GONE);
+        submitButton.setVisibility(show ? View.VISIBLE : View.GONE);
+
+
     }
 
     // RelationItem class

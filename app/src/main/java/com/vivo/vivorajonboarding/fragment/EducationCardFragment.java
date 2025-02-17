@@ -430,7 +430,7 @@ public class EducationCardFragment extends Fragment {
     private void showDeleteConfirmation() {
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Delete Education Record")
-                .setMessage("Are you sure you want to delete this education record?")
+                .setMessage("Are you sure you want to delete this Experience record?")
                 .setPositiveButton("Delete", (dialog, which) -> {
                     if (getActivity() instanceof EducationActivity) {
                         ((EducationActivity) getActivity()).removeCard(position);

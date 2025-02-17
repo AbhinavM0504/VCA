@@ -28,7 +28,7 @@ public class SlidingButtonOne extends FrameLayout {
     private OnSlideCompleteListener listener;
     private ValueAnimator resetAnimator;
     private View backgroundView;
-    private int baseColor;
+    private int baseColor,textColor;
 
     // Enhanced animation constants
     private static final int SLIDE_DURATION = 300; // Increased for smoother feel
@@ -62,7 +62,8 @@ public class SlidingButtonOne extends FrameLayout {
         backgroundView = findViewById(R.id.backgroundView);
 
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        baseColor = ContextCompat.getColor(context, R.color.selected_relation_bg);
+        baseColor = ContextCompat.getColor(context, R.color.relation_bg);
+        textColor=ContextCompat.getColor(context,R.color.selected_relation_text);
 
         // Set initial background color
         resetBackgroundColor();
@@ -72,8 +73,15 @@ public class SlidingButtonOne extends FrameLayout {
 
     // New method to reset background color to original state
     private void resetBackgroundColor() {
-        backgroundView.setBackgroundTintList(ColorStateList.valueOf(baseColor));
-        slideText.setAlpha(1.0f);
+        try {
+            backgroundView.setBackgroundTintList(ColorStateList.valueOf(baseColor));
+            slideText.setTextColor(ColorUtils.setAlphaComponent(textColor, 255));
+            slideText.setAlpha(1.0f);
+            slideButton.setScaleX(1.0f);
+            slideButton.setScaleY(1.0f);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -91,22 +99,37 @@ public class SlidingButtonOne extends FrameLayout {
     }
 
     private void updateBackground(float progress) {
-        // Smooth out the progress
-        float smoothProgress = Math.max(0, Math.min(1, progress));
+        // Ensure progress is within valid bounds
+        float boundedProgress = Math.max(0f, Math.min(1f, progress));
 
-        // Apply exponential easing for more natural feel
-        smoothProgress = (float) Math.pow(smoothProgress, 1.3);
+        // Apply exponential easing with validation
+        float smoothProgress = (float) Math.pow(boundedProgress, 1.3);
 
+        // Ensure smoothProgress is within bounds after pow operation
+        smoothProgress = Math.max(0f, Math.min(1f, smoothProgress));
+
+        // Calculate alpha with bounds checking
         int alpha = (int) (smoothProgress * 255);
+        alpha = Math.max(0, Math.min(255, alpha));
+
         int color = ColorUtils.setAlphaComponent(baseColor, alpha);
 
+        // Apply background color
         backgroundView.setBackgroundTintList(ColorStateList.valueOf(color));
-        slideText.setAlpha(1 - smoothProgress);
 
-        // Add subtle scale animation to the slide button
-        float scale = 1 + (0.1f * smoothProgress);
-        slideButton.setScaleX(scale);
-        slideButton.setScaleY(scale);
+        // Update text alpha with validation
+        float textAlpha = Math.max(0f, Math.min(1f, 1 - smoothProgress));
+        slideText.setAlpha(textAlpha);
+
+        // Calculate scale with validation to prevent NaN
+        float maxScale = 1.1f;
+        float scale = 1f + (Math.max(0f, Math.min(0.1f, 0.1f * smoothProgress)));
+
+        // Validate scale before applying
+        if (!Float.isNaN(scale) && scale >= 1f && scale <= maxScale) {
+            slideButton.setScaleX(scale);
+            slideButton.setScaleY(scale);
+        }
     }
 
     private void setupTouchListener() {
@@ -234,28 +257,78 @@ public class SlidingButtonOne extends FrameLayout {
     }
 
     public void resetSlide() {
-        resetAnimator = ValueAnimator.ofFloat(slideButton.getTranslationX(), 0);
+        // Cancel any existing animation
+        if (resetAnimator != null && resetAnimator.isRunning()) {
+            resetAnimator.cancel();
+        }
+
+        // Get current translation with validation
+        float currentTranslation = slideButton.getTranslationX();
+        if (Float.isNaN(currentTranslation)) {
+            currentTranslation = 0f;
+        }
+
+        // Create new reset animator
+        resetAnimator = ValueAnimator.ofFloat(currentTranslation, 0f);
         resetAnimator.setDuration(SLIDE_DURATION);
         resetAnimator.setInterpolator(new DecelerateInterpolator());
 
+        float finalWidth = getWidth() - slideButton.getWidth();
+        // Ensure we don't divide by zero
+        final float maxWidth = finalWidth <= 0 ? 1f : finalWidth;
+
         resetAnimator.addUpdateListener(animation -> {
-            float value = (float) animation.getAnimatedValue();
-            slideButton.setTranslationX(value);
-            updateBackground(value / (getWidth() - slideButton.getWidth()));
+            try {
+                float value = (float) animation.getAnimatedValue();
+                if (!Float.isNaN(value)) {
+                    slideButton.setTranslationX(value);
+                    updateBackground(value / maxWidth);
+                }
+            } catch (Exception e) {
+                // Log the error but don't crash
+                e.printStackTrace();
+            }
         });
 
         resetAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                // Reset background color to original state when slide is not completed
-                resetBackgroundColor();
+                try {
+                    // Reset everything to initial state
+                    slideButton.setTranslationX(0f);
+                    slideButton.setScaleX(1f);
+                    slideButton.setScaleY(1f);
+                    resetBackgroundColor();
+                    isSlideComplete = false;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-        resetAnimator.start();
+        // Start the animation
+        try {
+            resetAnimator.start();
+        } catch (Exception e) {
+            // If animation fails, reset to initial state immediately
+            slideButton.setTranslationX(0f);
+            slideButton.setScaleX(1f);
+            slideButton.setScaleY(1f);
+            resetBackgroundColor();
+            isSlideComplete = false;
+        }
     }
 
     public void setOnSlideCompleteListener(OnSlideCompleteListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (resetAnimator != null) {
+            resetAnimator.cancel();
+            resetAnimator = null;
+        }
     }
 }
