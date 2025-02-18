@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
-            android:background="@drawable/gradient_background_ten"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -29,7 +29,7 @@
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"
+                android:textColor="#1A237E"
                 android:fontFamily="sans-serif-medium"
                 android:layout_marginBottom="32dp"/>
 

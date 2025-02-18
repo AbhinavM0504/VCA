@@ -151,28 +151,90 @@
         android:clickable="true"
         android:focusable="true">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/uploadProgressCard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginHorizontal="32dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-            <ProgressBar
-                android:id="@+id/uploadProgressBar"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:indeterminateTint="#FFFFFF"/>
-
-            <TextView
-                android:id="@+id/uploadStatusText"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/uploadProgressContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Uploading Documents..."
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <TextView
+                    android:id="@+id/uploadProgressTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Uploading Documents"
+                    android:textColor="#1A237E"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:layout_marginBottom="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:id="@+id/current_file_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_document"
+                        android:layout_marginEnd="8dp"
+                        app:tint="@null" />
+
+                    <TextView
+                        android:id="@+id/currentFileText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#1A237E"
+
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="14sp"
+                        android:ellipsize="middle"
+                        android:maxLines="1"/>
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/fileProgressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:trackCornerRadius="8dp"
+                        app:trackThickness="8dp"
+                        app:indicatorColor="#2196F3"
+                        app:trackColor="#E3F2FD"/>
+
+
+                    <TextView
+                        android:id="@+id/uploadProgressText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+
+                        android:layout_gravity="center"
+                        android:textColor="#1A237E"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textSize="12sp"/>
+                </FrameLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </FrameLayout>
 
     <!-- Success Overlay with Enhanced Animation Support -->
@@ -197,7 +259,7 @@
                 android:id="@+id/successIcon"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
-                android:src="@drawable/ic_check"/>
+                android:src="@drawable/ic_check_one"/>
 
             <TextView
                 android:id="@+id/successText"

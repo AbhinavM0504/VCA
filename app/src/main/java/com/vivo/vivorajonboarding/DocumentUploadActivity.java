@@ -1,5 +1,7 @@
 package com.vivo.vivorajonboarding;
 
+import static com.android.volley.VolleyLog.TAG;
+
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -22,6 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LayoutAnimationController;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +48,8 @@ import com.vivo.vivorajonboarding.api.ApiService;
 import com.vivo.vivorajonboarding.api.RetrofitClient;
 import com.vivo.vivorajonboarding.model.Document;
 import com.vivo.vivorajonboarding.model.UploadResponse;
+import com.vivo.vivorajonboarding.model.UserModel;
+import com.vivo.vivorajonboarding.network.ProgressRequestBody;
 import com.vivo.vivorajonboarding.transformer.ProgressUpdateHandler;
 
 
@@ -56,6 +61,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -78,6 +84,7 @@ public class DocumentUploadActivity extends AppCompatActivity {
     private ProgressUpdateHandler progressHandler;
     private FrameLayout progressContainer;
     private TextView progressText;
+    private String userId;
 
 
     @Override
@@ -86,6 +93,8 @@ public class DocumentUploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_document_upload);
 
         initializeViews();
+        checkUserLoggedIn();
+
         initializeToolbar();
         setupRecyclerView();
         setupFileTypeDialog();
@@ -101,6 +110,18 @@ public class DocumentUploadActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.submitButton);
         progressContainer = findViewById(R.id.progressContainer); // Add this ID to your FrameLayout
         progressText = findViewById(R.id.progressText);
+    }
+    private void checkUserLoggedIn() {
+        SessionManager sessionManager = new SessionManager(this);
+        if (sessionManager.isLoggedIn() ) {
+            UserModel user = sessionManager.getUserDetails();
+            userId=(user.getUserid());
+            Log.d(TAG, "\n======= Form Submission Data ======="+userId);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void setupProgressHandler() {
@@ -395,47 +416,69 @@ public class DocumentUploadActivity extends AppCompatActivity {
 
 
     private void uploadDocuments() {
+        TextView uploadProgressText = findViewById(R.id.uploadProgressText);
+        TextView currentFileText = findViewById(R.id.currentFileText);
+        ProgressBar fileProgressBar = findViewById(R.id.fileProgressBar);
+        View uploadProgressContainer = findViewById(R.id.uploadProgressContainer);
+        ImageView currentFileIcon = findViewById(R.id.current_file_icon);
+
+        uploadProgressContainer.setVisibility(View.VISIBLE);
+        // Reset initial state
+        fileProgressBar.setProgress(0);
+        currentFileIcon.setImageResource(R.drawable.ic_document); // Set default icon initially
+
         List<MultipartBody.Part> parts = new ArrayList<>();
+        List<Document> filesToUpload = new ArrayList<>();
 
-        Log.d(TAG, "Starting document upload process");
-        Log.d(TAG, "User ID: " + getCurrentUserId());
-
+        // Filter documents that need to be uploaded
         for (Document doc : documents) {
             if (doc.getFileUri() != null) {
-                try {
-                    File file = new File(doc.getFileUri().getPath());
-                    Log.d(TAG, String.format("Processing file: %s (Field: %s, Size: %d bytes, Type: %s)",
-                            doc.getFileName(), doc.getFieldName(), file.length(), doc.getMimeType()));
-
-                    if (!file.exists()) {
-                        Log.e(TAG, "File does not exist: " + file.getAbsolutePath());
-                        continue;
-                    }
-
-                    RequestBody requestFile = RequestBody.create(
-                            MediaType.parse(doc.getMimeType()), file);
-
-                    MultipartBody.Part part = MultipartBody.Part.createFormData(
-                            doc.getFieldName(), doc.getFileName(), requestFile);
-                    parts.add(part);
-
-                    Log.d(TAG, "Added file to upload request: " + doc.getFieldName());
-                } catch (Exception e) {
-                    Log.e(TAG, "Error processing file: " + doc.getFileName(), e);
-                }
+                filesToUpload.add(doc);
             }
         }
 
-        Log.d(TAG, "Total files to upload: " + parts.size());
+        final int totalFiles = filesToUpload.size();
+        final AtomicInteger currentFileIndex = new AtomicInteger(0);
+
+        // Create MultipartBody.Part list with progress tracking
+        for (int i = 0; i < filesToUpload.size(); i++) {
+            Document doc = filesToUpload.get(i);
+            File file = new File(doc.getFileUri().getPath());
+
+            RequestBody requestFile = RequestBody.create(
+                    MediaType.parse(doc.getMimeType()),
+                    file
+            );
+
+            ProgressRequestBody progressBody = new ProgressRequestBody(
+                    requestFile,
+                    doc.getTitle(),
+                    doc.getIconResource(),
+                    i + 1,
+                    totalFiles,
+                    (fileIndex, total, fileName, iconResource, progress) -> runOnUiThread(() -> {
+                        uploadProgressText.setText(String.format("Uploading file %d/%d", fileIndex, total));
+                        currentFileIcon.setImageResource(iconResource);
+                        currentFileText.setText(fileName);
+                        fileProgressBar.setProgress(progress);
+                    })
+            );
+
+            MultipartBody.Part part = MultipartBody.Part.createFormData(
+                    doc.getFieldName(),
+                    doc.getFileName(),
+                    progressBody
+            );
+
+            parts.add(part);
+        }
 
         RequestBody userId = RequestBody.create(
                 MediaType.parse("text/plain"),
                 getCurrentUserId()
         );
 
-        // Log the full request
-        Log.d(TAG, "Making upload request with user_id: " + getCurrentUserId());
-
+        // Make the upload request
         apiService.uploadDocuments(userId, parts)
                 .enqueue(new Callback<UploadResponse>() {
                     @Override
@@ -530,8 +573,7 @@ public class DocumentUploadActivity extends AppCompatActivity {
 
 
     private String getCurrentUserId() {
-        SessionManager sessionManager = new SessionManager(this);
-        return "test4275";
+       return userId;
     }
 
     private void setupApiService() {
@@ -554,7 +596,7 @@ public class DocumentUploadActivity extends AppCompatActivity {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_submit_confirmation, null);
         builder.setView(dialogView)
-               .setCancelable(false);
+                .setCancelable(false);
 
         AlertDialog dialog = builder.create();
         dialog.show();
